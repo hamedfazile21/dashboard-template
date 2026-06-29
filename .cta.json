@@ -1,5 +1,5 @@
 {
-  "projectName": "dashborad-template",
+  "projectName": "dashboard-template",
   "mode": "file-router",
   "typescript": true,
   "packageManager": "npm",

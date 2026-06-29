@@ -3,7 +3,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 import { Provider } from 'react-redux'
 import { store } from './app/store'
-
+import './app/i18n'
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
