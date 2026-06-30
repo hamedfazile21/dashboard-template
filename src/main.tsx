@@ -1,9 +1,13 @@
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
 import { Provider } from 'react-redux'
+import { RouterProvider, createRouter } from '@tanstack/react-router'
+
+import { routeTree } from './routeTree.gen'
 import { store } from './app/store'
+
 import './app/i18n'
+import { App } from './App'
+
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
@@ -16,13 +20,8 @@ declare module '@tanstack/react-router' {
   }
 }
 
-const rootElement = document.getElementById('app')!
-
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement)
-  root.render(
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>,
-  )
-}
+ReactDOM.createRoot(document.getElementById('app')!).render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+)
