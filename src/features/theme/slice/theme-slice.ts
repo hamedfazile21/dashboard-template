@@ -3,10 +3,12 @@ import type { ThemeMode } from './theme-types'
 
 interface ThemeState {
   mode: ThemeMode
+  direction: 'ltr' | 'rtl'
 }
 
 const initialState: ThemeState = {
   mode: 'system',
+  direction : 'ltr'
 }
 
 const themeSlice = createSlice({
@@ -24,9 +26,13 @@ const themeSlice = createSlice({
         state.mode = 'light'
       }
     },
+    
+    changeDirection(state, action: PayloadAction<'ltr' | 'rtl'>) {
+      state.direction = action.payload
+    }
   },
 })
 
-export const { setTheme, toggleTheme } = themeSlice.actions
+export const { setTheme, toggleTheme, changeDirection } = themeSlice.actions
 
 export default themeSlice.reducer

@@ -1,13 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import 'tailwindcss';
 @import './theme.css';
 
 @theme {
   --color-primary: var(--color-primary);
   --color-primary-foreground: var(--color-primary-foreground);
+
+  --font-outfit: 'Outfit', sans-serif;
+
+  --text-system : 14px
 }
 
+@layer base {
+  html {
+    @apply font-outfit font-[300];
+  }
+}
 * {
   box-sizing: border-box;
+  /* font-family: "Outfit", sans-serif; */
 }
 
 html,
@@ -18,4 +29,12 @@ body,
 
 body {
   margin: 0;
+}
+
+.border-light {
+  @apply border-gray-200;
+}
+
+.border-dark {
+  @apply border-gray-800;
 }
