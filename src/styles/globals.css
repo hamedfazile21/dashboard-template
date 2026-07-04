@@ -5,10 +5,11 @@
 @theme {
   --color-primary: var(--color-primary);
   --color-primary-foreground: var(--color-primary-foreground);
-
+  --color-light: #e5e7eb;
+  --color-dark: #1e2939;
   --font-outfit: 'Outfit', sans-serif;
 
-  --text-system : 14px
+  --text-system: 14px;
 }
 
 @layer base {
@@ -31,10 +32,7 @@ body {
   margin: 0;
 }
 
-.border-light {
-  @apply border-gray-200;
-}
 
-.border-dark {
-  @apply border-gray-800;
+button {
+  @apply cursor-pointer;
 }
