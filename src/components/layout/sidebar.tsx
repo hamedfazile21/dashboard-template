@@ -1,18 +1,30 @@
 import { ChevronFirst, ChevronRight } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from '@tanstack/react-router'
 import { sidebar_data, type SidebarChild } from './data/sidebar-data'
 import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import { toggleSidebar } from '#/features/theme/slice/theme-slice'
+import Tooltip from '../tooltip'
 
 const Sidebar = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const dispatch = useAppDispatch()
+  const sidebarRef = useRef<HTMLDivElement | null>(null)
   const [openItem, setOpenItem] = useState<string | null>(null)
   const { sidebarStatus } = useAppSelector((state) => state.themeConfig)
+  const [submenuActiveTab, setSubmenuActiveTab] = useState<string>('')
+
+  const getTruncatedTitle = (title: string) => {
+    const limit = sidebarStatus === 'collapsible-vertical' ? 9 : 25
+    return title.length > limit ? `${title.slice(0, limit)}...` : title
+  }
+
   const toggleItem = (id: string) => {
+    if (sidebarStatus === 'collapsible-vertical') {
+      setSubmenuActiveTab(id)
+    }
     setOpenItem((current) => (current === id ? null : id))
   }
 
@@ -34,7 +46,8 @@ const Sidebar = () => {
   }
 
   const handedToggleSidebar = () => {
-    setOpenItem(null)
+    setSubmenuActiveTab('')
+    // setOpenItem(null)
     if (sidebarStatus === 'collapsible-vertical') {
       dispatch(toggleSidebar('vertical'))
     } else {
@@ -43,14 +56,26 @@ const Sidebar = () => {
   }
 
   const renderSubNavItem = (item: any) => {
+    const titleMessage = getTruncatedTitle(item.title)
     return (
       <div className="mt-1 flex flex-col gap-y-1">
-        {item.children?.map((child: SidebarChild, index: number) => {
+        {sidebarStatus === 'collapsible-vertical' && (
+          <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 flex items-center gap-x-3">
+            {titleMessage !== item.title ? (
+              <Tooltip placement="right" content={item.title}>
+                {<button className="uppercase">{titleMessage}</button>}
+              </Tooltip>
+            ) : (
+              <span>{titleMessage}</span>
+            )}
+          </p>
+        )}
+        {item.children?.map((child: SidebarChild , index: number) => {
           const isChildActive = isRouteActive(child.href)
 
           return (
             <Link
-              key={child.title}
+              key={index}
               to={child.href}
               onClick={() => setOpenItem(null)}
               className={`relative flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm transition-all duration-200 ${
@@ -59,9 +84,6 @@ const Sidebar = () => {
                   : 'text-gray-600 hover:bg-gray-50 hover:text-primary'
               }`}
             >
-              {!(index === item.children.length - 1) && (
-                <span className="absolute -bottom-4 ltr:left-5.25 rtl:right-5.25 h-7 w-0.5 bg-gray-300/80 z-0" />
-              )}
               <span className="z-10 flex h-5 w-5 items-center justify-center rounded-full border border-gray-300/80 bg-white">
                 <span
                   className={`h-2.5 w-2.5 rotate-45 rounded-sm ${isChildActive ? 'bg-primary/70' : 'bg-gray-300/80'}`}
@@ -79,17 +101,18 @@ const Sidebar = () => {
     const Icon = item.icon
     const hasChildren = Array.isArray(item.children) && item.children.length > 0
     const isOpen = openItem === item.id
+    const titleLabel = getTruncatedTitle(t(item.title))
     const isParentActive =
       isRouteActive(item.href) ||
       (hasChildren &&
         item.children?.some((child: any) => isRouteActive(child.href)))
 
     return (
-      <div key={item.id} data-sidebar-item-root={item.id} className="relative">
+      <div key={item.id} className="relative">
         <button
           type="button"
           onClick={() => hasChildren && toggleItem(item.id)}
-          className={`group  relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-2.5 transition-all duration-300 ${
+          className={`group  relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.75 transition-all duration-300 ${
             sidebarStatus === 'collapsible-vertical'
               ? 'flex-col items-center justify-center gap-y-1 p-1 min-h-14.5 mb-1'
               : ''
@@ -106,9 +129,9 @@ const Sidebar = () => {
               <Icon size={18} />
             </div>
             <span
-              className={`font-medium ${sidebarStatus === 'collapsible-vertical' ? 'text-center text-[10px] leading-3' : 'text-system'}`}
+              className={`max-w-full truncate font-medium ${sidebarStatus === 'collapsible-vertical' ? 'text-center text-[10px] leading-3' : 'text-system'}`}
             >
-              {t(item.title)}
+              {titleLabel}
             </span>
           </div>
 
@@ -122,8 +145,7 @@ const Sidebar = () => {
 
         {hasChildren ? (
           <div
-            data-sidebar-panel={item.id}
-            className={`${sidebarStatus === 'collapsible-vertical' ? 'absolute top-1/2 z-50 ml-2 w-56 -translate-y-1/2 rounded-xl bg-white p-2 shadow-xl ltr:left-full rtl:right-full' : ''} transition-all duration-300 ease-in-out ${
+            className={`${sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''} transition-all duration-300 ease-in-out ${
               sidebarStatus === 'collapsible-vertical'
                 ? isOpen
                   ? 'pointer-events-auto visible opacity-100'
@@ -136,6 +158,11 @@ const Sidebar = () => {
             {renderSubNavItem(item)}
           </div>
         ) : null}
+        {submenuActiveTab === item.id && (
+          <div className="absolute bg-white p-2 ltr:left-18 top-0 w-55 rounded-lg shadow-lg border border-light ">
+            {renderSubNavItem(item)}
+          </div>
+        )}
       </div>
     )
   }
@@ -168,24 +195,24 @@ const Sidebar = () => {
 
     const handleOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement
-      const clickedInsideItem = target.closest('[data-sidebar-item-root]')
-      const clickedInsidePanel = target.closest('[data-sidebar-panel]')
 
-      if (clickedInsideItem || clickedInsidePanel) {
+      if (sidebarRef.current?.contains(target)) {
         return
       }
 
       setOpenItem(null)
+      setSubmenuActiveTab('')
     }
 
     document.addEventListener('click', handleOutsideClick)
 
     return () => document.removeEventListener('click', handleOutsideClick)
-  }, [sidebarStatus, openItem])
+  }, [sidebarStatus])
 
   return (
     <div
-      className={`relative h-screen overflow-visible transition-all duration-300 ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'} border-light ltr:border-r rtl:border-l`}
+      ref={sidebarRef}
+      className={`relative h-screen overflow-visible transition-all duration-300  ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'} border-light ltr:border-r rtl:border-l`}
     >
       <div className="flex h-14 items-center justify-between border-b border-light px-3">
         <p className="font-medium text-gray-800">{t('Name')}</p>
@@ -195,16 +222,16 @@ const Sidebar = () => {
       </div>
 
       <div className="flex flex-col p-2 ">
-        {sidebar_data.map((item) => {
+        {sidebar_data.map((item , index) => {
           if (item.type === 'group') {
             return (
-              <div key={item.id} className=" first:mt-0">
+              <div key={index} className=" first:mt-0">
                 {sidebarStatus === 'vertical' && (
                   <div
                     className={`mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 flex items-center gap-x-3`}
                   >
                     <div className={`w-fit`}>{t(item.title)}</div>
-                    <div className="border border-dashed border-light w-full" />
+                    {/* <div className="border border-dashed border-light w-full" /> */}
                   </div>
                 )}
                 <div className="flex flex-col">

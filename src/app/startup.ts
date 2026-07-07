@@ -10,6 +10,7 @@ export async function startup() {
   initializeThemePrimaryColor()
 
   initializeSystemDir()
+  
 
   // Future initialization
   // await restoreSession();

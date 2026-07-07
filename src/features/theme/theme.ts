@@ -1,4 +1,6 @@
 import i18n from '#/app/i18n'
+import { useAppDispatch } from '#/hooks/redux'
+import { toggleSidebar } from './slice/theme-slice'
 
 export function initializeTheme() {
   const theme = localStorage.getItem('theme') ?? 'system'
@@ -19,7 +21,7 @@ export function initializeThemePrimaryColor() {
 
 export function initializeSystemDir() {
   const dir = localStorage.getItem('dir') ?? 'ltr'
-  
+
   if (dir === 'rtl') {
     document.dir = 'rtl'
     i18n.changeLanguage('fa')

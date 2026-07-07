@@ -60,7 +60,7 @@ export const sidebar_data: SidebarItem[] = [
     children: [
       {
         id: 'dashboard12',
-        title: 'Dashboard',
+        title: 'Dashboard2367765432123432',
         icon: ChartNoAxesCombined,
         href: '',
         children: [

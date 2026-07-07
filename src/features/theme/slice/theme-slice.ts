@@ -1,16 +1,18 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { ThemeMode } from './theme-types'
 
+type SidebarStatusType = 'vertical' | 'collapsible-vertical'
 interface ThemeState {
   mode: ThemeMode
   direction: 'ltr' | 'rtl'
-  sidebarStatus: 'vertical' | 'collapsible-vertical'
+  sidebarStatus: SidebarStatusType
 }
 
 const initialState: ThemeState = {
   mode: 'system',
   direction: 'ltr',
-  sidebarStatus: 'vertical',
+  sidebarStatus:
+    (localStorage.getItem('sidebar-status') as SidebarStatusType) || 'vertical',
 }
 
 const themeSlice = createSlice({
@@ -37,6 +39,7 @@ const themeSlice = createSlice({
       state,
       action: PayloadAction<'vertical' | 'collapsible-vertical'>,
     ) {
+      localStorage.setItem('sidebar-status', action.payload)
       state.sidebarStatus = action.payload
     },
   },

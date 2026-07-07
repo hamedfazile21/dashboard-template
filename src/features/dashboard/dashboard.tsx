@@ -1,7 +1,11 @@
 import i18n from '#/app/i18n'
+import Custome from '#/components/custome'
 import Dropdown from '#/components/drop-down'
+import AnimateTooltip from '#/components/tooltip'
+import Tippy from '@tippyjs/react'
 import { useAppSelector } from '#/hooks/redux'
 import { useTranslation } from 'react-i18next'
+import Tooltip from '#/components/tooltip'
 const Dashboard = () => {
   const { t } = useTranslation()
   const handelChangeLanguage = (language: string) => {
@@ -43,6 +47,11 @@ const Dashboard = () => {
       <div>
         <button onClick={handelChangeThemeColor}>Change Theme Color</button>
       </div>
+      <Tooltip
+        placement={'right'}
+        content={'Hover Me'}
+        children={<button>Click</button>}
+      />
     </div>
   )
 }

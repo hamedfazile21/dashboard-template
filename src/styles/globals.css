@@ -36,3 +36,81 @@ body {
 button {
   @apply cursor-pointer;
 }
+
+
+/* Right Tooltip */
+
+.tippy-box[data-animation="custom-right"] {
+  transform-origin: left;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tippy-box[data-animation="custom-right"][data-state="hidden"] {
+  opacity: 0;
+  transform: perspective(500px) rotateX(-20deg) scale(0.9);
+}
+
+.tippy-box[data-animation="custom-right"][data-state="visible"] {
+  opacity: 1;
+  transform: perspective(500px) rotateX(0) scale(1);
+}
+
+/* Left Tooltip */
+
+.tippy-box[data-animation="custom-left"] {
+  transform-origin: right;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tippy-box[data-animation="custom-left"][data-state="hidden"] {
+  opacity: 0;
+  transform: perspective(500px) rotateX(-20deg) scale(0.9);
+}
+
+.tippy-box[data-animation="custom-left"][data-state="visible"] {
+  opacity: 1;
+  transform: perspective(500px) rotateX(0) scale(1);
+}
+
+/* Top Tooltip */
+
+.tippy-box[data-animation="custom-top"] {
+  transform-origin: bottom;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tippy-box[data-animation="custom-top"][data-state="hidden"] {
+  opacity: 0;
+  transform: perspective(500px) rotateX(-20deg) scale(0.9);
+}
+
+.tippy-box[data-animation="custom-top"][data-state="visible"] {
+  opacity: 1;
+  transform: perspective(500px) rotateX(0) scale(1);
+}
+
+
+/* Bottom Tooltip */
+
+.tippy-box[data-animation="custom-bottom"] {
+  transform-origin: top;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tippy-box[data-animation="custom-top"][data-state="hidden"] {
+  opacity: 0;
+  transform: perspective(500px) rotateX(-20deg) scale(0.9);
+}
+
+.tippy-box[data-animation="custom-top"][data-state="visible"] {
+  opacity: 1;
+  transform: perspective(500px) rotateX(0) scale(1);
+}
