@@ -5,7 +5,7 @@ import {
 } from '@/features/theme/theme'
 
 export async function startup() {
-  initializeTheme()
+  // initializeTheme()
 
   initializeThemePrimaryColor()
 

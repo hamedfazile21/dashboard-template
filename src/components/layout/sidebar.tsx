@@ -17,7 +17,7 @@ const Sidebar = () => {
   const [submenuActiveTab, setSubmenuActiveTab] = useState<string>('')
 
   const getTruncatedTitle = (title: string) => {
-    const limit = sidebarStatus === 'collapsible-vertical' ? 9 : 25
+    const limit = sidebarStatus === 'collapsible-vertical' ? 9 : 20
     return title.length > limit ? `${title.slice(0, limit)}...` : title
   }
 
@@ -47,7 +47,6 @@ const Sidebar = () => {
 
   const handedToggleSidebar = () => {
     setSubmenuActiveTab('')
-    // setOpenItem(null)
     if (sidebarStatus === 'collapsible-vertical') {
       dispatch(toggleSidebar('vertical'))
     } else {
@@ -60,7 +59,7 @@ const Sidebar = () => {
     return (
       <div className="mt-1 flex flex-col gap-y-1">
         {sidebarStatus === 'collapsible-vertical' && (
-          <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 flex items-center gap-x-3">
+          <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground flex items-center gap-x-3">
             {titleMessage !== item.title ? (
               <Tooltip placement="right" content={item.title}>
                 {<button className="uppercase">{titleMessage}</button>}
@@ -70,7 +69,7 @@ const Sidebar = () => {
             )}
           </p>
         )}
-        {item.children?.map((child: SidebarChild , index: number) => {
+        {item.children?.map((child: SidebarChild, index: number) => {
           const isChildActive = isRouteActive(child.href)
 
           return (
@@ -81,10 +80,10 @@ const Sidebar = () => {
               className={`relative flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm transition-all duration-200 ${
                 isChildActive
                   ? 'bg-primary/10 font-medium text-primary'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-primary'
+                  : 'text-muted hover:bg-surface hover:text-primary'
               }`}
             >
-              <span className="z-10 flex h-5 w-5 items-center justify-center rounded-full border border-gray-300/80 bg-white">
+              <span className="z-10 flex h-5 w-5 items-center justify-center rounded-full border border-borderColor bg-background">
                 <span
                   className={`h-2.5 w-2.5 rotate-45 rounded-sm ${isChildActive ? 'bg-primary/70' : 'bg-gray-300/80'}`}
                 />
@@ -117,19 +116,19 @@ const Sidebar = () => {
               ? 'flex-col items-center justify-center gap-y-1 p-1 min-h-14.5 mb-1'
               : ''
           } ${
-            hasChildren ? 'cursor-pointer hover:bg-gray-100' : 'cursor-default'
+            hasChildren ? 'cursor-pointer hover:bg-surface' : 'cursor-default'
           } ${isParentActive ? 'bg-primary/10 text-primary' : 'text-gray-700 hover:text-primary'}`}
         >
           <div
             className={`flex ${sidebarStatus === 'collapsible-vertical' ? 'flex-col items-center justify-center gap-y-1' : 'gap-x-2 items-center'} `}
           >
             <div
-              className={`rounded-lg p-1.5 transition-all duration-300 ${isParentActive ? 'bg-primary/15 text-primary' : 'bg-gray-100 text-gray-600 group-hover:bg-primary/15 group-hover:text-primary'}`}
+              className={`rounded-lg p-1.5 transition-all duration-300 ${isParentActive ? 'bg-primary/15 text-primary' : 'bg-surface text-foreground group-hover:bg-primary/15 group-hover:text-primary'}`}
             >
               <Icon size={18} />
             </div>
             <span
-              className={`max-w-full truncate font-medium ${sidebarStatus === 'collapsible-vertical' ? 'text-center text-[10px] leading-3' : 'text-system'}`}
+              className={`max-w-full truncate font-medium text-foreground ${sidebarStatus === 'collapsible-vertical' ? 'text-center text-[10px] leading-3' : ''}`}
             >
               {titleLabel}
             </span>
@@ -159,7 +158,7 @@ const Sidebar = () => {
           </div>
         ) : null}
         {submenuActiveTab === item.id && (
-          <div className="absolute bg-white p-2 ltr:left-18 top-0 w-55 rounded-lg shadow-lg border border-light ">
+          <div className="absolute bg-background p-2 ltr:left-18 top-0 w-55 rounded-lg shadow-lg border border-borderColor ">
             {renderSubNavItem(item)}
           </div>
         )}
@@ -212,17 +211,17 @@ const Sidebar = () => {
   return (
     <div
       ref={sidebarRef}
-      className={`relative h-screen overflow-visible transition-all duration-300  ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'} border-light ltr:border-r rtl:border-l`}
+      className={`relative h-screen overflow-visible transition-all duration-300  ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'}  ltr:border-r rtl:border-l border-borderColor`}
     >
-      <div className="flex h-14 items-center justify-between border-b border-light px-3">
-        <p className="font-medium text-gray-800">{t('Name')}</p>
+      <div className="flex h-14 items-center justify-between border-b border-borderColor  px-3">
+        <p className="font-medium text-foreground">{t('Name')}</p>
         {sidebarStatus === 'vertical' && (
-          <p className="text-gray-500">{t('Icon')}</p>
+          <p className="text-foreground">{t('Icon')}</p>
         )}
       </div>
 
       <div className="flex flex-col p-2 ">
-        {sidebar_data.map((item , index) => {
+        {sidebar_data.map((item, index) => {
           if (item.type === 'group') {
             return (
               <div key={index} className=" first:mt-0">
@@ -231,7 +230,7 @@ const Sidebar = () => {
                     className={`mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 flex items-center gap-x-3`}
                   >
                     <div className={`w-fit`}>{t(item.title)}</div>
-                    {/* <div className="border border-dashed border-light w-full" /> */}
+                    {/* <div className="border border-dashed  w-full" /> */}
                   </div>
                 )}
                 <div className="flex flex-col">
@@ -247,7 +246,7 @@ const Sidebar = () => {
       <div>
         <button
           onClick={handedToggleSidebar}
-          className="absolute bottom-3 ltr:right-3 rtl:left-3 rounded-full border border-light bg-white p-2 text-gray-600 shadow-sm transition hover:bg-gray-50 hover:text-primary"
+          className="absolute bottom-3 ltr:right-3 rtl:left-3 rounded-full border border-borderColor p-2 text-foreground shadow-sm transition bg-background hover:bg-surface-hover hover:text-primary"
         >
           <ChevronFirst
             className={`transition-transform duration-300 ${sidebarStatus === 'collapsible-vertical' ? 'rotate-180' : 'rotate-0'}`}

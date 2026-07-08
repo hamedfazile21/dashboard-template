@@ -1,15 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import type { ThemeMode } from './theme-types'
+import type { SidebarStatusType, ThemeMode } from './theme-types'
 
-type SidebarStatusType = 'vertical' | 'collapsible-vertical'
 interface ThemeState {
-  mode: ThemeMode
+  themeMode: ThemeMode
   direction: 'ltr' | 'rtl'
   sidebarStatus: SidebarStatusType
 }
 
 const initialState: ThemeState = {
-  mode: 'system',
+  themeMode: 'system',
   direction: 'ltr',
   sidebarStatus:
     (localStorage.getItem('sidebar-status') as SidebarStatusType) || 'vertical',
@@ -20,14 +19,13 @@ const themeSlice = createSlice({
   initialState,
   reducers: {
     setTheme(state, action: PayloadAction<ThemeMode>) {
-      state.mode = action.payload
+      state.themeMode = action.payload
     },
-
     toggleTheme(state) {
-      if (state.mode === 'light') {
-        state.mode = 'dark'
+      if (state.themeMode === 'light') {
+        state.themeMode = 'dark'
       } else {
-        state.mode = 'light'
+        state.themeMode = 'light'
       }
     },
 

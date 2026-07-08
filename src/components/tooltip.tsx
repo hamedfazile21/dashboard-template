@@ -1,6 +1,7 @@
 import React from 'react'
 import Tippy from '@tippyjs/react'
 import type { Placement } from 'tippy.js'
+import "tippy.js/dist/tippy.css";
 
 interface TooltipProps {
   placement?: Placement

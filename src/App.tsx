@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { RouterProvider } from '@tanstack/react-router'
-import "tippy.js/dist/tippy.css";
 import { getRouter } from './router'
 
 import { startup } from './app/startup'

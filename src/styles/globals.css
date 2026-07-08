@@ -5,11 +5,14 @@
 @theme {
   --color-primary: var(--color-primary);
   --color-primary-foreground: var(--color-primary-foreground);
-  --color-light: #e5e7eb;
-  --color-dark: #1e2939;
   --font-outfit: 'Outfit', sans-serif;
-
   --text-system: 14px;
+  --color-borderColor: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted-foreground);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
 }
 
 @layer base {
@@ -30,87 +33,85 @@ body,
 
 body {
   margin: 0;
+  background: var(--background);
 }
-
 
 button {
   @apply cursor-pointer;
 }
 
-
 /* Right Tooltip */
 
-.tippy-box[data-animation="custom-right"] {
+.tippy-box[data-animation='custom-right'] {
   transform-origin: left;
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
 }
 
-.tippy-box[data-animation="custom-right"][data-state="hidden"] {
+.tippy-box[data-animation='custom-right'][data-state='hidden'] {
   opacity: 0;
   transform: perspective(500px) rotateX(-20deg) scale(0.9);
 }
 
-.tippy-box[data-animation="custom-right"][data-state="visible"] {
+.tippy-box[data-animation='custom-right'][data-state='visible'] {
   opacity: 1;
   transform: perspective(500px) rotateX(0) scale(1);
 }
 
 /* Left Tooltip */
 
-.tippy-box[data-animation="custom-left"] {
+.tippy-box[data-animation='custom-left'] {
   transform-origin: right;
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
 }
 
-.tippy-box[data-animation="custom-left"][data-state="hidden"] {
+.tippy-box[data-animation='custom-left'][data-state='hidden'] {
   opacity: 0;
   transform: perspective(500px) rotateX(-20deg) scale(0.9);
 }
 
-.tippy-box[data-animation="custom-left"][data-state="visible"] {
+.tippy-box[data-animation='custom-left'][data-state='visible'] {
   opacity: 1;
   transform: perspective(500px) rotateX(0) scale(1);
 }
 
 /* Top Tooltip */
 
-.tippy-box[data-animation="custom-top"] {
+.tippy-box[data-animation='custom-top'] {
   transform-origin: bottom;
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
 }
 
-.tippy-box[data-animation="custom-top"][data-state="hidden"] {
+.tippy-box[data-animation='custom-top'][data-state='hidden'] {
   opacity: 0;
   transform: perspective(500px) rotateX(-20deg) scale(0.9);
 }
 
-.tippy-box[data-animation="custom-top"][data-state="visible"] {
+.tippy-box[data-animation='custom-top'][data-state='visible'] {
   opacity: 1;
   transform: perspective(500px) rotateX(0) scale(1);
 }
 
-
 /* Bottom Tooltip */
 
-.tippy-box[data-animation="custom-bottom"] {
+.tippy-box[data-animation='custom-bottom'] {
   transform-origin: top;
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
 }
 
-.tippy-box[data-animation="custom-top"][data-state="hidden"] {
+.tippy-box[data-animation='custom-top'][data-state='hidden'] {
   opacity: 0;
   transform: perspective(500px) rotateX(-20deg) scale(0.9);
 }
 
-.tippy-box[data-animation="custom-top"][data-state="visible"] {
+.tippy-box[data-animation='custom-top'][data-state='visible'] {
   opacity: 1;
   transform: perspective(500px) rotateX(0) scale(1);
 }

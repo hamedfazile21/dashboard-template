@@ -26,6 +26,9 @@ const Dashboard = () => {
     )
     localStorage.setItem('primary-color', 'rgb(16 185 129)')
   }
+  const handelChangeTheme = () => {
+    document.documentElement.classList.toggle('dark')
+  }
   const { counter } = useAppSelector((state) => state.dashboard)
   return (
     <div className="bg-yellow-500/20">
@@ -47,10 +50,19 @@ const Dashboard = () => {
       <div>
         <button onClick={handelChangeThemeColor}>Change Theme Color</button>
       </div>
-      <Tooltip
-        placement={'right'}
-        content={'Hover Me'}
-        children={<button>Click</button>}
+      <div>
+        <button onClick={handelChangeTheme}>Change Theme</button>
+      </div>
+      <Dropdown
+        menuButtonContent={
+          <div className="flex items-center">
+            <p>Open Menu</p>
+          </div>
+        }
+        menuItemContent={[
+          { className: '', onClick: () => {}, title: 'Mahmood' },
+          { className: '', onClick: () => {}, title: 'Hamed' },
+        ]}
       />
     </div>
   )
