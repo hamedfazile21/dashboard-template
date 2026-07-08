@@ -158,7 +158,7 @@ const Sidebar = () => {
           </div>
         ) : null}
         {submenuActiveTab === item.id && (
-          <div className="absolute bg-background p-2 ltr:left-18 top-0 w-55 rounded-lg shadow-lg border border-borderColor ">
+          <div className="absolute bg-surface p-2 ltr:left-18 top-0 w-55 rounded-lg shadow-lg border border-borderColor ">
             {renderSubNavItem(item)}
           </div>
         )}

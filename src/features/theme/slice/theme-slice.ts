@@ -1,17 +1,19 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import type { SidebarStatusType, ThemeMode } from './theme-types'
+import type { Language, SidebarStatusType, ThemeMode } from './theme-types'
 
 interface ThemeState {
   themeMode: ThemeMode
   direction: 'ltr' | 'rtl'
   sidebarStatus: SidebarStatusType
+  language: Language
 }
 
 const initialState: ThemeState = {
-  themeMode: 'system',
+  themeMode: (localStorage.getItem('theme-mode') as ThemeMode) || 'system',
   direction: 'ltr',
   sidebarStatus:
     (localStorage.getItem('sidebar-status') as SidebarStatusType) || 'vertical',
+  language: (localStorage.getItem('system-language') as Language) || 'english',
 }
 
 const themeSlice = createSlice({
@@ -21,15 +23,33 @@ const themeSlice = createSlice({
     setTheme(state, action: PayloadAction<ThemeMode>) {
       state.themeMode = action.payload
     },
-    toggleTheme(state) {
-      if (state.themeMode === 'light') {
-        state.themeMode = 'dark'
-      } else {
-        state.themeMode = 'light'
+    toggleTheme(state, action: PayloadAction<ThemeMode>) {
+      const theme = action.payload
+      const html = document.documentElement
+
+      html.classList.remove('dark')
+
+      switch (theme) {
+        case 'light':
+          break
+
+        case 'dark':
+          html.classList.add('dark')
+          break
+
+        case 'system':
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.classList.add('dark')
+          }
+          break
       }
+
+      localStorage.setItem('theme-mode', theme)
+      state.themeMode = theme
     },
 
     changeDirection(state, action: PayloadAction<'ltr' | 'rtl'>) {
+      document.dir = action.payload
       state.direction = action.payload
     },
 

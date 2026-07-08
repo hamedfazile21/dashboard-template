@@ -1,9 +1,7 @@
 import i18n from '#/app/i18n'
-import { useAppDispatch } from '#/hooks/redux'
-import { toggleSidebar } from './slice/theme-slice'
 
 export function initializeTheme() {
-  const theme = localStorage.getItem('theme') ?? 'system'
+  const theme = localStorage.getItem('theme-mode') ?? 'system'
 
   const isDark =
     theme === 'dark' ||

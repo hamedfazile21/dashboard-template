@@ -2,12 +2,9 @@
   --color-primary: rgb(59 130 246);
   --color-primary-foreground: rgb(255 255 255);
 
-  --background: oklch(1 0 0);
-  --foreground: 210 40% 98%;
-
   /* Backgrounds */
-  --background: rgb(248 250 252);
-  --surface: rgb(255 255 255);
+  --background: rgb(255 255 255);
+  --surface: rgb(248 250 252);
   --surface-hover: rgb(241 245 249);
 
   /* Text */
@@ -24,7 +21,7 @@
   --primary-foreground: rgb(2 6 23);
 
   /* Backgrounds */
-  --background:  oklch(0.129 0.042 264.695);
+  --background: oklch(0.129 0.042 264.695);
   --surface: rgb(30 41 59);
   --surface-hover: rgb(51 65 85);
 

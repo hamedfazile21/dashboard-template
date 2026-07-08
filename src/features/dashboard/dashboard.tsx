@@ -6,6 +6,7 @@ import Tippy from '@tippyjs/react'
 import { useAppSelector } from '#/hooks/redux'
 import { useTranslation } from 'react-i18next'
 import Tooltip from '#/components/tooltip'
+import { User } from 'lucide-react'
 const Dashboard = () => {
   const { t } = useTranslation()
   const handelChangeLanguage = (language: string) => {
@@ -60,8 +61,8 @@ const Dashboard = () => {
           </div>
         }
         menuItemContent={[
-          { className: '', onClick: () => {}, title: 'Mahmood' },
-          { className: '', onClick: () => {}, title: 'Hamed' },
+          { className: '', onClick: () => {}, title: 'Mahmood', icon: null },
+          { className: '', onClick: () => {}, title: null, icon: <User size={18} /> },
         ]}
       />
     </div>

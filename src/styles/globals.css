@@ -17,7 +17,7 @@
 
 @layer base {
   html {
-    @apply font-outfit font-[300];
+    @apply font-outfit font-light overflow-hidden;
   }
 }
 * {
