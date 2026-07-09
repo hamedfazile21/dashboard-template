@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { Language, SidebarStatusType, ThemeMode } from './theme-types'
+import i18n from '#/app/i18n'
 
 interface ThemeState {
   themeMode: ThemeMode
@@ -49,8 +50,16 @@ const themeSlice = createSlice({
     },
 
     changeDirection(state, action: PayloadAction<'ltr' | 'rtl'>) {
-      document.dir = action.payload
-      state.direction = action.payload
+      const selectedDir = action.payload
+      document.dir = selectedDir
+      localStorage.setItem('dir', selectedDir)
+      state.direction = selectedDir
+    },
+
+    changeLanguage(state, action: PayloadAction<Language>) {
+      const selectedLanguage = action.payload
+      localStorage.setItem('system-language', selectedLanguage)
+      state.language = selectedLanguage
     },
 
     toggleSidebar(
@@ -63,7 +72,7 @@ const themeSlice = createSlice({
   },
 })
 
-export const { setTheme, toggleTheme, changeDirection, toggleSidebar } =
+export const { setTheme, toggleTheme, changeDirection, toggleSidebar , changeLanguage } =
   themeSlice.actions
 
 export default themeSlice.reducer

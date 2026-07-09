@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import {
   changeDirection,
+  changeLanguage,
   toggleTheme,
 } from '#/features/theme/slice/theme-slice'
 import type { ThemeMode } from '#/features/theme/slice/theme-types'
@@ -22,11 +23,11 @@ const Header = () => {
   const handelChangeLanguage = (language: string) => {
     if (language === 'fa') {
       dispatch(changeDirection('rtl'))
-      localStorage.setItem('dir', 'rtl')
+      dispatch(changeLanguage('farsi'))
       i18n.changeLanguage('fa')
     } else {
       dispatch(changeDirection('ltr'))
-      localStorage.setItem('dir', 'ltr')
+      dispatch(changeLanguage('english'))
       i18n.changeLanguage('en')
     }
   }

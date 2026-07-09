@@ -8,8 +8,8 @@
   --surface-hover: rgb(241 245 249);
 
   /* Text */
-  --foreground: rgb(15 23 42);
-  --muted-foreground: rgb(100 116 139);
+  --foreground: rgb(64, 64, 64);
+  --muted-foreground: rgb(55, 55, 55);
 
   /* Borders */
   --border: rgb(219, 219, 219);

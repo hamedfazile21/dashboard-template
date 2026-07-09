@@ -83,11 +83,13 @@ const Sidebar = () => {
                   : 'text-muted hover:bg-surface hover:text-primary'
               }`}
             >
-              <span className="z-10 flex h-5 w-5 items-center justify-center rounded-full border border-borderColor bg-background">
+              {sidebarStatus === "vertical" && (
+                <span className="z-10 flex h-5 w-5 items-center justify-center rounded-full border border-borderColor bg-background">
                 <span
                   className={`h-2.5 w-2.5 rotate-45 rounded-sm ${isChildActive ? 'bg-primary/70' : 'bg-gray-300/80'}`}
                 />
               </span>
+              )}
               <span>{t(child.title)}</span>
             </Link>
           )

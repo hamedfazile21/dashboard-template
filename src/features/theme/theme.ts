@@ -1,4 +1,5 @@
 import i18n from '#/app/i18n'
+import type { Language } from './slice/theme-types'
 
 export function initializeTheme() {
   const theme = localStorage.getItem('theme-mode') ?? 'system'
@@ -22,9 +23,19 @@ export function initializeSystemDir() {
 
   if (dir === 'rtl') {
     document.dir = 'rtl'
-    i18n.changeLanguage('fa')
   } else {
     document.dir = 'ltr'
+  }
+}
+
+export function initializeSystemLanguage() {
+  const language = localStorage.getItem('system-language') as Language
+
+  if (language === 'english') {
     i18n.changeLanguage('en')
+  }
+
+  if (language === 'farsi') {
+    i18n.changeLanguage('fa')
   }
 }
