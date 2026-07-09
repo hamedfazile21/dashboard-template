@@ -56,13 +56,25 @@ const Dashboard = () => {
       </div>
       <Dropdown
         menuButtonContent={
-          <div className="flex items-center">
+          <div className="flex items-center ">
             <p>Open Menu</p>
           </div>
         }
         menuItemContent={[
-          { className: '', onClick: () => {}, title: 'Mahmood', icon: null },
-          { className: '', onClick: () => {}, title: null, icon: <User size={18} /> },
+          { className: '', onClick: () => {}, title: 'Mahmood', icon: null  },
+          {
+            className: '',
+            onClick: () => {},
+            title: null,
+            icon: null,
+            isHtmlElement: true,
+            elementContent: (
+              <div className="flex flex-col items-center">
+                <p>Good</p>
+                <p>Good</p>
+              </div>
+            ),
+          },
         ]}
       />
     </div>

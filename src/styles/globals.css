@@ -1,11 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import 'tailwindcss';
 @import './theme.css';
 
 @theme {
   --color-primary: var(--color-primary);
   --color-primary-foreground: var(--color-primary-foreground);
-  --font-outfit: 'Outfit', sans-serif;
+  --font-jost: 'Jost', sans-serif;
   --text-system: 14px;
   --color-borderColor: var(--border);
   --color-foreground: var(--foreground);
@@ -17,7 +20,7 @@
 
 @layer base {
   html {
-    @apply font-outfit font-light overflow-hidden;
+    @apply font-jost overflow-hidden;
   }
 }
 * {
@@ -114,4 +117,22 @@ button {
 .tippy-box[data-animation='custom-top'][data-state='visible'] {
   opacity: 1;
   transform: perspective(500px) rotateX(0) scale(1);
+}
+
+/* Button */
+
+.btn {
+  @apply w-full justify-center gap-x-1.5 rounded-md p-2 text-sm font-semibold  inset-ring-1 inset-ring-white/5 outline-none border border-borderColor  transition-all duration-200 ease-out;
+}
+
+.btn-primary {
+  @apply bg-primary text-white;
+}
+
+.btn-secondary {
+  @apply bg-surface hover:bg-surface-hover  text-foreground;
+}
+
+.btn-rounded-full {
+  @apply rounded-full;
 }

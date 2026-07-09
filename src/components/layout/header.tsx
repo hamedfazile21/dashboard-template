@@ -1,5 +1,16 @@
 import Dropdown from '../drop-down'
-import { Globe, LaptopMinimal, Moon, Sun } from 'lucide-react'
+import {
+  CircleUser,
+  Globe,
+  LaptopMinimal,
+  LogOut,
+  Mail,
+  Moon,
+  Settings,
+  Sun,
+  User,
+  UserRound,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import {
@@ -8,10 +19,11 @@ import {
   toggleTheme,
 } from '#/features/theme/slice/theme-slice'
 import type { ThemeMode } from '#/features/theme/slice/theme-types'
-import { AfghanistanFlag, EnglishFlag } from '../../../public/assets'
+import { AfghanistanFlag, EnglishFlag, UserPNG } from '../../../public/assets'
 import i18n from '#/app/i18n'
-
+import { useNavigate } from '@tanstack/react-router'
 const Header = () => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const {
     themeConfig: { themeMode, direction },
@@ -37,11 +49,18 @@ const Header = () => {
         <p>Header</p>
       </div>
       <div className="flex items-center gap-x-3">
+        <button
+          className="btn btn-secondary btn-rounded-full"
+          onClick={() => navigate({ to: '.' })}
+        >
+          <Settings size={18} />
+        </button>
+
         <Dropdown
-          menuButtonClassName="!rounded-full w-fit !p-1 bg-surface border border-borderColor"
+          menuButtonClassName="!p-1"
           menuButtonContent={
             <button className="flex items-center gap-x-2 ">
-              <span className="rounded-full bg-surface-hover size-6.75 flex items-center justify-center ">
+              <span className="rounded-full bg-surface-hover size-6.75 flex items-center justify-center  ">
                 {themeMode === 'light' ? (
                   <Sun size={18} />
                 ) : themeMode === 'dark' ? (
@@ -77,7 +96,6 @@ const Header = () => {
           ]}
         />
         <Dropdown
-          menuButtonClassName="!rounded-full w-fit !p-2 bg-surface border border-borderColor"
           menuItemClassName="!w-[150px]"
           menuButtonContent={
             <div className="flex items-center text-foreground">
@@ -96,6 +114,56 @@ const Header = () => {
               onClick: () => handelChangeLanguage('fa'),
               title: 'Farsi',
               icon: <img src={AfghanistanFlag} />,
+            },
+          ]}
+        />
+        <Dropdown
+          menuItemClassName="!w-[250px]"
+          menuButtonContent={
+            <div className="flex items-center text-foreground">
+              <User strokeWidth={2} size={18} />
+            </div>
+          }
+          menuItemContent={[
+            {
+              className: `!px-1`,
+              onClick: () => {},
+              title: null,
+              icon: null,
+              isHtmlElement: true,
+              elementContent: (
+                <div className="w-full flex items-center gap-x-3 border-b border-borderColor pb-2 ">
+                  <div>
+                    <img src={UserPNG} className="size-10 rounded-full" />
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <p className="font-medium text-foreground text-md">
+                      Hamed Fazeli
+                    </p>
+                    <p className="text-muted text-sm hover:text-blue-500 cursor-pointer hover:underline">
+                      hamed@gmail.com
+                    </p>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              className: ``,
+              onClick: () => {},
+              title: 'Profile',
+              icon: <UserRound size={18} />,
+            },
+            {
+              className: ``,
+              onClick: () => {},
+              title: 'Inbox',
+              icon: <Mail size={18} />,
+            },
+            {
+              className: `text-red-500`,
+              onClick: () => {},
+              title: 'Logout',
+              icon: <LogOut size={18} />,
             },
           ]}
         />

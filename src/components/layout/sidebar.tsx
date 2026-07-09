@@ -1,4 +1,4 @@
-import { ChevronFirst, ChevronRight } from 'lucide-react'
+import { ChevronFirst, ChevronRight, Dot } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from '@tanstack/react-router'
@@ -13,7 +13,9 @@ const Sidebar = () => {
   const dispatch = useAppDispatch()
   const sidebarRef = useRef<HTMLDivElement | null>(null)
   const [openItem, setOpenItem] = useState<string | null>(null)
-  const { sidebarStatus } = useAppSelector((state) => state.themeConfig)
+  const { sidebarStatus, direction } = useAppSelector(
+    (state) => state.themeConfig,
+  )
   const [submenuActiveTab, setSubmenuActiveTab] = useState<string>('')
 
   const getTruncatedTitle = (title: string) => {
@@ -77,19 +79,13 @@ const Sidebar = () => {
               key={index}
               to={child.href}
               onClick={() => setOpenItem(null)}
-              className={`relative flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm transition-all duration-200 ${
+              className={`relative flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm transition-all duration-200 ${
                 isChildActive
                   ? 'bg-primary/10 font-medium text-primary'
-                  : 'text-muted hover:bg-surface hover:text-primary'
+                  : 'text-muted hover:bg-surface-hover hover:text-primary'
               }`}
             >
-              {sidebarStatus === "vertical" && (
-                <span className="z-10 flex h-5 w-5 items-center justify-center rounded-full border border-borderColor bg-background">
-                <span
-                  className={`h-2.5 w-2.5 rotate-45 rounded-sm ${isChildActive ? 'bg-primary/70' : 'bg-gray-300/80'}`}
-                />
-              </span>
-              )}
+              {sidebarStatus === 'vertical' && <Dot size={20} />}
               <span>{t(child.title)}</span>
             </Link>
           )
@@ -110,39 +106,43 @@ const Sidebar = () => {
 
     return (
       <div key={item.id} className="relative">
-        <button
-          type="button"
-          onClick={() => hasChildren && toggleItem(item.id)}
-          className={`group  relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.75 transition-all duration-300 ${
-            sidebarStatus === 'collapsible-vertical'
-              ? 'flex-col items-center justify-center gap-y-1 p-1 min-h-14.5 mb-1'
-              : ''
-          } ${
-            hasChildren ? 'cursor-pointer hover:bg-surface' : 'cursor-default'
-          } ${isParentActive ? 'bg-primary/10 text-primary' : 'text-gray-700 hover:text-primary'}`}
+        <Tooltip
+          className={`${sidebarStatus === 'vertical' && 'hidden'}`}
+          content={t(item.title)}
+          placement={direction === 'ltr' ? 'left' : 'right'}
         >
-          <div
-            className={`flex ${sidebarStatus === 'collapsible-vertical' ? 'flex-col items-center justify-center gap-y-1' : 'gap-x-2 items-center'} `}
+          <button
+            type="button"
+            onClick={() => hasChildren && toggleItem(item.id)}
+            className={`group  relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.75 transition-all duration-300 ${
+              sidebarStatus === 'collapsible-vertical'
+                ? 'flex-col items-center justify-center gap-y-1 p-1 min-h-14.5 mb-1'
+                : ''
+            } ${
+              hasChildren ? 'cursor-pointer ' : 'cursor-default'
+            } ${isParentActive ? 'bg-primary text-white' : 'text-foreground hover:text-primary hover:bg-surface'}`}
           >
             <div
-              className={`rounded-lg p-1.5 transition-all duration-300 ${isParentActive ? 'bg-primary/15 text-primary' : 'bg-surface text-foreground group-hover:bg-primary/15 group-hover:text-primary'}`}
+              className={`flex ${sidebarStatus === 'collapsible-vertical' ? 'flex-col items-center justify-center gap-y-1' : 'gap-x-2 items-center'} `}
             >
-              <Icon size={18} />
+              <div>
+                <Icon size={18} />
+              </div>
+              <span
+                className={`max-w-full truncate font-medium ${sidebarStatus === 'collapsible-vertical' ? 'text-center text-[10px] leading-3' : ''}`}
+              >
+                {titleLabel}
+              </span>
             </div>
-            <span
-              className={`max-w-full truncate font-medium text-foreground ${sidebarStatus === 'collapsible-vertical' ? 'text-center text-[10px] leading-3' : ''}`}
-            >
-              {titleLabel}
-            </span>
-          </div>
 
-          {hasChildren ? (
-            <ChevronRight
-              size={18}
-              className={`transition-transform duration-300 ${sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''} ${isOpen ? 'rotate-90' : 'ltr:rotate-0 rtl:rotate-180'}`}
-            />
-          ) : null}
-        </button>
+            {hasChildren ? (
+              <ChevronRight
+                size={18}
+                className={`transition-transform duration-300 ${sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''} ${isOpen ? 'rotate-90' : 'ltr:rotate-0 rtl:rotate-180'}`}
+              />
+            ) : null}
+          </button>
+        </Tooltip>
 
         {hasChildren ? (
           <div
@@ -160,7 +160,7 @@ const Sidebar = () => {
           </div>
         ) : null}
         {submenuActiveTab === item.id && (
-          <div className="absolute bg-surface p-2 ltr:left-18 top-0 w-55 rounded-lg shadow-lg border border-borderColor ">
+          <div className="absolute bg-surface p-2 ltr:left-18 rtl:right-18 top-0 w-55 rounded-lg shadow-lg border border-borderColor ">
             {renderSubNavItem(item)}
           </div>
         )}
@@ -213,7 +213,7 @@ const Sidebar = () => {
   return (
     <div
       ref={sidebarRef}
-      className={`relative h-screen overflow-visible transition-all duration-300  ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'}  ltr:border-r rtl:border-l border-borderColor`}
+      className={`relative  h-screen overflow-visible transition-all duration-300  ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'}  ltr:border-r rtl:border-l border-borderColor`}
     >
       <div className="flex h-14 items-center justify-between border-b border-borderColor  px-3">
         <p className="font-medium text-foreground">{t('Name')}</p>
