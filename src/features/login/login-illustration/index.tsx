@@ -1,15 +1,39 @@
-import React from 'react'
-import { GlassBlob, LoginIllustrationSVG } from '../../../../public/assets'
+import {
+  GlassBlob,
+  GlassBlob1,
+  GlassBlob2,
+  GlassBlob3,
+} from '../../../../public/assets'
+import LoginIllustrationSVGComponents from '../../../../public/assets/illustration/LoginIllustration'
+import { useTranslation } from 'react-i18next'
+import Input from '#/components/Input'
+import CheckBox from '#/components/Checkbox'
+import Github from '../../../../public/assets/media/github'
+import Google from '../../../../public/assets/media/google'
+import Linkedin from '../../../../public/assets/media/linkedin'
 
 const LoginIllustration = () => {
+  const { t } = useTranslation()
   return (
     <div className="flex min-h-screen w-full flex-col lg:flex-row">
       {/* Illustration side */}
-      <div className="hidden w-full items-center justify-center bg-surface p-10 lg:flex lg:w-1/2">
-        <img src={LoginIllustrationSVG} alt="" className="max-w-md w-full" />
+      <div className="hidden w-full items-center justify-center bg-surface dark:bg-black/20  p-10 lg:flex lg:w-[45%]">
+        <LoginIllustrationSVGComponents />
       </div>
 
-      <img src={GlassBlob} className="absolute top-20 right-41.25 -z-10" />
+      <img
+        src={GlassBlob1}
+        className="absolute top-14 right-65 -z-10 size-130"
+      />
+      
+      <img
+        src={GlassBlob2}
+        className="absolute bottom-12 right-50 -z-10 size-130"
+      />
+      <img
+        src={GlassBlob}
+        className="absolute bottom-28 right-105 -z-10 size-130"
+      />
 
       {/* Form side */}
       <div className="flex w-full items-center justify-center lg:w-1/2 z-10">
@@ -25,18 +49,10 @@ const LoginIllustration = () => {
 
           <form className="flex flex-col gap-y-4">
             <div className="flex flex-col gap-y-1.5">
-              <label
-                htmlFor="email"
-                className="text-sm font-medium text-foreground"
-              >
-                Email
-              </label>
-              <input
+              <Input
+                label={t('Email')}
+                placeholder="example@gmail.com"
                 id="email"
-                type="email"
-                autoComplete="email"
-                placeholder="you@example.com"
-                className="input"
               />
             </div>
 
@@ -55,17 +71,13 @@ const LoginIllustration = () => {
                   Forgot password?
                 </a>
               </div>
-              <input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                placeholder="••••••••"
-                className="input"
-              />
+              <div className="relative w-full">
+                <Input placeholder="••••••••" id="email" type="password" />
+              </div>
             </div>
 
             <label className="flex items-center gap-x-2 text-sm text-muted">
-              <input type="checkbox" className="checkbox" />
+              <CheckBox />
               Remember me
             </label>
 
@@ -83,6 +95,24 @@ const LoginIllustration = () => {
               Sign up
             </a>
           </p>
+          <div className="mt-6 relative">
+            <div className="flex items-center  gap-x-2">
+              <div className="w-[48%] border-t border-borderColor" />
+              <p className=" text-muted">OR</p>
+              <div className="w-[48%] border-t border-borderColor" />
+            </div>
+            <div className="flex items-center justify-center gap-x-4 mt-1">
+              <button>
+                <Github />
+              </button>
+              <button>
+                <Google />
+              </button>
+              <button>
+                <Linkedin />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

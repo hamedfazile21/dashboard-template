@@ -97,7 +97,7 @@ export const sidebar_data: SidebarItem[] = [
         id: 'mail-box',
         title: 'Mailbox',
         icon: Mail,
-        href: '/task-management',
+        href: '/mail-box',
         children: [],
       },
     ],
