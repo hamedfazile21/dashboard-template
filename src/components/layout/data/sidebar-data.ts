@@ -1,4 +1,18 @@
-import { ChartNoAxesCombined, Users } from 'lucide-react'
+import {
+  AlertCircle,
+  ChartNoAxesCombined,
+  ClipboardCheck,
+  ListTodo,
+  Lock,
+  LogIn,
+  Mail,
+  MailQuestion,
+  MessageCircleMore,
+  RefreshCcwDot,
+  Users,
+  VerifiedIcon,
+  ScanLine,
+} from 'lucide-react'
 
 export type SidebarChild = {
   title: string
@@ -10,7 +24,7 @@ export type SidebarItem = {
   title: string
   icon?: typeof ChartNoAxesCombined
   href?: string
-  type?: 'group'
+  type?: 'group' | 'simple'
   children?: SidebarChild[] | SidebarItem[]
 }
 
@@ -54,45 +68,170 @@ export const sidebar_data: SidebarItem[] = [
     ],
   },
   {
-    id: 'main-group',
-    title: 'HR',
+    id: 'Apps',
+    title: 'Projects',
     type: 'group',
     children: [
       {
-        id: 'dashboard12',
-        title: 'Dashboard2367765432123432',
-        icon: ChartNoAxesCombined,
+        id: 'to-do-list',
+        title: 'To Do List',
+        icon: ListTodo,
+        href: '/to-do-list',
+        children: [],
+      },
+      {
+        id: 'chat-app',
+        title: 'Chat',
+        icon: MessageCircleMore,
+        href: '/chat',
+        children: [],
+      },
+      {
+        id: 'task-management',
+        title: 'Task Management',
+        icon: ClipboardCheck,
+        href: '/task-management',
+        children: [],
+      },
+      {
+        id: 'mail-box',
+        title: 'Mailbox',
+        icon: Mail,
+        href: '/task-management',
+        children: [],
+      },
+    ],
+  },
+  {
+    id: 'authentication',
+    title: 'Authentication',
+    type: 'group',
+    children: [
+      {
+        id: 'login',
+        title: 'Login',
+        icon: LogIn,
         href: '',
         children: [
           {
-            title: 'Overview',
-            href: '/dashboard',
+            title: 'Cover',
+            href: '/login-cover',
           },
           {
-            title: 'Analytics',
-            href: '/dashboard/analytics',
+            title: 'Basic',
+            href: '/login-basic',
           },
           {
-            title: 'Analytics-2',
-            href: '/dashboard/analytics',
+            title: 'Illustration',
+            href: '/login-illustration',
           },
         ],
       },
       {
-        id: 'userssds',
-        title: 'Users',
-        icon: Users,
+        id: 'register',
+        title: 'Register',
+        icon: ScanLine,
         children: [
           {
-            title: 'All Users',
-            href: '/sd',
+            title: 'Cover',
+            href: '/register-cover',
           },
           {
-            title: 'Create User',
-            href: '/users/create',
+            title: 'Basic',
+            href: '/register-basic',
+          },
+          {
+            title: 'Illustration',
+            href: '/register-illustration',
           },
         ],
+      },
+      {
+        id: 'forgot-password',
+        title: 'Forgot Password',
+        icon: AlertCircle,
+        children: [
+          {
+            title: 'Cover',
+            href: '/forgotPassword-cover',
+          },
+          {
+            title: 'Basic',
+            href: '/forgotPassword-basic',
+          },
+          {
+            title: 'Illustration',
+            href: '/forgotPassword-illustration',
+          },
+        ],
+      },
+      {
+        id: 'reset-password',
+        title: 'Reset Password',
+        icon: RefreshCcwDot,
+        children: [
+          {
+            title: 'Cover',
+            href: '/reset-cover',
+          },
+          {
+            title: 'Basic',
+            href: '/reset-basic',
+          },
+          {
+            title: 'Illustration',
+            href: '/reset-illustration',
+          },
+        ],
+      },
+      {
+        id: 'email-verification',
+        title: 'Email Verification',
+        icon: MailQuestion,
+        children: [
+          {
+            title: 'Cover',
+            href: '/emailVerification-cover',
+          },
+          {
+            title: 'Basic',
+            href: '/emailVerification-basic',
+          },
+          {
+            title: 'Illustration',
+            href: '/emailVerification-illustration',
+          },
+        ],
+      },
+      {
+        id: 'two-step-verification',
+        title: '2 Step Verification',
+        icon: VerifiedIcon,
+        children: [
+          {
+            title: 'Cover',
+            href: '/emailVerification-cover',
+          },
+          {
+            title: 'Basic',
+            href: '/emailVerification-basic',
+          },
+          {
+            title: 'Illustration',
+            href: '/emailVerification-illustration',
+          },
+        ],
+      },
+      {
+        id: 'lock-screen',
+        title: 'Lock Screen',
+        icon: Lock,
+        href: '/lock-screen',
+        type: 'simple',
+        children: [],
       },
     ],
   },
 ]
+
+// Authentication

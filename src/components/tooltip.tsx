@@ -7,14 +7,14 @@ interface TooltipProps {
   placement?: Placement
   content: React.ReactNode
   children: React.ReactElement
-  className? : string
+  className?: string
 }
 
 export default function Tooltip({
   placement = 'top',
   content,
   children,
-  className
+  className,
 }: TooltipProps) {
   return (
     <Tippy

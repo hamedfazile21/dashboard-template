@@ -26,7 +26,7 @@ const Header = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const {
-    themeConfig: { themeMode, direction },
+    themeConfig: { themeMode, direction, language },
   } = useAppSelector((state) => state)
   const { t } = useTranslation()
   const handelChangeTheme = (theme: ThemeMode) => {
@@ -44,7 +44,10 @@ const Header = () => {
     }
   }
   return (
-    <div className="w-full border-b border-borderColor h-14 flex items-center justify-between px-5">
+    <div
+      className="sticky top-0 z-30 flex h-14 w-full items-center justify-between border-b border-borderColor
+    bg-surface/40 px-5 backdrop-blur-xl backdrop-saturate-150"
+    >
       <div>
         <p>Header</p>
       </div>
@@ -104,13 +107,13 @@ const Header = () => {
           }
           menuItemContent={[
             {
-              className: `${direction === 'ltr' && '!bg-surface-hover'}`,
+              className: `${language === 'english' && '!bg-surface-hover'}`,
               onClick: () => handelChangeLanguage('en'),
               title: 'English',
               icon: <img src={EnglishFlag} />,
             },
             {
-              className: `${direction === 'rtl' && '!bg-surface-hover'}`,
+              className: `${language === 'farsi' && '!bg-surface-hover'}`,
               onClick: () => handelChangeLanguage('fa'),
               title: 'Farsi',
               icon: <img src={AfghanistanFlag} />,

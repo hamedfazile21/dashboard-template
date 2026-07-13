@@ -11,6 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteRouteImport } from './routes/_layout/route'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as PageLockScreenIndexRouteImport } from './routes/_page/lock-screen/index'
+import { Route as LayoutToDoListIndexRouteImport } from './routes/_layout/to-do-list/index'
+import { Route as LayoutTaskManagementIndexRouteImport } from './routes/_layout/task-management/index'
+import { Route as LayoutChatIndexRouteImport } from './routes/_layout/chat/index'
+import { Route as PageLoginLoginIllustrationIndexRouteImport } from './routes/_page/_login/login-illustration/index'
+import { Route as PageLoginLoginCoverIndexRouteImport } from './routes/_page/_login/login-cover/index'
+import { Route as PageLoginLoginBasicIndexRouteImport } from './routes/_page/_login/login-basic/index'
 
 const LayoutRouteRoute = LayoutRouteRouteImport.update({
   id: '/_layout',
@@ -21,28 +28,118 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRouteRoute,
 } as any)
+const PageLockScreenIndexRoute = PageLockScreenIndexRouteImport.update({
+  id: '/_page/lock-screen/',
+  path: '/lock-screen/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LayoutToDoListIndexRoute = LayoutToDoListIndexRouteImport.update({
+  id: '/to-do-list/',
+  path: '/to-do-list/',
+  getParentRoute: () => LayoutRouteRoute,
+} as any)
+const LayoutTaskManagementIndexRoute =
+  LayoutTaskManagementIndexRouteImport.update({
+    id: '/task-management/',
+    path: '/task-management/',
+    getParentRoute: () => LayoutRouteRoute,
+  } as any)
+const LayoutChatIndexRoute = LayoutChatIndexRouteImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => LayoutRouteRoute,
+} as any)
+const PageLoginLoginIllustrationIndexRoute =
+  PageLoginLoginIllustrationIndexRouteImport.update({
+    id: '/_page/_login/login-illustration/',
+    path: '/login-illustration/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageLoginLoginCoverIndexRoute =
+  PageLoginLoginCoverIndexRouteImport.update({
+    id: '/_page/_login/login-cover/',
+    path: '/login-cover/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageLoginLoginBasicIndexRoute =
+  PageLoginLoginBasicIndexRouteImport.update({
+    id: '/_page/_login/login-basic/',
+    path: '/login-basic/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
+  '/chat/': typeof LayoutChatIndexRoute
+  '/task-management/': typeof LayoutTaskManagementIndexRoute
+  '/to-do-list/': typeof LayoutToDoListIndexRoute
+  '/lock-screen/': typeof PageLockScreenIndexRoute
+  '/login-basic/': typeof PageLoginLoginBasicIndexRoute
+  '/login-cover/': typeof PageLoginLoginCoverIndexRoute
+  '/login-illustration/': typeof PageLoginLoginIllustrationIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
+  '/chat': typeof LayoutChatIndexRoute
+  '/task-management': typeof LayoutTaskManagementIndexRoute
+  '/to-do-list': typeof LayoutToDoListIndexRoute
+  '/lock-screen': typeof PageLockScreenIndexRoute
+  '/login-basic': typeof PageLoginLoginBasicIndexRoute
+  '/login-cover': typeof PageLoginLoginCoverIndexRoute
+  '/login-illustration': typeof PageLoginLoginIllustrationIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/chat/': typeof LayoutChatIndexRoute
+  '/_layout/task-management/': typeof LayoutTaskManagementIndexRoute
+  '/_layout/to-do-list/': typeof LayoutToDoListIndexRoute
+  '/_page/lock-screen/': typeof PageLockScreenIndexRoute
+  '/_page/_login/login-basic/': typeof PageLoginLoginBasicIndexRoute
+  '/_page/_login/login-cover/': typeof PageLoginLoginCoverIndexRoute
+  '/_page/_login/login-illustration/': typeof PageLoginLoginIllustrationIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/chat/'
+    | '/task-management/'
+    | '/to-do-list/'
+    | '/lock-screen/'
+    | '/login-basic/'
+    | '/login-cover/'
+    | '/login-illustration/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/_layout' | '/_layout/'
+  to:
+    | '/'
+    | '/chat'
+    | '/task-management'
+    | '/to-do-list'
+    | '/lock-screen'
+    | '/login-basic'
+    | '/login-cover'
+    | '/login-illustration'
+  id:
+    | '__root__'
+    | '/_layout'
+    | '/_layout/'
+    | '/_layout/chat/'
+    | '/_layout/task-management/'
+    | '/_layout/to-do-list/'
+    | '/_page/lock-screen/'
+    | '/_page/_login/login-basic/'
+    | '/_page/_login/login-cover/'
+    | '/_page/_login/login-illustration/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   LayoutRouteRoute: typeof LayoutRouteRouteWithChildren
+  PageLockScreenIndexRoute: typeof PageLockScreenIndexRoute
+  PageLoginLoginBasicIndexRoute: typeof PageLoginLoginBasicIndexRoute
+  PageLoginLoginCoverIndexRoute: typeof PageLoginLoginCoverIndexRoute
+  PageLoginLoginIllustrationIndexRoute: typeof PageLoginLoginIllustrationIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -61,15 +158,70 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRouteRoute
     }
+    '/_page/lock-screen/': {
+      id: '/_page/lock-screen/'
+      path: '/lock-screen'
+      fullPath: '/lock-screen/'
+      preLoaderRoute: typeof PageLockScreenIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layout/to-do-list/': {
+      id: '/_layout/to-do-list/'
+      path: '/to-do-list'
+      fullPath: '/to-do-list/'
+      preLoaderRoute: typeof LayoutToDoListIndexRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
+    '/_layout/task-management/': {
+      id: '/_layout/task-management/'
+      path: '/task-management'
+      fullPath: '/task-management/'
+      preLoaderRoute: typeof LayoutTaskManagementIndexRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
+    '/_layout/chat/': {
+      id: '/_layout/chat/'
+      path: '/chat'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof LayoutChatIndexRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
+    '/_page/_login/login-illustration/': {
+      id: '/_page/_login/login-illustration/'
+      path: '/login-illustration'
+      fullPath: '/login-illustration/'
+      preLoaderRoute: typeof PageLoginLoginIllustrationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_login/login-cover/': {
+      id: '/_page/_login/login-cover/'
+      path: '/login-cover'
+      fullPath: '/login-cover/'
+      preLoaderRoute: typeof PageLoginLoginCoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_login/login-basic/': {
+      id: '/_page/_login/login-basic/'
+      path: '/login-basic'
+      fullPath: '/login-basic/'
+      preLoaderRoute: typeof PageLoginLoginBasicIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface LayoutRouteRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutChatIndexRoute: typeof LayoutChatIndexRoute
+  LayoutTaskManagementIndexRoute: typeof LayoutTaskManagementIndexRoute
+  LayoutToDoListIndexRoute: typeof LayoutToDoListIndexRoute
 }
 
 const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutChatIndexRoute: LayoutChatIndexRoute,
+  LayoutTaskManagementIndexRoute: LayoutTaskManagementIndexRoute,
+  LayoutToDoListIndexRoute: LayoutToDoListIndexRoute,
 }
 
 const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
@@ -78,6 +230,10 @@ const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRouteRoute: LayoutRouteRouteWithChildren,
+  PageLockScreenIndexRoute: PageLockScreenIndexRoute,
+  PageLoginLoginBasicIndexRoute: PageLoginLoginBasicIndexRoute,
+  PageLoginLoginCoverIndexRoute: PageLoginLoginCoverIndexRoute,
+  PageLoginLoginIllustrationIndexRoute: PageLoginLoginIllustrationIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

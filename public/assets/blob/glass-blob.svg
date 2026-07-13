@@ -1,0 +1,54 @@
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="blob1" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="blob2" cx="70%" cy="65%" r="60%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="blob3" cx="55%" cy="80%" r="55%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0" />
+    </radialGradient>
+
+    <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60" />
+    </filter>
+  </defs>
+
+  <rect width="800" height="800" fill="transparent" />
+
+  <g filter="url(#softBlur)">
+    <path
+      d="M 220 120
+         C 340 40, 520 60, 600 180
+         C 690 310, 660 470, 560 570
+         C 460 670, 280 680, 170 590
+         C 60 500, 40 340, 100 240
+         C 130 190, 170 150, 220 120 Z"
+      fill="url(#blob1)"
+    />
+
+    <path
+      d="M 480 260
+         C 600 220, 720 300, 730 420
+         C 740 540, 640 640, 520 660
+         C 400 680, 300 610, 290 500
+         C 280 390, 360 300, 480 260 Z"
+      fill="url(#blob2)"
+    />
+
+    <path
+      d="M 260 450
+         C 360 410, 470 460, 490 550
+         C 510 640, 430 710, 330 700
+         C 230 690, 160 610, 170 520
+         C 175 480, 210 465, 260 450 Z"
+      fill="url(#blob3)"
+    />
+  </g>
+</svg>

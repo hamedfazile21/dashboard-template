@@ -1,12 +1,11 @@
 import { ChevronFirst, ChevronRight, Dot } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation } from '@tanstack/react-router'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { sidebar_data, type SidebarChild } from './data/sidebar-data'
 import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import { toggleSidebar } from '#/features/theme/slice/theme-slice'
 import Tooltip from '../tooltip'
-
 const Sidebar = () => {
   const { t } = useTranslation()
   const location = useLocation()
@@ -16,6 +15,7 @@ const Sidebar = () => {
   const { sidebarStatus, direction } = useAppSelector(
     (state) => state.themeConfig,
   )
+  const navigate = useNavigate()
   const [submenuActiveTab, setSubmenuActiveTab] = useState<string>('')
 
   const getTruncatedTitle = (title: string) => {
@@ -59,34 +59,50 @@ const Sidebar = () => {
   const renderSubNavItem = (item: any) => {
     const titleMessage = getTruncatedTitle(item.title)
     return (
-      <div className="mt-1 flex flex-col gap-y-1">
+      <div className="mt-1 flex flex-col gap-y-1 ">
         {sidebarStatus === 'collapsible-vertical' && (
-          <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground flex items-center gap-x-3">
+          <p className="mb-1 flex items-center gap-x-3 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
             {titleMessage !== item.title ? (
               <Tooltip placement="right" content={item.title}>
-                {<button className="uppercase">{titleMessage}</button>}
+                <button
+                  type="button"
+                  className="truncate uppercase tracking-[0.2em] hover:text-primary transition-colors"
+                >
+                  {titleMessage}
+                </button>
               </Tooltip>
             ) : (
-              <span>{titleMessage}</span>
+              <span className="truncate">{titleMessage}</span>
             )}
           </p>
         )}
-        {item.children?.map((child: SidebarChild, index: number) => {
+
+        {item.children?.map((child: SidebarChild) => {
           const isChildActive = isRouteActive(child.href)
 
           return (
             <Link
-              key={index}
+              key={child.href}
               to={child.href}
               onClick={() => setOpenItem(null)}
-              className={`relative flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm transition-all duration-200 ${
-                isChildActive
-                  ? 'bg-primary/10 font-medium text-primary'
-                  : 'text-muted hover:bg-surface-hover hover:text-primary'
-              }`}
+              aria-current={isChildActive ? 'page' : undefined}
+              className={`group relative flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm transition-all duration-200 ease-out
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
+          ${
+            isChildActive
+              ? 'bg-primary/10 font-medium text-primary'
+              : 'text-muted hover:bg-surface-hover hover:text-primary'
+          }`}
             >
-              {sidebarStatus === 'vertical' && <Dot size={20} />}
-              <span>{t(child.title)}</span>
+              <Dot
+                size={20}
+                className={`shrink-0 transition-all duration-200 ${
+                  isChildActive
+                    ? 'text-primary scale-110'
+                    : 'text-muted/50 group-hover:text-primary/70'
+                }`}
+              />
+              <span className="truncate">{t(child.title)}</span>
             </Link>
           )
         })}
@@ -97,6 +113,7 @@ const Sidebar = () => {
   const renderNavItem = (item: any) => {
     const Icon = item.icon
     const hasChildren = Array.isArray(item.children) && item.children.length > 0
+    console.log(item, '-----------------')
     const isOpen = openItem === item.id
     const titleLabel = getTruncatedTitle(t(item.title))
     const isParentActive =
@@ -107,29 +124,51 @@ const Sidebar = () => {
     return (
       <div key={item.id} className="relative">
         <Tooltip
-          className={`${sidebarStatus === 'vertical' && 'hidden'}`}
+          className={sidebarStatus !== 'vertical' ? '' : 'hidden'}
           content={t(item.title)}
           placement={direction === 'ltr' ? 'left' : 'right'}
         >
           <button
             type="button"
-            onClick={() => hasChildren && toggleItem(item.id)}
-            className={`group  relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.75 transition-all duration-300 ${
-              sidebarStatus === 'collapsible-vertical'
-                ? 'flex-col items-center justify-center gap-y-1 p-1 min-h-14.5 mb-1'
-                : ''
-            } ${
-              hasChildren ? 'cursor-pointer ' : 'cursor-default'
-            } ${isParentActive ? 'bg-primary text-white' : 'text-foreground hover:text-primary hover:bg-surface'}`}
+            onClick={() =>
+              hasChildren ? toggleItem(item.id) : navigate({ to: item.href })
+            }
+            aria-haspopup={hasChildren ? 'true' : undefined}
+            aria-expanded={hasChildren ? isOpen : undefined}
+            className={`group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.75 transition-all duration-200 ease-out
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
+        ${
+          sidebarStatus === 'collapsible-vertical'
+            ? 'mb-1 min-h-14.5 flex-col items-center justify-center gap-y-1 p-1'
+            : ''
+        }
+        ${hasChildren ? 'cursor-pointer' : 'cursor-default'}
+        ${
+          isParentActive
+            ? 'bg-primary/10 text-primary'
+            : 'text-foreground hover:bg-surface hover:text-primary'
+        }`}
           >
             <div
-              className={`flex ${sidebarStatus === 'collapsible-vertical' ? 'flex-col items-center justify-center gap-y-1' : 'gap-x-2 items-center'} `}
+              className={`flex ${
+                sidebarStatus === 'collapsible-vertical'
+                  ? 'flex-col items-center justify-center gap-y-1'
+                  : 'items-center gap-x-2'
+              }`}
             >
-              <div>
+              <div
+                className={`flex items-center justify-center transition-transform duration-200 ${
+                  isParentActive ? 'scale-105' : 'group-hover:scale-105'
+                }`}
+              >
                 <Icon size={18} />
               </div>
               <span
-                className={`max-w-full truncate font-medium ${sidebarStatus === 'collapsible-vertical' ? 'text-center text-[10px] leading-3' : ''}`}
+                className={`max-w-full truncate font-medium transition-colors ${
+                  sidebarStatus === 'collapsible-vertical'
+                    ? 'text-center text-[10px] leading-3'
+                    : 'text-sm'
+                }`}
               >
                 {titleLabel}
               </span>
@@ -138,29 +177,30 @@ const Sidebar = () => {
             {hasChildren ? (
               <ChevronRight
                 size={18}
-                className={`transition-transform duration-300 ${sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''} ${isOpen ? 'rotate-90' : 'ltr:rotate-0 rtl:rotate-180'}`}
+                className={`shrink-0 transition-transform duration-200 ease-out ${
+                  sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''
+                } ${isOpen ? 'rotate-90' : 'ltr:rotate-0 rtl:rotate-180'}`}
               />
             ) : null}
           </button>
         </Tooltip>
 
-        {hasChildren ? (
+        {/* inline submenu (expanded sidebar) */}
+        {hasChildren && sidebarStatus !== 'collapsible-vertical' && (
           <div
-            className={`${sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''} transition-all duration-300 ease-in-out ${
-              sidebarStatus === 'collapsible-vertical'
-                ? isOpen
-                  ? 'pointer-events-auto visible opacity-100'
-                  : 'pointer-events-none invisible opacity-0'
-                : isOpen
-                  ? 'mt-1 max-h-40 opacity-100'
-                  : 'max-h-0 opacity-0'
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+              isOpen ? 'mt-1 max-h-40 opacity-100' : 'max-h-0 opacity-0'
             }`}
           >
             {renderSubNavItem(item)}
           </div>
-        ) : null}
+        )}
+
+        {/* flyout submenu (collapsed sidebar) */}
         {submenuActiveTab === item.id && (
-          <div className="absolute bg-surface p-2 ltr:left-18 rtl:right-18 top-0 w-55 rounded-lg shadow-lg border border-borderColor ">
+          <div
+            className={`card absolute! p-1.5! top-0 z-20 w-55 origin-top ltr:left-18 rtl:right-18`}
+          >
             {renderSubNavItem(item)}
           </div>
         )}
@@ -215,13 +255,13 @@ const Sidebar = () => {
       ref={sidebarRef}
       className={`relative  h-screen overflow-visible transition-all duration-300  ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'}  ltr:border-r rtl:border-l border-borderColor`}
     >
-      <div className="flex h-14 items-center justify-between border-b border-borderColor  px-3">
+      <div className="flex h-14 items-center justify-between border-b border-borderColor py-1 px-3 bg-surface/40 backdrop-blur-xl backdrop-saturate-150">
         <p className="font-medium text-foreground">{t('Name')}</p>
         {sidebarStatus === 'vertical' && (
           <p className="text-foreground">{t('Icon')}</p>
         )}
       </div>
-
+      {/* TODO : Create the scroll */}
       <div className="flex flex-col p-2 ">
         {sidebar_data.map((item, index) => {
           if (item.type === 'group') {
@@ -229,7 +269,7 @@ const Sidebar = () => {
               <div key={index} className=" first:mt-0">
                 {sidebarStatus === 'vertical' && (
                   <div
-                    className={`mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 flex items-center gap-x-3`}
+                    className={`${index !== 0 && 'mt-2 '} pb-1 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 flex items-center gap-x-3 `}
                   >
                     <div className={`w-fit`}>{t(item.title)}</div>
                     {/* <div className="border border-dashed  w-full" /> */}

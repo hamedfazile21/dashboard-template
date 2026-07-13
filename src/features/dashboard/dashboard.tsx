@@ -32,7 +32,7 @@ const Dashboard = () => {
   }
   const { counter } = useAppSelector((state) => state.dashboard)
   return (
-    <div className="bg-yellow-500/20">
+    <div className="bg-blue-500/20">
       <button
         className="px-5 bg-primary"
         onClick={() => handelChangeLanguage('fa')}
@@ -46,7 +46,7 @@ const Dashboard = () => {
         EN
       </button>
 
-      <div className="bg-primary text-primary-foreground">{t('name')}</div>
+      <div className="bg-primary text-primary-foreground ">{t('name')}</div>
 
       <div>
         <button onClick={handelChangeThemeColor}>Change Theme Color</button>
@@ -54,29 +54,7 @@ const Dashboard = () => {
       <div>
         <button onClick={handelChangeTheme}>Change Theme</button>
       </div>
-      <Dropdown
-        menuButtonContent={
-          <div className="flex items-center ">
-            <p>Open Menu</p>
-          </div>
-        }
-        menuItemContent={[
-          { className: '', onClick: () => {}, title: 'Mahmood', icon: null  },
-          {
-            className: '',
-            onClick: () => {},
-            title: null,
-            icon: null,
-            isHtmlElement: true,
-            elementContent: (
-              <div className="flex flex-col items-center">
-                <p>Good</p>
-                <p>Good</p>
-              </div>
-            ),
-          },
-        ]}
-      />
+     
     </div>
   )
 }
