@@ -4,6 +4,7 @@
 
 @import 'tailwindcss';
 @import './theme.css';
+@import './scrollbar.css';
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -176,3 +177,5 @@ button {
 .card-body {
   @apply text-sm text-muted;
 }
+
+

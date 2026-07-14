@@ -1,9 +1,6 @@
+import LoginCover from '#/features/login/login-cover'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_page/_login/login-cover/')({
-  component: RouteComponent,
+  component: LoginCover,
 })
-
-function RouteComponent() {
-  return <div>Hello Login Cover!</div>
-}

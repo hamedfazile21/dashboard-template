@@ -15,6 +15,9 @@ import { Route as PageLockScreenIndexRouteImport } from './routes/_page/lock-scr
 import { Route as LayoutToDoListIndexRouteImport } from './routes/_layout/to-do-list/index'
 import { Route as LayoutTaskManagementIndexRouteImport } from './routes/_layout/task-management/index'
 import { Route as LayoutChatIndexRouteImport } from './routes/_layout/chat/index'
+import { Route as PageRegisterRegisterIllustrationIndexRouteImport } from './routes/_page/_register/register-illustration/index'
+import { Route as PageRegisterRegisterCoverIndexRouteImport } from './routes/_page/_register/register-cover/index'
+import { Route as PageRegisterRegisterBasicIndexRouteImport } from './routes/_page/_register/register-basic/index'
 import { Route as PageLoginLoginIllustrationIndexRouteImport } from './routes/_page/_login/login-illustration/index'
 import { Route as PageLoginLoginCoverIndexRouteImport } from './routes/_page/_login/login-cover/index'
 import { Route as PageLoginLoginBasicIndexRouteImport } from './routes/_page/_login/login-basic/index'
@@ -49,6 +52,24 @@ const LayoutChatIndexRoute = LayoutChatIndexRouteImport.update({
   path: '/chat/',
   getParentRoute: () => LayoutRouteRoute,
 } as any)
+const PageRegisterRegisterIllustrationIndexRoute =
+  PageRegisterRegisterIllustrationIndexRouteImport.update({
+    id: '/_page/_register/register-illustration/',
+    path: '/register-illustration/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageRegisterRegisterCoverIndexRoute =
+  PageRegisterRegisterCoverIndexRouteImport.update({
+    id: '/_page/_register/register-cover/',
+    path: '/register-cover/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageRegisterRegisterBasicIndexRoute =
+  PageRegisterRegisterBasicIndexRouteImport.update({
+    id: '/_page/_register/register-basic/',
+    path: '/register-basic/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PageLoginLoginIllustrationIndexRoute =
   PageLoginLoginIllustrationIndexRouteImport.update({
     id: '/_page/_login/login-illustration/',
@@ -77,6 +98,9 @@ export interface FileRoutesByFullPath {
   '/login-basic/': typeof PageLoginLoginBasicIndexRoute
   '/login-cover/': typeof PageLoginLoginCoverIndexRoute
   '/login-illustration/': typeof PageLoginLoginIllustrationIndexRoute
+  '/register-basic/': typeof PageRegisterRegisterBasicIndexRoute
+  '/register-cover/': typeof PageRegisterRegisterCoverIndexRoute
+  '/register-illustration/': typeof PageRegisterRegisterIllustrationIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
@@ -87,6 +111,9 @@ export interface FileRoutesByTo {
   '/login-basic': typeof PageLoginLoginBasicIndexRoute
   '/login-cover': typeof PageLoginLoginCoverIndexRoute
   '/login-illustration': typeof PageLoginLoginIllustrationIndexRoute
+  '/register-basic': typeof PageRegisterRegisterBasicIndexRoute
+  '/register-cover': typeof PageRegisterRegisterCoverIndexRoute
+  '/register-illustration': typeof PageRegisterRegisterIllustrationIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -99,6 +126,9 @@ export interface FileRoutesById {
   '/_page/_login/login-basic/': typeof PageLoginLoginBasicIndexRoute
   '/_page/_login/login-cover/': typeof PageLoginLoginCoverIndexRoute
   '/_page/_login/login-illustration/': typeof PageLoginLoginIllustrationIndexRoute
+  '/_page/_register/register-basic/': typeof PageRegisterRegisterBasicIndexRoute
+  '/_page/_register/register-cover/': typeof PageRegisterRegisterCoverIndexRoute
+  '/_page/_register/register-illustration/': typeof PageRegisterRegisterIllustrationIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +141,9 @@ export interface FileRouteTypes {
     | '/login-basic/'
     | '/login-cover/'
     | '/login-illustration/'
+    | '/register-basic/'
+    | '/register-cover/'
+    | '/register-illustration/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,6 +154,9 @@ export interface FileRouteTypes {
     | '/login-basic'
     | '/login-cover'
     | '/login-illustration'
+    | '/register-basic'
+    | '/register-cover'
+    | '/register-illustration'
   id:
     | '__root__'
     | '/_layout'
@@ -132,6 +168,9 @@ export interface FileRouteTypes {
     | '/_page/_login/login-basic/'
     | '/_page/_login/login-cover/'
     | '/_page/_login/login-illustration/'
+    | '/_page/_register/register-basic/'
+    | '/_page/_register/register-cover/'
+    | '/_page/_register/register-illustration/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -140,6 +179,9 @@ export interface RootRouteChildren {
   PageLoginLoginBasicIndexRoute: typeof PageLoginLoginBasicIndexRoute
   PageLoginLoginCoverIndexRoute: typeof PageLoginLoginCoverIndexRoute
   PageLoginLoginIllustrationIndexRoute: typeof PageLoginLoginIllustrationIndexRoute
+  PageRegisterRegisterBasicIndexRoute: typeof PageRegisterRegisterBasicIndexRoute
+  PageRegisterRegisterCoverIndexRoute: typeof PageRegisterRegisterCoverIndexRoute
+  PageRegisterRegisterIllustrationIndexRoute: typeof PageRegisterRegisterIllustrationIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -185,6 +227,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/chat/'
       preLoaderRoute: typeof LayoutChatIndexRouteImport
       parentRoute: typeof LayoutRouteRoute
+    }
+    '/_page/_register/register-illustration/': {
+      id: '/_page/_register/register-illustration/'
+      path: '/register-illustration'
+      fullPath: '/register-illustration/'
+      preLoaderRoute: typeof PageRegisterRegisterIllustrationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_register/register-cover/': {
+      id: '/_page/_register/register-cover/'
+      path: '/register-cover'
+      fullPath: '/register-cover/'
+      preLoaderRoute: typeof PageRegisterRegisterCoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_register/register-basic/': {
+      id: '/_page/_register/register-basic/'
+      path: '/register-basic'
+      fullPath: '/register-basic/'
+      preLoaderRoute: typeof PageRegisterRegisterBasicIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_page/_login/login-illustration/': {
       id: '/_page/_login/login-illustration/'
@@ -234,6 +297,10 @@ const rootRouteChildren: RootRouteChildren = {
   PageLoginLoginBasicIndexRoute: PageLoginLoginBasicIndexRoute,
   PageLoginLoginCoverIndexRoute: PageLoginLoginCoverIndexRoute,
   PageLoginLoginIllustrationIndexRoute: PageLoginLoginIllustrationIndexRoute,
+  PageRegisterRegisterBasicIndexRoute: PageRegisterRegisterBasicIndexRoute,
+  PageRegisterRegisterCoverIndexRoute: PageRegisterRegisterCoverIndexRoute,
+  PageRegisterRegisterIllustrationIndexRoute:
+    PageRegisterRegisterIllustrationIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

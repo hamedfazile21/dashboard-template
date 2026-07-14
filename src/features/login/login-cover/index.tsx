@@ -1,43 +1,40 @@
+import React, { useState } from 'react'
 import {
+  Avatar1,
+  Avatar2,
+  Avatar3,
   GlassBlob,
   GlassBlob1,
   GlassBlob2,
-  GlassBlob3,
+  LoginCoverPNG,
 } from '../../../../public/assets'
-import LoginIllustrationSVGComponents from '../../../../public/assets/illustration/LoginIllustration'
-import { useTranslation } from 'react-i18next'
 import Input from '#/components/Input'
 import CheckBox from '#/components/Checkbox'
 import Github from '../../../../public/assets/media/github'
 import Google from '../../../../public/assets/media/google'
 import Linkedin from '../../../../public/assets/media/linkedin'
-import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-const LoginIllustration = () => {
+const LoginCover = () => {
   const { t } = useTranslation()
   const [check, setCheck] = useState<boolean>(false)
-  return (
-    <div className="flex min-h-screen w-full flex-col lg:flex-row">
-      {/* Illustration side */}
-      <div className="hidden w-1/2 items-center justify-center bg-surface/60 p-10 dark:bg-black/20 lg:flex">
-        <LoginIllustrationSVGComponents className="text-primary w-full max-w-md" />
-      </div>
 
+  return (
+    <div className="w-full h-screen flex items-center justify-between relative">
       <img
         src={GlassBlob1}
-        className="absolute top-14 right-65 -z-10 size-130"
+        className="absolute top-14 left-30 -z-10 size-130"
       />
-
+      {/* 
       <img
         src={GlassBlob2}
-        className="absolute bottom-12 right-50 -z-10 size-130"
-      />
+        className="absolute bottom-12 left-20 -z-10 size-130"
+      /> */}
       <img
         src={GlassBlob}
-        className="absolute bottom-28 right-110 -z-10 size-130"
+        className="absolute bottom-12 left-50 -z-10 size-130"
       />
 
-      {/* Form side */}
       <div className="flex w-full items-center justify-center lg:w-1/2 z-10">
         <div className="card w-132.5! p-10!">
           <div className="mb-6 text-center">
@@ -117,8 +114,53 @@ const LoginIllustration = () => {
           </div>
         </div>
       </div>
+      <div className="relative flex h-screen w-[45%] items-center justify-center overflow-hidden p-10">
+        <img
+          src={LoginCoverPNG}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+
+        {/* subtle dark overlay so the glass card has enough contrast against varied cover images */}
+        <div className="absolute inset-0 bg-black/20" />
+
+        <div className="card relative z-10 w-full max-w-md p-8">
+          <h2 className="text-2xl font-semibold text-foreground">
+            Manage everything, in one place
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted">
+            Track projects, collaborate with your team, and stay on top of what
+            matters — all from a single dashboard built for speed.
+          </p>
+
+          <div className="mt-6 flex items-center gap-x-4 border-t border-white/10 pt-6">
+            <div className="flex -space-x-2">
+              <img
+                src={Avatar1}
+                alt=""
+                className="size-8 rounded-full border-2 border-borderColor bg-surface"
+              />
+              <img
+                src={Avatar2}
+                alt=""
+                className="size-8 rounded-full border-2 border-borderColor bg-surface"
+              />
+              <img
+                src={Avatar3}
+                alt=""
+                className="size-8 rounded-full border-2 border-borderColor bg-surface"
+              />
+            </div>
+            <p className="text-xs text-muted">
+              Trusted by{' '}
+              <span className="font-semibold text-foreground">4,000+</span>{' '}
+              teams worldwide
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default LoginIllustration
+export default LoginCover

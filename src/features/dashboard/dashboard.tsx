@@ -7,6 +7,9 @@ import { useAppSelector } from '#/hooks/redux'
 import { useTranslation } from 'react-i18next'
 import Tooltip from '#/components/tooltip'
 import { User } from 'lucide-react'
+import { toast } from 'sonner'
+import ObjectViewer from '#/components/object-viewer'
+import { showObjectToast } from '#/helper/toast-helper'
 const Dashboard = () => {
   const { t } = useTranslation()
   const handelChangeLanguage = (language: string) => {
@@ -54,7 +57,24 @@ const Dashboard = () => {
       <div>
         <button onClick={handelChangeTheme}>Change Theme</button>
       </div>
-     
+      <button
+        onClick={() =>
+          showObjectToast('Form submitted', {
+            name: 'Hamed Fazeli',
+            last_name: 'fazeli',
+            name1: 'Hamed Fazeli',
+            last_name1: 'fazeli',
+            name2: 'Hamed Fazeli',
+            last_name2: 'fazeli',
+            name3: 'Hamed Fazeli',
+            last_name3: 'fazeli',
+            name4: 'Hamed Fazeli',
+            last_name4: 'fazeli',
+          })
+        }
+      >
+        Give me a toast
+      </button>
     </div>
   )
 }

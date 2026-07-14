@@ -113,7 +113,6 @@ const Sidebar = () => {
   const renderNavItem = (item: any) => {
     const Icon = item.icon
     const hasChildren = Array.isArray(item.children) && item.children.length > 0
-    console.log(item, '-----------------')
     const isOpen = openItem === item.id
     const titleLabel = getTruncatedTitle(t(item.title))
     const isParentActive =

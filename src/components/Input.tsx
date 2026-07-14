@@ -67,7 +67,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               aria-label={visible ? 'Hide password' : 'Show password'}
               aria-pressed={visible}
               tabIndex={-1}
-              className="btn btn-secondary btn-rounded-full w-fit! right-2 p-1! top-1.25 absolute!"
+              className="btn btn-secondary btn-rounded-full w-fit! ltr:right-2 rtl:left-2 p-1! top-1.25 absolute!"
             >
               {visible ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
