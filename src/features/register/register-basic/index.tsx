@@ -4,21 +4,46 @@ import Google from '../../../../public/assets/media/google'
 import Linkedin from '../../../../public/assets/media/linkedin'
 import CheckBox from '#/components/Checkbox'
 import Input from '#/components/Input'
-import { GlassBlob, GlassBlob1, GlassBlob2 } from '../../../../public/assets'
+import {GlassBlob1, GlassBlob2 } from '../../../../public/assets'
 import { Link } from '@tanstack/react-router'
+import { useForm } from '@tanstack/react-form'
+import { useTranslation } from 'react-i18next'
+import { showObjectToast } from '#/helper/toast-helper'
+
+interface RegisterForm {
+  fist_name: string
+  last_name: string
+  email: string
+  password: string
+  confirm_password: string
+  agreement: boolean
+}
 
 const RegisterBasic = () => {
-  const [agreed, setAgreed] = useState<boolean>(false)
+  const {t} = useTranslation()
+  const { Field, handleSubmit } = useForm({
+    defaultValues: {
+      fist_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      confirm_password: '',
+      agreement: false,
+    } as RegisterForm,
+    onSubmit: async ({ value }) => {
+      showObjectToast('Register From Submitted', value)
+    },
+  })
   return (
     <div className="flex items-center justify-center h-screen relative">
       <img
         src={GlassBlob1}
-        className="absolute top-14 right-120 -z-10 size-130"
+        className="hidden md:block absolute top-14 md:right-80 lg:right-120 -z-10 size-130"
       />
 
       <img
         src={GlassBlob2}
-        className="absolute bottom-10 left-130 -z-10 size-130"
+        className="hidden md:block absolute bottom-10 md:left-60 lg:left-130 -z-10 size-130"
       />
       <div className="card  p-10! w-132.5!  sm:p-10">
         <div className="mb-6 text-center">
@@ -30,67 +55,142 @@ const RegisterBasic = () => {
           </p>
         </div>
 
-        <form className="flex flex-col gap-y-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            handleSubmit()
+          }}
+          className="flex flex-col gap-y-4"
+        >
           <div className="flex gap-x-3">
-            <Input
-              label="First name"
-              placeholder="Jane"
-              id="firstName"
-              type="text"
+            <Field
+              name="fist_name"
+              children={(field) => (
+                <Input
+                  label="First name"
+                  placeholder="Hamed"
+                  id={field.name}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  value={field.state.value}
+                  type="text"
+                />
+              )}
             />
-            <Input
-              label="Last name"
-              placeholder="Doe"
-              id="lastName"
-              type="text"
+
+            <Field
+              name="last_name"
+              children={(field) => (
+                <Input
+                  label="Last name"
+                  placeholder="Fazeli"
+                  id={field.name}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  value={field.state.value}
+                  type="text"
+                />
+              )}
             />
           </div>
 
-          <Input
-            label="Email"
-            placeholder="example@gmail.com"
-            id="email"
-            type="email"
+          <Field
+            name="email"
+            validators={{
+              onSubmit: ({ value }) =>
+                !value
+                  ? 'Email is required'
+                  : !/^\S+@\S+\.\S+$/.test(value)
+                    ? 'Enter a valid email'
+                    : undefined,
+            }}
+            children={(field) => (
+              <div className="flex flex-col gap-y-1.5">
+                <Input
+                  label={t('Email')}
+                  placeholder="example@gmail.com"
+                  id={field.name}
+                  type="email"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  error={
+                    field.state.meta.isTouched
+                      ? field.state.meta.errors.join(', ')
+                      : undefined
+                  }
+                />
+              </div>
+            )}
           />
 
-          <Input
-            label="Password"
-            placeholder="••••••••"
-            id="password"
-            type="password"
+          <Field
+            name="password"
+            validators={{
+              onSubmit: ({ value }) =>
+                !value ? 'Password is required' : undefined,
+            }}
+            children={(field) => (
+              <Input
+                label="Password"
+                placeholder="••••••••"
+                id={field.name}
+                onChange={(e) => field.handleChange(e.target.value)}
+                value={field.state.value}
+                type="password"
+              />
+            )}
           />
 
-          <Input
-            label="Confirm password"
-            placeholder="••••••••"
-            id="confirmPassword"
-            type="password"
+          <Field
+            name="confirm_password"
+            validators={{
+              onSubmit: ({ value }) =>
+                !value ? 'Password is required' : undefined,
+            }}
+            children={(field) => (
+              <Input
+                label="Confirm password"
+                placeholder="••••••••"
+                id={field.name}
+                onChange={(e) => field.handleChange(e.target.value)}
+                value={field.state.value}
+                type="password"
+              />
+            )}
           />
 
-          <label className="flex items-start gap-x-2 text-sm text-muted">
-            <CheckBox checked={agreed} onChange={() => setAgreed((a) => !a)} />
-            <span className="cursor-pointer">
-              I agree to the{' '}
-              <a
-                href="/terms"
-                className="font-medium text-primary hover:underline"
-              >
-                Terms of Service
-              </a>{' '}
-              and{' '}
-              <a
-                href="/privacy"
-                className="font-medium text-primary hover:underline"
-              >
-                Privacy Policy
-              </a>
-            </span>
-          </label>
+          <Field
+            name="agreement"
+            children={(field) => (
+              <label className="flex items-start gap-x-2 text-sm text-muted">
+                <CheckBox
+                  checked={field.state.value}
+                  onChange={() => field.handleChange(!field.state.value)}
+                />
+                <span className="cursor-pointer">
+                  I agree to the{' '}
+                  <a
+                    href="/terms"
+                    className="font-medium text-primary hover:underline"
+                  >
+                    Terms of Service
+                  </a>{' '}
+                  and{' '}
+                  <a
+                    href="/privacy"
+                    className="font-medium text-primary hover:underline"
+                  >
+                    Privacy Policy
+                  </a>
+                </span>
+              </label>
+            )}
+          />
 
           <button
             type="submit"
             className="btn btn-primary mt-2"
-            disabled={!agreed}
+            disabled={false}
           >
             Create account
           </button>
@@ -99,7 +199,7 @@ const RegisterBasic = () => {
         <p className="mt-6 text-center text-sm text-muted">
           Already have an account?{' '}
           <Link
-            to="/login-basic"
+            to="/login-cover"
             className="font-medium text-primary hover:underline"
           >
             Sign in

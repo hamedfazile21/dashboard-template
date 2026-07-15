@@ -42,7 +42,7 @@ import Avatar32 from './avatar/memo_32.png'
 import Avatar33 from './avatar/memo_33.png'
 import Avatar34 from './avatar/memo_34.png'
 import Avatar35 from './avatar/memo_35.png'
-
+import RegisterCoverPNG from './illustration/register-cover.jpg'
 export {
   AfghanistanFlag,
   EnglishFlag,
@@ -88,4 +88,5 @@ export {
   Avatar33,
   Avatar34,
   Avatar35,
+  RegisterCoverPNG
 }

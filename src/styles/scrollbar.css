@@ -11,7 +11,8 @@
 }
 
 .dark * {
-  scrollbar-color: rgb(var(--color-foreground) / 0.15) transparent;
+  scrollbar-color: rgb(var(--color-foreground) / 0.15)
+    rgb(var(--color-surface) / 0.4);
 }
 
 /* ---- WebKit (Chrome, Safari, Edge) — default page/app scrollbar ---- */
@@ -22,6 +23,10 @@
 
 ::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background-color: rgb(var(--color-surface) / 0.4);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -38,6 +43,7 @@
 
 .dark ::-webkit-scrollbar-thumb {
   background-color: rgb(var(--color-foreground) / 0.15);
+  background-clip: padding-box; /* keep the border "gap" transparent, not surface-colored */
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
@@ -46,6 +52,10 @@
 
 ::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+.dark ::-webkit-scrollbar-corner {
+  background-color: rgb(var(--color-surface) / 0.4);
 }
 
 /* ==========================================================================
@@ -67,6 +77,15 @@
 .scrollbar-thin {
   scrollbar-width: thin;
   scrollbar-color: rgb(var(--color-foreground) / 0.25) transparent;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-track {
+  background-color: rgb(var(--color-surface) / 0.4);
+}
+
+.dark .scrollbar-thin {
+  scrollbar-color: rgb(var(--color-foreground) / 0.2)
+    rgb(var(--color-surface) / 0.4);
 }
 
 /* ==========================================================================

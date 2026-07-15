@@ -7,10 +7,28 @@ import Linkedin from '../../../../public/assets/media/linkedin'
 import { useTranslation } from 'react-i18next'
 import { GlassBlob1, GlassBlob2 } from '../../../../public/assets'
 import { Link } from '@tanstack/react-router'
+import { useForm } from '@tanstack/react-form'
+import { showObjectToast } from '#/helper/toast-helper'
+
+interface LoginFormValues {
+  email: string
+  password: string
+  rememberMe: boolean
+}
 
 const LoginBasic = () => {
   const { t } = useTranslation()
-  const [check, setCheck] = useState<boolean>(false)
+  const { Field, handleSubmit } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    } as LoginFormValues,
+
+    onSubmit: async ({ value }) => {
+      showObjectToast('Login From Submitted', value)
+    },
+  })
   return (
     <div className="h-screen w-full flex items-center justify-center relative">
       <img
@@ -32,39 +50,93 @@ const LoginBasic = () => {
           </p>
         </div>
 
-        <form className="flex flex-col gap-y-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            handleSubmit()
+          }}
+          className="flex flex-col gap-y-4"
+        >
           <div className="flex flex-col gap-y-1.5">
-            <Input
-              label={t('Email')}
-              placeholder="example@gmail.com"
-              id="email"
+            <Field
+              name="email"
+              validators={{
+                onSubmit: ({ value }) =>
+                  !value
+                    ? 'Email is required'
+                    : !/^\S+@\S+\.\S+$/.test(value)
+                      ? 'Enter a valid email'
+                      : undefined,
+              }}
+              children={(field) => {
+                return (
+                  <Input
+                    label={t('Email')}
+                    placeholder="example@gmail.com"
+                    id={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    error={
+                      field.state.meta.isTouched
+                        ? field.state.meta.errors.join(', ')
+                        : undefined
+                    }
+                  />
+                )
+              }}
             />
           </div>
 
           <div className="flex flex-col gap-y-1.5">
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="text-sm font-medium text-foreground"
-              >
-                Password
-              </label>
-              <a
-                href="/forgot-password"
-                className="text-xs font-medium text-primary hover:underline"
-              >
-                Forgot password?
-              </a>
-            </div>
-            <div className="relative w-full">
-              <Input placeholder="••••••••" id="email" type="password" />
-            </div>
+            <Field
+              name="password"
+              children={(field) => {
+                return (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <label
+                        htmlFor="password"
+                        className="text-sm font-medium text-foreground"
+                      >
+                        Password
+                      </label>
+                      <a
+                        href="/forgot-password"
+                        className="text-xs font-medium text-primary hover:underline"
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
+                    <div className="relative w-full">
+                      <Input
+                        placeholder="••••••••"
+                        id={field.name}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        onBlur={field.handleBlur}
+                        value={field.state.value}
+                        type="password"
+                      />
+                    </div>
+                  </>
+                )
+              }}
+            />
           </div>
 
-          <label className="flex items-center gap-x-2 text-sm text-muted">
-            <CheckBox checked={check} onChange={() => setCheck(!check)} />
-            Remember me
-          </label>
+          <Field
+            name="rememberMe"
+            children={(field) => (
+              <label className="flex items-center gap-x-2 text-sm text-muted">
+                <CheckBox
+                  checked={field.state.value}
+                  onChange={() => field.handleChange(!field.state.value)}
+                />
+                Remember me
+              </label>
+            )}
+          />
 
           <button type="submit" className="btn btn-primary mt-2">
             Sign in

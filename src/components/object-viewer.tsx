@@ -44,9 +44,7 @@ export function ObjectViewer({ data, className = '' }: ObjectViewerProps) {
 
   return (
     <div
-      className={`group relative overflow-hidden rounded-xl border border-white/10 bg-surface/40
-        backdrop-blur-xl backdrop-saturate-150 shadow-lg shadow-black/5
-        dark:border-white/8 dark:bg-surface/35 dark:shadow-black/20 ${className}`}
+      className={`group relative overflow-hidden rounded-xl bg-gray-800 ${className}`}
     >
       <button
         type="button"

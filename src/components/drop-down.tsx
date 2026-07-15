@@ -62,7 +62,7 @@ const Dropdown: React.FC<props> = ({
                   transition-colors duration-150
                   data-focus:outline-hidden
               ${
-                !item.elementContent
+                !item.isHtmlElement
                   ? 'hover:bg-surface-hover hover:text-muted data-focus:bg-surface-hover data-focus:text-muted'
                   : 'cursor-default!'
               } ${item.className}`}

@@ -121,10 +121,6 @@ export const sidebar_data: SidebarItem[] = [
             title: 'Basic',
             href: '/login-basic',
           },
-          {
-            title: 'Illustration',
-            href: '/login-illustration',
-          },
         ],
       },
       {
@@ -139,10 +135,6 @@ export const sidebar_data: SidebarItem[] = [
           {
             title: 'Basic',
             href: '/register-basic',
-          },
-          {
-            title: 'Illustration',
-            href: '/register-illustration',
           },
         ],
       },
@@ -159,10 +151,6 @@ export const sidebar_data: SidebarItem[] = [
             title: 'Basic',
             href: '/forgotPassword-basic',
           },
-          {
-            title: 'Illustration',
-            href: '/forgotPassword-illustration',
-          },
         ],
       },
       {
@@ -177,10 +165,6 @@ export const sidebar_data: SidebarItem[] = [
           {
             title: 'Basic',
             href: '/reset-basic',
-          },
-          {
-            title: 'Illustration',
-            href: '/reset-illustration',
           },
         ],
       },
@@ -197,10 +181,6 @@ export const sidebar_data: SidebarItem[] = [
             title: 'Basic',
             href: '/emailVerification-basic',
           },
-          {
-            title: 'Illustration',
-            href: '/emailVerification-illustration',
-          },
         ],
       },
       {
@@ -215,10 +195,6 @@ export const sidebar_data: SidebarItem[] = [
           {
             title: 'Basic',
             href: '/emailVerification-basic',
-          },
-          {
-            title: 'Illustration',
-            href: '/emailVerification-illustration',
           },
         ],
       },

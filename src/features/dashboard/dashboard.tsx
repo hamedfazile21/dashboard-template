@@ -65,11 +65,6 @@ const Dashboard = () => {
             name1: 'Hamed Fazeli',
             last_name1: 'fazeli',
             name2: 'Hamed Fazeli',
-            last_name2: 'fazeli',
-            name3: 'Hamed Fazeli',
-            last_name3: 'fazeli',
-            name4: 'Hamed Fazeli',
-            last_name4: 'fazeli',
           })
         }
       >

@@ -20,6 +20,7 @@ export function App() {
   if (!ready) {
     return <SplashScreen />
   }
+  
 
   return (
     <>

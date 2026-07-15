@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useForm } from '@tanstack/react-form'
 import {
   Avatar1,
   Avatar2,
@@ -14,16 +15,32 @@ import Github from '../../../../public/assets/media/github'
 import Google from '../../../../public/assets/media/google'
 import Linkedin from '../../../../public/assets/media/linkedin'
 import { useTranslation } from 'react-i18next'
+import { showObjectToast } from '#/helper/toast-helper'
+
+interface LoginFormValues {
+  email: string
+  password: string
+  rememberMe: boolean
+}
 
 const LoginCover = () => {
   const { t } = useTranslation()
   const [check, setCheck] = useState<boolean>(false)
-
+  const { Field, handleSubmit } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    } as LoginFormValues,
+    onSubmit: async ({ value }) => {
+      showObjectToast('Login From Submitted', value)
+    },
+  })
   return (
     <div className="w-full h-screen flex items-center justify-between relative">
       <img
         src={GlassBlob1}
-        className="absolute top-14 left-30 -z-10 size-130"
+        className="hidden md:block absolute top-14 left-30 -z-10 size-130"
       />
       {/* 
       <img
@@ -32,10 +49,10 @@ const LoginCover = () => {
       /> */}
       <img
         src={GlassBlob}
-        className="absolute bottom-12 left-50 -z-10 size-130"
+        className="hidden md:block absolute bottom-12 left-50 -z-10 size-130"
       />
 
-      <div className="flex w-full items-center justify-center lg:w-1/2 z-10">
+      <div className="flex w-full items-center justify-center lg:w-1/2 z-10 ">
         <div className="card w-132.5! p-10!">
           <div className="mb-6 text-center">
             <h1 className="text-xl font-semibold text-foreground">
@@ -46,39 +63,100 @@ const LoginCover = () => {
             </p>
           </div>
 
-          <form className="flex flex-col gap-y-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              handleSubmit()
+            }}
+            className="flex flex-col gap-y-4"
+          >
             <div className="flex flex-col gap-y-1.5">
-              <Input
-                label={t('Email')}
-                placeholder="example@gmail.com"
-                id="email"
+              <Field
+                name="email"
+                validators={{
+                  onSubmit: ({ value }) =>
+                    !value
+                      ? 'Email is required'
+                      : !/^\S+@\S+\.\S+$/.test(value)
+                        ? 'Enter a valid email'
+                        : undefined,
+                }}
+                children={(field) => (
+                  <div className="flex flex-col gap-y-1.5">
+                    <Input
+                      label={t('Email')}
+                      placeholder="example@gmail.com"
+                      id={field.name}
+                      type="email"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      error={
+                        field.state.meta.isTouched
+                          ? field.state.meta.errors.join(', ')
+                          : undefined
+                      }
+                    />
+                  </div>
+                )}
               />
             </div>
 
             <div className="flex flex-col gap-y-1.5">
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="text-sm font-medium text-foreground"
-                >
-                  Password
-                </label>
-                <a
-                  href="/forgot-password"
-                  className="text-xs font-medium text-primary hover:underline"
-                >
-                  Forgot password?
-                </a>
-              </div>
-              <div className="relative w-full">
-                <Input placeholder="••••••••" id="email" type="password" />
-              </div>
+              <Field
+                name="password"
+                validators={{
+                  onSubmit: ({ value }) =>
+                    !value ? 'Password is required' : undefined,
+                }}
+                children={(field) => (
+                  <div className="flex flex-col gap-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label
+                        htmlFor={field.name}
+                        className="text-sm font-medium text-foreground"
+                      >
+                        Password
+                      </label>
+                      <a
+                        href="/forgot-password"
+                        className="text-xs font-medium text-primary hover:underline"
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      placeholder="••••••••"
+                      type="password"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      error={
+                        field.state.meta.isTouched
+                          ? field.state.meta.errors.join(', ')
+                          : undefined
+                      }
+                    />
+                  </div>
+                )}
+              />
             </div>
 
-            <label className="flex items-center gap-x-2 text-sm text-muted">
-              <CheckBox checked={check} onChange={() => setCheck(!check)} />
-              Remember me
-            </label>
+            <Field
+              name="rememberMe"
+              children={(field) => (
+                <label className="flex items-center gap-x-2 text-sm text-muted">
+                  <CheckBox
+                    checked={field.state.value}
+                    onChange={() => field.handleChange(!field.state.value)}
+                  />
+                  Remember me
+                </label>
+              )}
+            />
 
             <button type="submit" className="btn btn-primary mt-2">
               Sign in
@@ -114,7 +192,7 @@ const LoginCover = () => {
           </div>
         </div>
       </div>
-      <div className="relative flex h-screen w-[45%] items-center justify-center overflow-hidden p-10">
+      <div className="hidden lg:flex relative h-screen w-[45%] items-center justify-center overflow-hidden p-10">
         <img
           src={LoginCoverPNG}
           alt=""
