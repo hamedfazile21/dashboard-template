@@ -43,6 +43,8 @@ import Avatar33 from './avatar/memo_33.png'
 import Avatar34 from './avatar/memo_34.png'
 import Avatar35 from './avatar/memo_35.png'
 import RegisterCoverPNG from './illustration/register-cover.jpg'
+import ForgotPasswordSVG from './illustration/forgot-password-cover.svg'
+import EmailValidationSVG from './illustration/email-validation-cover.svg'
 export {
   AfghanistanFlag,
   EnglishFlag,
@@ -88,5 +90,7 @@ export {
   Avatar33,
   Avatar34,
   Avatar35,
-  RegisterCoverPNG
+  RegisterCoverPNG,
+  ForgotPasswordSVG,
+  EmailValidationSVG,
 }

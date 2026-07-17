@@ -200,7 +200,9 @@ const LoginCover = () => {
         />
 
         {/* subtle dark overlay so the glass card has enough contrast against varied cover images */}
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="hidden dark:block absolute inset-0 bg-black/20" />
+
+        <div className="hidden dark:block absolute inset-0 bg-black/20" />
 
         <div className="card relative z-10 w-full max-w-md p-8">
           <h2 className="text-2xl font-semibold text-foreground">

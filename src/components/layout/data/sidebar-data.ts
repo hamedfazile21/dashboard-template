@@ -154,21 +154,6 @@ export const sidebar_data: SidebarItem[] = [
         ],
       },
       {
-        id: 'reset-password',
-        title: 'Reset Password',
-        icon: RefreshCcwDot,
-        children: [
-          {
-            title: 'Cover',
-            href: '/reset-cover',
-          },
-          {
-            title: 'Basic',
-            href: '/reset-basic',
-          },
-        ],
-      },
-      {
         id: 'email-verification',
         title: 'Email Verification',
         icon: MailQuestion,
@@ -180,6 +165,21 @@ export const sidebar_data: SidebarItem[] = [
           {
             title: 'Basic',
             href: '/emailVerification-basic',
+          },
+        ],
+      },
+      {
+        id: 'reset-password',
+        title: 'Reset Password',
+        icon: RefreshCcwDot,
+        children: [
+          {
+            title: 'Cover',
+            href: '/reset-cover',
+          },
+          {
+            title: 'Basic',
+            href: '/reset-basic',
           },
         ],
       },
@@ -206,6 +206,7 @@ export const sidebar_data: SidebarItem[] = [
         type: 'simple',
         children: [],
       },
+      
     ],
   },
 ]

@@ -19,6 +19,10 @@ import { Route as PageRegisterRegisterCoverIndexRouteImport } from './routes/_pa
 import { Route as PageRegisterRegisterBasicIndexRouteImport } from './routes/_page/_register/register-basic/index'
 import { Route as PageLoginLoginCoverIndexRouteImport } from './routes/_page/_login/login-cover/index'
 import { Route as PageLoginLoginBasicIndexRouteImport } from './routes/_page/_login/login-basic/index'
+import { Route as PageForgotPasswordForgotPasswordCoverIndexRouteImport } from './routes/_page/_forgot-password/forgotPassword-cover/index'
+import { Route as PageForgotPasswordForgotPasswordBasicIndexRouteImport } from './routes/_page/_forgot-password/forgotPassword-basic/index'
+import { Route as PageEmailVerificationEmailVerificationCoverIndexRouteImport } from './routes/_page/_email-verification/emailVerification-cover/index'
+import { Route as PageEmailVerificationEmailVerificationBasicIndexRouteImport } from './routes/_page/_email-verification/emailVerification-basic/index'
 
 const LayoutRouteRoute = LayoutRouteRouteImport.update({
   id: '/_layout',
@@ -74,6 +78,30 @@ const PageLoginLoginBasicIndexRoute =
     path: '/login-basic/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const PageForgotPasswordForgotPasswordCoverIndexRoute =
+  PageForgotPasswordForgotPasswordCoverIndexRouteImport.update({
+    id: '/_page/_forgot-password/forgotPassword-cover/',
+    path: '/forgotPassword-cover/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageForgotPasswordForgotPasswordBasicIndexRoute =
+  PageForgotPasswordForgotPasswordBasicIndexRouteImport.update({
+    id: '/_page/_forgot-password/forgotPassword-basic/',
+    path: '/forgotPassword-basic/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageEmailVerificationEmailVerificationCoverIndexRoute =
+  PageEmailVerificationEmailVerificationCoverIndexRouteImport.update({
+    id: '/_page/_email-verification/emailVerification-cover/',
+    path: '/emailVerification-cover/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageEmailVerificationEmailVerificationBasicIndexRoute =
+  PageEmailVerificationEmailVerificationBasicIndexRouteImport.update({
+    id: '/_page/_email-verification/emailVerification-basic/',
+    path: '/emailVerification-basic/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
@@ -81,6 +109,10 @@ export interface FileRoutesByFullPath {
   '/task-management/': typeof LayoutTaskManagementIndexRoute
   '/to-do-list/': typeof LayoutToDoListIndexRoute
   '/lock-screen/': typeof PageLockScreenIndexRoute
+  '/emailVerification-basic/': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
+  '/emailVerification-cover/': typeof PageEmailVerificationEmailVerificationCoverIndexRoute
+  '/forgotPassword-basic/': typeof PageForgotPasswordForgotPasswordBasicIndexRoute
+  '/forgotPassword-cover/': typeof PageForgotPasswordForgotPasswordCoverIndexRoute
   '/login-basic/': typeof PageLoginLoginBasicIndexRoute
   '/login-cover/': typeof PageLoginLoginCoverIndexRoute
   '/register-basic/': typeof PageRegisterRegisterBasicIndexRoute
@@ -92,6 +124,10 @@ export interface FileRoutesByTo {
   '/task-management': typeof LayoutTaskManagementIndexRoute
   '/to-do-list': typeof LayoutToDoListIndexRoute
   '/lock-screen': typeof PageLockScreenIndexRoute
+  '/emailVerification-basic': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
+  '/emailVerification-cover': typeof PageEmailVerificationEmailVerificationCoverIndexRoute
+  '/forgotPassword-basic': typeof PageForgotPasswordForgotPasswordBasicIndexRoute
+  '/forgotPassword-cover': typeof PageForgotPasswordForgotPasswordCoverIndexRoute
   '/login-basic': typeof PageLoginLoginBasicIndexRoute
   '/login-cover': typeof PageLoginLoginCoverIndexRoute
   '/register-basic': typeof PageRegisterRegisterBasicIndexRoute
@@ -105,6 +141,10 @@ export interface FileRoutesById {
   '/_layout/task-management/': typeof LayoutTaskManagementIndexRoute
   '/_layout/to-do-list/': typeof LayoutToDoListIndexRoute
   '/_page/lock-screen/': typeof PageLockScreenIndexRoute
+  '/_page/_email-verification/emailVerification-basic/': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
+  '/_page/_email-verification/emailVerification-cover/': typeof PageEmailVerificationEmailVerificationCoverIndexRoute
+  '/_page/_forgot-password/forgotPassword-basic/': typeof PageForgotPasswordForgotPasswordBasicIndexRoute
+  '/_page/_forgot-password/forgotPassword-cover/': typeof PageForgotPasswordForgotPasswordCoverIndexRoute
   '/_page/_login/login-basic/': typeof PageLoginLoginBasicIndexRoute
   '/_page/_login/login-cover/': typeof PageLoginLoginCoverIndexRoute
   '/_page/_register/register-basic/': typeof PageRegisterRegisterBasicIndexRoute
@@ -118,6 +158,10 @@ export interface FileRouteTypes {
     | '/task-management/'
     | '/to-do-list/'
     | '/lock-screen/'
+    | '/emailVerification-basic/'
+    | '/emailVerification-cover/'
+    | '/forgotPassword-basic/'
+    | '/forgotPassword-cover/'
     | '/login-basic/'
     | '/login-cover/'
     | '/register-basic/'
@@ -129,6 +173,10 @@ export interface FileRouteTypes {
     | '/task-management'
     | '/to-do-list'
     | '/lock-screen'
+    | '/emailVerification-basic'
+    | '/emailVerification-cover'
+    | '/forgotPassword-basic'
+    | '/forgotPassword-cover'
     | '/login-basic'
     | '/login-cover'
     | '/register-basic'
@@ -141,6 +189,10 @@ export interface FileRouteTypes {
     | '/_layout/task-management/'
     | '/_layout/to-do-list/'
     | '/_page/lock-screen/'
+    | '/_page/_email-verification/emailVerification-basic/'
+    | '/_page/_email-verification/emailVerification-cover/'
+    | '/_page/_forgot-password/forgotPassword-basic/'
+    | '/_page/_forgot-password/forgotPassword-cover/'
     | '/_page/_login/login-basic/'
     | '/_page/_login/login-cover/'
     | '/_page/_register/register-basic/'
@@ -150,6 +202,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   LayoutRouteRoute: typeof LayoutRouteRouteWithChildren
   PageLockScreenIndexRoute: typeof PageLockScreenIndexRoute
+  PageEmailVerificationEmailVerificationBasicIndexRoute: typeof PageEmailVerificationEmailVerificationBasicIndexRoute
+  PageEmailVerificationEmailVerificationCoverIndexRoute: typeof PageEmailVerificationEmailVerificationCoverIndexRoute
+  PageForgotPasswordForgotPasswordBasicIndexRoute: typeof PageForgotPasswordForgotPasswordBasicIndexRoute
+  PageForgotPasswordForgotPasswordCoverIndexRoute: typeof PageForgotPasswordForgotPasswordCoverIndexRoute
   PageLoginLoginBasicIndexRoute: typeof PageLoginLoginBasicIndexRoute
   PageLoginLoginCoverIndexRoute: typeof PageLoginLoginCoverIndexRoute
   PageRegisterRegisterBasicIndexRoute: typeof PageRegisterRegisterBasicIndexRoute
@@ -228,6 +284,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageLoginLoginBasicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_page/_forgot-password/forgotPassword-cover/': {
+      id: '/_page/_forgot-password/forgotPassword-cover/'
+      path: '/forgotPassword-cover'
+      fullPath: '/forgotPassword-cover/'
+      preLoaderRoute: typeof PageForgotPasswordForgotPasswordCoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_forgot-password/forgotPassword-basic/': {
+      id: '/_page/_forgot-password/forgotPassword-basic/'
+      path: '/forgotPassword-basic'
+      fullPath: '/forgotPassword-basic/'
+      preLoaderRoute: typeof PageForgotPasswordForgotPasswordBasicIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_email-verification/emailVerification-cover/': {
+      id: '/_page/_email-verification/emailVerification-cover/'
+      path: '/emailVerification-cover'
+      fullPath: '/emailVerification-cover/'
+      preLoaderRoute: typeof PageEmailVerificationEmailVerificationCoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_email-verification/emailVerification-basic/': {
+      id: '/_page/_email-verification/emailVerification-basic/'
+      path: '/emailVerification-basic'
+      fullPath: '/emailVerification-basic/'
+      preLoaderRoute: typeof PageEmailVerificationEmailVerificationBasicIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -252,6 +336,14 @@ const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   LayoutRouteRoute: LayoutRouteRouteWithChildren,
   PageLockScreenIndexRoute: PageLockScreenIndexRoute,
+  PageEmailVerificationEmailVerificationBasicIndexRoute:
+    PageEmailVerificationEmailVerificationBasicIndexRoute,
+  PageEmailVerificationEmailVerificationCoverIndexRoute:
+    PageEmailVerificationEmailVerificationCoverIndexRoute,
+  PageForgotPasswordForgotPasswordBasicIndexRoute:
+    PageForgotPasswordForgotPasswordBasicIndexRoute,
+  PageForgotPasswordForgotPasswordCoverIndexRoute:
+    PageForgotPasswordForgotPasswordCoverIndexRoute,
   PageLoginLoginBasicIndexRoute: PageLoginLoginBasicIndexRoute,
   PageLoginLoginCoverIndexRoute: PageLoginLoginCoverIndexRoute,
   PageRegisterRegisterBasicIndexRoute: PageRegisterRegisterBasicIndexRoute,
