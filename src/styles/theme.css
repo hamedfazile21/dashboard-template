@@ -13,12 +13,21 @@
 
   /* Borders */
   --border: rgb(219, 219, 219);
+
+  /* Glass — single canonical values. .dark overrides these below via
+     cascade, so consuming code never needs a separate "-dark" variable
+     or a Tailwind dark: variant just to pick opacity. */
+  --glass-bg-opacity: 0.4;
+  --glass-border-opacity: 0.1;
+  --glass-blur: 24px; /* = Tailwind's backdrop-blur-xl */
+  --glass-saturate: 150%;
+  --glass-shadow-opacity: 0.1;
 }
 
 .dark {
   /* Brand */
-  --primary: rgb(96 165 250);
-  --primary-foreground: rgb(2 6 23);
+  --color-primary: rgb(96 165 250);
+  --color-primary-foreground: rgb(2 6 23);
 
   /* Backgrounds */
   --background: oklch(0.129 0.042 264.695);
@@ -31,4 +40,13 @@
 
   /* Borders */
   --border: rgb(31, 38, 47);
+
+  /* Glass — higher opacity than light mode on purpose. This --surface
+     (a fairly saturated navy) needs more coverage to keep --foreground
+     text legible through the blur; going lower (e.g. 0.35) tends to
+     read as muddy/flat against this particular surface color rather
+     than crisp. Tune the number here only — nowhere else. */
+  --glass-bg-opacity: 0.55;
+  --glass-border-opacity: 0.08;
+  --glass-shadow-opacity: 0.25;
 }

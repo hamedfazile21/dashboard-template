@@ -43,19 +43,18 @@ export function ObjectViewer({ data, className = '' }: ObjectViewerProps) {
   }
 
   return (
-    <div
-      className={`group relative overflow-hidden rounded-xl bg-gray-800 ${className}`}
-    >
+    <div className={`group relative overflow-hidden rounded-xl bg-gray-800 ${className}`}>
       <button
         type="button"
         onClick={handleCopy}
         aria-label="Copy JSON"
-        className="absolute right-3 top-3 z-10 flex items-center gap-x-1 rounded-md border border-white/10
+        className="absolute top-3 z-10 flex items-center gap-x-1 rounded-md border border-white/10
           bg-surface/60 px-2 py-1 text-xs text-muted opacity-0 backdrop-blur-md
           transition-all duration-150 ease-out
           hover:bg-surface-hover hover:text-primary
           focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30
-          group-hover:opacity-100"
+          group-hover:opacity-100
+          right-3"
       >
         {copied ? (
           <>
@@ -70,7 +69,10 @@ export function ObjectViewer({ data, className = '' }: ObjectViewerProps) {
         )}
       </button>
 
-      <pre className="overflow-x-auto p-4 text-sm leading-relaxed">
+      {/* dir="ltr" forced regardless of page direction — JSON/code must never
+          follow RTL bidi reordering, or brackets/colons/punctuation can render
+          visually scrambled even though the underlying text is correct. */}
+      <pre dir="ltr" className="overflow-x-auto p-4 text-left text-sm leading-relaxed">
         <code
           className="font-mono text-foreground"
           dangerouslySetInnerHTML={{ __html: highlighted }}
@@ -81,3 +83,4 @@ export function ObjectViewer({ data, className = '' }: ObjectViewerProps) {
 }
 
 export default ObjectViewer
+

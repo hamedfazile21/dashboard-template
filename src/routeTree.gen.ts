@@ -15,6 +15,8 @@ import { Route as PageLockScreenIndexRouteImport } from './routes/_page/lock-scr
 import { Route as LayoutToDoListIndexRouteImport } from './routes/_layout/to-do-list/index'
 import { Route as LayoutTaskManagementIndexRouteImport } from './routes/_layout/task-management/index'
 import { Route as LayoutChatIndexRouteImport } from './routes/_layout/chat/index'
+import { Route as PageResetResetCoverIndexRouteImport } from './routes/_page/_reset/reset-cover/index'
+import { Route as PageResetResetBasicIndexRouteImport } from './routes/_page/_reset/reset-basic/index'
 import { Route as PageRegisterRegisterCoverIndexRouteImport } from './routes/_page/_register/register-cover/index'
 import { Route as PageRegisterRegisterBasicIndexRouteImport } from './routes/_page/_register/register-basic/index'
 import { Route as PageLoginLoginCoverIndexRouteImport } from './routes/_page/_login/login-cover/index'
@@ -54,6 +56,18 @@ const LayoutChatIndexRoute = LayoutChatIndexRouteImport.update({
   path: '/chat/',
   getParentRoute: () => LayoutRouteRoute,
 } as any)
+const PageResetResetCoverIndexRoute =
+  PageResetResetCoverIndexRouteImport.update({
+    id: '/_page/_reset/reset-cover/',
+    path: '/reset-cover/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PageResetResetBasicIndexRoute =
+  PageResetResetBasicIndexRouteImport.update({
+    id: '/_page/_reset/reset-basic/',
+    path: '/reset-basic/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PageRegisterRegisterCoverIndexRoute =
   PageRegisterRegisterCoverIndexRouteImport.update({
     id: '/_page/_register/register-cover/',
@@ -117,6 +131,8 @@ export interface FileRoutesByFullPath {
   '/login-cover/': typeof PageLoginLoginCoverIndexRoute
   '/register-basic/': typeof PageRegisterRegisterBasicIndexRoute
   '/register-cover/': typeof PageRegisterRegisterCoverIndexRoute
+  '/reset-basic/': typeof PageResetResetBasicIndexRoute
+  '/reset-cover/': typeof PageResetResetCoverIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
@@ -132,6 +148,8 @@ export interface FileRoutesByTo {
   '/login-cover': typeof PageLoginLoginCoverIndexRoute
   '/register-basic': typeof PageRegisterRegisterBasicIndexRoute
   '/register-cover': typeof PageRegisterRegisterCoverIndexRoute
+  '/reset-basic': typeof PageResetResetBasicIndexRoute
+  '/reset-cover': typeof PageResetResetCoverIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,6 +167,8 @@ export interface FileRoutesById {
   '/_page/_login/login-cover/': typeof PageLoginLoginCoverIndexRoute
   '/_page/_register/register-basic/': typeof PageRegisterRegisterBasicIndexRoute
   '/_page/_register/register-cover/': typeof PageRegisterRegisterCoverIndexRoute
+  '/_page/_reset/reset-basic/': typeof PageResetResetBasicIndexRoute
+  '/_page/_reset/reset-cover/': typeof PageResetResetCoverIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -166,6 +186,8 @@ export interface FileRouteTypes {
     | '/login-cover/'
     | '/register-basic/'
     | '/register-cover/'
+    | '/reset-basic/'
+    | '/reset-cover/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -181,6 +203,8 @@ export interface FileRouteTypes {
     | '/login-cover'
     | '/register-basic'
     | '/register-cover'
+    | '/reset-basic'
+    | '/reset-cover'
   id:
     | '__root__'
     | '/_layout'
@@ -197,6 +221,8 @@ export interface FileRouteTypes {
     | '/_page/_login/login-cover/'
     | '/_page/_register/register-basic/'
     | '/_page/_register/register-cover/'
+    | '/_page/_reset/reset-basic/'
+    | '/_page/_reset/reset-cover/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -210,6 +236,8 @@ export interface RootRouteChildren {
   PageLoginLoginCoverIndexRoute: typeof PageLoginLoginCoverIndexRoute
   PageRegisterRegisterBasicIndexRoute: typeof PageRegisterRegisterBasicIndexRoute
   PageRegisterRegisterCoverIndexRoute: typeof PageRegisterRegisterCoverIndexRoute
+  PageResetResetBasicIndexRoute: typeof PageResetResetBasicIndexRoute
+  PageResetResetCoverIndexRoute: typeof PageResetResetCoverIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -255,6 +283,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/chat/'
       preLoaderRoute: typeof LayoutChatIndexRouteImport
       parentRoute: typeof LayoutRouteRoute
+    }
+    '/_page/_reset/reset-cover/': {
+      id: '/_page/_reset/reset-cover/'
+      path: '/reset-cover'
+      fullPath: '/reset-cover/'
+      preLoaderRoute: typeof PageResetResetCoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_page/_reset/reset-basic/': {
+      id: '/_page/_reset/reset-basic/'
+      path: '/reset-basic'
+      fullPath: '/reset-basic/'
+      preLoaderRoute: typeof PageResetResetBasicIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_page/_register/register-cover/': {
       id: '/_page/_register/register-cover/'
@@ -348,6 +390,8 @@ const rootRouteChildren: RootRouteChildren = {
   PageLoginLoginCoverIndexRoute: PageLoginLoginCoverIndexRoute,
   PageRegisterRegisterBasicIndexRoute: PageRegisterRegisterBasicIndexRoute,
   PageRegisterRegisterCoverIndexRoute: PageRegisterRegisterCoverIndexRoute,
+  PageResetResetBasicIndexRoute: PageResetResetBasicIndexRoute,
+  PageResetResetCoverIndexRoute: PageResetResetCoverIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
