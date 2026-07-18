@@ -10,6 +10,7 @@ import { User } from 'lucide-react'
 import { toast } from 'sonner'
 import ObjectViewer from '#/components/object-viewer'
 import { showObjectToast } from '#/helper/toast-helper'
+import Popover from '#/components/popover'
 const Dashboard = () => {
   const { t } = useTranslation()
   const handelChangeLanguage = (language: string) => {
@@ -36,6 +37,15 @@ const Dashboard = () => {
   const { counter } = useAppSelector((state) => state.dashboard)
   return (
     <div className="bg-blue-500/20">
+      <Popover
+        trigger={<button className="btn btn-secondary">Open</button>}
+        placement="bottom-start"
+      >
+        <div className="flex flex-col gap-y-1">
+          <p className="text-sm font-medium text-foreground">Notifications</p>
+          <p className="text-xs text-muted">You're all caught up.</p>
+        </div>
+      </Popover>
       <button
         className="px-5 bg-primary"
         onClick={() => handelChangeLanguage('fa')}
