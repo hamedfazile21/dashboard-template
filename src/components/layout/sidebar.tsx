@@ -169,7 +169,7 @@ const Sidebar = () => {
                     : 'text-sm'
                 }`}
               >
-                {titleLabel}
+                {t(titleLabel)}
               </span>
             </div>
 

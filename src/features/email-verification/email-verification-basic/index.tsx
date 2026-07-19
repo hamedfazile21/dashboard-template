@@ -3,9 +3,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { GlassBlob, GlassBlob2, GlassBlob3 } from '../../../../public/assets'
 import { showObjectToast } from '#/helper/toast-helper'
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 const CODE_LENGTH = 6
 const RESEND_COOLDOWN = 30 // seconds
 const EmailVerificationBasic = () => {
+  const { t } = useTranslation()
   const [code, setCode] = useState<string[]>(Array(CODE_LENGTH).fill(''))
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -65,7 +67,7 @@ const EmailVerificationBasic = () => {
     setError('')
     setSubmitting(true)
     setSubmitting(false)
-    showObjectToast('Login From Submitted', { code: value })
+    showObjectToast(t('Verification From Submitted'), { code: value })
   }
 
   const handleResend = () => {
@@ -74,90 +76,90 @@ const EmailVerificationBasic = () => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-screen relative">
+    <div className="flex items-center justify-center w-full h-screen relative ">
       <img
         src={GlassBlob2}
         alt=""
-        className="pointer-events-none absolute -top-20 -left-20 -z-10 size-128 opacity-70 dark:opacity-30"
+        className="pointer-events-none fixed -top-20 left-0 lg:-left-20 -z-10 size-128 opacity-70 dark:opacity-30"
       />
       <img
         src={GlassBlob}
         alt=""
-        className="pointer-events-none absolute bottom-50 right-180 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none fixed bottom-50 right-0 md:right-180 -z-10 size-128 opacity-60 dark:opacity-25"
       />
       <img
         src={GlassBlob3}
         alt=""
-        className="pointer-events-none absolute -bottom-24 -right-16 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none fixed -bottom-24 right-0 lg:-right-16 -z-10 size-128 opacity-60 dark:opacity-25"
       />
-      <div className="relative z-10 flex w-full items-center justify-center p-6 lg:w-[55%]">
-        <div className="card w-full max-w-md p-10 text-center">
-          <Link
-            to="/login-basic"
-            className="mb-6 inline-flex items-center gap-x-1.5 text-sm font-medium text-muted hover:text-primary"
-          >
-            <ArrowLeft size={16} />
-            Back to sign in
-          </Link>
+      <div className="card w-full max-w-md p-10 text-center">
+        <Link
+          to="/login-cover"
+          className="mb-6 inline-flex items-center gap-x-1.5 text-sm font-medium text-muted hover:text-primary"
+        >
+          <ArrowLeft className="rtl:rotate-180" size={16} />
+          {t('Back to sign in')}
+        </Link>
 
-          <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-primary/15 text-primary">
-            <MailCheck size={26} />
-          </div>
+        <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-primary/15 text-primary">
+          <MailCheck size={26} />
+        </div>
 
-          <h1 className="text-xl font-semibold text-foreground">
-            Verify your email
-          </h1>
-          <p className="mt-2 text-sm text-muted">
-            We sent a 6-digit code to{' '}
-            <span className="font-medium text-foreground">{email}</span>
-          </p>
+        <h1 className="text-xl font-semibold text-foreground">
+          {t('Verify your email')}
+        </h1>
+        <p className="mt-2 text-sm text-muted">
+          {t('We sent a 6-digit code to')}{' '}
+          <span className="font-medium text-foreground">{email}</span>
+        </p>
 
-          <form
-            className="mt-8 flex flex-col items-center gap-y-4"
-            onSubmit={handleSubmit}
-          >
-            <div className="flex justify-center gap-x-2" onPaste={handlePaste}>
-              {code.map((digit, index) => (
-                <input
-                  key={index}
-                  ref={(el) => (inputsRef.current[index] = el)}
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleChange(index, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(index, e)}
-                  className={`size-12 rounded-lg border bg-surface/60 text-center text-lg font-semibold
+        <form
+          className="mt-8 flex flex-col items-center gap-y-4"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex justify-center gap-x-2" onPaste={handlePaste}>
+            {code.map((digit, index) => (
+              <input
+                key={index}
+                ref={(el) => (inputsRef.current[index] = el)}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                className={`size-12 rounded-lg border bg-surface/60 text-center text-lg font-semibold
                     text-foreground outline-none transition-all duration-150
                     focus:border-primary/50 focus:ring-2 focus:ring-primary/30
                     ${error ? 'border-red-500' : 'border-borderColor'}`}
-                />
-              ))}
-            </div>
+              />
+            ))}
+          </div>
 
-            {error && <p className="text-xs text-red-500">{error}</p>}
+          {error && <p className="text-xs text-red-500">{error}</p>}
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="btn btn-primary mt-2 w-full disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {submitting ? 'Verifying…' : 'Verify email'}
-            </button>
-          </form>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="btn btn-primary mt-2 w-full disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {submitting ? t('Verifying…') : t('Verify email')}
+          </button>
+        </form>
 
-          <p className="mt-6 text-sm text-muted">
-            Didn't get a code?{' '}
-            <button
-              type="button"
-              onClick={handleResend}
-              disabled={coolDown > 0}
-              className="font-medium text-primary hover:underline disabled:cursor-not-allowed disabled:text-muted disabled:no-underline"
-            >
-              {coolDown > 0 ? `Resend in ${coolDown}s` : 'Resend code'}
-            </button>
-          </p>
-        </div>
+        <p className="mt-6 text-sm text-muted">
+          {t("Didn't get a code?")}{' '}
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={coolDown > 0}
+            className="font-medium text-primary hover:underline disabled:cursor-not-allowed disabled:text-muted disabled:no-underline"
+          >
+            {coolDown > 0
+              ? t('Resend in ${coolDown}s', { coolDown })
+              : t('Resend code')}
+          </button>
+        </p>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Check, Copy } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface ObjectViewerProps {
   data: unknown
@@ -12,6 +13,7 @@ interface ObjectViewerProps {
  * JSON.stringify + a small regex pass to colorize tokens.
  */
 export function ObjectViewer({ data, className = '' }: ObjectViewerProps) {
+  const {t} = useTranslation()
   const [copied, setCopied] = useState(false)
 
   const json = JSON.stringify(data, null, 2)
@@ -49,7 +51,7 @@ export function ObjectViewer({ data, className = '' }: ObjectViewerProps) {
         onClick={handleCopy}
         aria-label="Copy JSON"
         className="absolute top-3 z-10 flex items-center gap-x-1 rounded-md border border-white/10
-          bg-surface/60 px-2 py-1 text-xs text-muted opacity-0 backdrop-blur-md
+          bg-surface px-2 py-1 text-xs text-muted opacity-0 backdrop-blur-md
           transition-all duration-150 ease-out
           hover:bg-surface-hover hover:text-primary
           focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30
@@ -59,12 +61,12 @@ export function ObjectViewer({ data, className = '' }: ObjectViewerProps) {
         {copied ? (
           <>
             <Check size={13} className="text-emerald-500" />
-            Copied
+            {t('Copied')}
           </>
         ) : (
           <>
             <Copy size={13} />
-            Copy
+            {t('Copy')}
           </>
         )}
       </button>

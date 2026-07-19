@@ -46,21 +46,21 @@ const RegisterCover = () => {
     <div className="flex items-center w-full h-screen relative">
       <img
         src={GlassBlob1}
-        className="hidden md:block absolute top-10 md:left-70 lg:left-110 -z-10 size-130"
+        className="fixed top-10 md:right-70 lg:right-110 -z-10 size-130"
       />
 
       <img
         src={GlassBlob2}
-        className="hidden md:block absolute bottom-10 left-30 -z-10 size-130"
+        className="fixed bottom-10 right-30 -z-10 size-130"
       />
       <div className="flex w-full items-center justify-center lg:w-[55%] z-10 ">
         <div className="card  p-10! w-132.5!  sm:p-10">
           <div className="mb-6 text-center">
             <h1 className="text-xl font-semibold text-foreground">
-              Create your account
+              {t('Create your account')}
             </h1>
             <p className="mt-1 text-sm text-muted">
-              Start your free trial — no credit card required
+              {t('Start your free trial — no credit card required')}
             </p>
           </div>
 
@@ -77,7 +77,7 @@ const RegisterCover = () => {
                 name="fist_name"
                 children={(field) => (
                   <Input
-                    label="First name"
+                    label={t('First name')}
                     placeholder="Hamed"
                     id={field.name}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -91,7 +91,7 @@ const RegisterCover = () => {
                 name="last_name"
                 children={(field) => (
                   <Input
-                    label="Last name"
+                    label={t('Last name')}
                     placeholder="Fazeli"
                     id={field.name}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -140,7 +140,7 @@ const RegisterCover = () => {
               }}
               children={(field) => (
                 <Input
-                  label="Password"
+                  label={t('Password')}
                   placeholder="••••••••"
                   id={field.name}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -158,7 +158,7 @@ const RegisterCover = () => {
               }}
               children={(field) => (
                 <Input
-                  label="Confirm password"
+                  label={t('Confirm password')}
                   placeholder="••••••••"
                   id={field.name}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -171,26 +171,16 @@ const RegisterCover = () => {
             <Field
               name="agreement"
               children={(field) => (
-                <label className="flex items-start gap-x-2 text-sm text-muted">
+                <label
+                  onClick={() => field.handleChange(!field.state.value)}
+                  className="flex items-start gap-x-2 text-sm text-muted"
+                >
                   <CheckBox
                     checked={field.state.value}
                     onChange={() => field.handleChange(!field.state.value)}
                   />
                   <span className="cursor-pointer">
-                    I agree to the{' '}
-                    <a
-                      href="/terms"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      Terms of Service
-                    </a>{' '}
-                    and{' '}
-                    <a
-                      href="/privacy"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      Privacy Policy
-                    </a>
+                    {t('I agree to the Terms of Service and Privacy Policy')}
                   </span>
                 </label>
               )}
@@ -201,24 +191,24 @@ const RegisterCover = () => {
               className="btn btn-primary mt-2"
               disabled={false}
             >
-              Create account
+              {t('Create account')}
             </button>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted">
-            Already have an account?{' '}
+            {t('Already have an account?')}{' '}
             <Link
               to="/login-cover"
               className="font-medium text-primary hover:underline"
             >
-              Sign in
+              {t('Sign in')}
             </Link>
           </p>
 
           <div className="mt-6">
             <div className="flex items-center gap-x-3">
               <div className="h-px flex-1 bg-borderColor" />
-              <p className="text-xs text-muted">OR</p>
+              <p className="text-xs text-muted">{t('OR')}</p>
               <div className="h-px flex-1 bg-borderColor" />
             </div>
 
@@ -250,11 +240,10 @@ const RegisterCover = () => {
 
         <div className="card relative z-10 w-full max-w-md p-8">
           <h2 className="text-2xl font-semibold text-foreground">
-            Get started in minutes
+            {t('Get started in minutes')}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            Everything you need to launch your workflow — no credit card, no
-            setup calls, just sign up and go.
+            {t('Everything you need to launch your workflow — no credit card, no setup calls, just sign up and go.')}
           </p>
 
           <ul className="mt-6 flex flex-col gap-y-3">
@@ -270,7 +259,7 @@ const RegisterCover = () => {
                 <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
                   <Check size={13} strokeWidth={3} />
                 </span>
-                {item}
+                {t(item)}
               </li>
             ))}
           </ul>
@@ -294,9 +283,9 @@ const RegisterCover = () => {
               />
             </div>
             <p className="text-xs text-muted">
-              Joined by{' '}
+              {t('Joined by')}{' '}
               <span className="font-semibold text-foreground">4,000+</span>{' '}
-              teams this year
+              {t('teams this year')}
             </p>
           </div>
         </div>

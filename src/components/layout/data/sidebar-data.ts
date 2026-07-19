@@ -12,6 +12,7 @@ import {
   Users,
   VerifiedIcon,
   ScanLine,
+  CircleQuestionMark,
 } from 'lucide-react'
 
 export type SidebarChild = {
@@ -39,31 +40,7 @@ export const sidebar_data: SidebarItem[] = [
         title: 'Dashboard',
         icon: ChartNoAxesCombined,
         href: '',
-        children: [
-          {
-            title: 'Overview',
-            href: '/',
-          },
-          {
-            title: 'Analytics',
-            href: '/dashboard/analytics',
-          },
-        ],
-      },
-      {
-        id: 'users',
-        title: 'Users',
-        icon: Users,
-        children: [
-          {
-            title: 'All Users',
-            href: '/sd',
-          },
-          {
-            title: 'Create User',
-            href: '/users/create',
-          },
-        ],
+        children: [],
       },
     ],
   },
@@ -141,7 +118,7 @@ export const sidebar_data: SidebarItem[] = [
       {
         id: 'forgot-password',
         title: 'Forgot Password',
-        icon: AlertCircle,
+        icon: CircleQuestionMark,
         children: [
           {
             title: 'Cover',
@@ -184,21 +161,6 @@ export const sidebar_data: SidebarItem[] = [
         ],
       },
       {
-        id: 'two-step-verification',
-        title: '2 Step Verification',
-        icon: VerifiedIcon,
-        children: [
-          {
-            title: 'Cover',
-            href: '/emailVerification-cover',
-          },
-          {
-            title: 'Basic',
-            href: '/emailVerification-basic',
-          },
-        ],
-      },
-      {
         id: 'lock-screen',
         title: 'Lock Screen',
         icon: Lock,
@@ -206,7 +168,6 @@ export const sidebar_data: SidebarItem[] = [
         type: 'simple',
         children: [],
       },
-      
     ],
   },
 ]

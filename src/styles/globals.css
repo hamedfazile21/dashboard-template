@@ -7,10 +7,76 @@
 @import './scrollbar.css';
 @variant dark (&:where(.dark, .dark *));
 
+@font-face {
+  font-family: Shabnam;
+  src: url('../../public/assets/Font/Shabnam.eot');
+  src:
+    url('../../public/assets/Font/Shabnam.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../public/assets/Font/Shabnam.woff2') format('woff2'),
+    url('../../public/assets/Font/Shabnam.woff') format('woff'),
+    url('../../public/assets/Font/Shabnam.ttf') format('truetype');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Shabnam;
+  src: url('../../public/assets/Font/Shabnam-Bold.eot');
+  src:
+    url('../../public/assets/Font/Shabnam-Bold.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../public/assets/Font/Shabnam-Bold.woff2') format('woff2'),
+    url('../../public/assets/Font/Shabnam-Bold.woff') format('woff'),
+    url('../../public/assets/Font/Shabnam-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Shabnam;
+  src: url('../../public/assets/Font/Shabnam-Thin.eot');
+  src:
+    url('../../public/assets/Font/Shabnam-Thin.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../public/assets/Font/Shabnam-Thin.woff2') format('woff2'),
+    url('../../public/assets/Font/Shabnam-Thin.woff') format('woff'),
+    url('../../public/assets/Font/Shabnam-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Shabnam;
+  src: url('../../public/assets/Font/Shabnam-Light.eot');
+  src:
+    url('../../public/assets/Font/Shabnam-Light.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../public/assets/Font/Shabnam-Light.woff2') format('woff2'),
+    url('../../public/assets/Font/Shabnam-Light.woff') format('woff'),
+    url('../../public/assets/Font/Shabnam-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Shabnam;
+  src: url('../../public/assets/Font/Shabnam-Medium.eot');
+  src:
+    url('../../public/assets/Font/Shabnam-Medium.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../public/assets/Font/Shabnam-Medium.woff2') format('woff2'),
+    url('../../public/assets/Font/Shabnam-Medium.woff') format('woff'),
+    url('../../public/assets/Font/Shabnam-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
 @theme {
   --color-primary: var(--color-primary);
   --color-primary-foreground: var(--color-primary-foreground);
   --font-jost: 'Jost', sans-serif;
+  --font-shabnam: 'Shabnam', sans-serif;
   --text-system: 14px;
   --color-borderColor: var(--border);
   --color-foreground: var(--foreground);
@@ -22,7 +88,7 @@
 
 @layer base {
   html {
-    @apply font-jost overflow-hidden;
+    @apply font-jost rtl:font-shabnam overflow-hidden;
   }
 }
 * {
@@ -88,7 +154,7 @@ button {
 }
 
 .btn-primary {
-  @apply border border-transparent bg-primary text-foreground
+  @apply border border-transparent bg-primary text-white dark:text-foreground
     shadow-sm shadow-primary/25
     hover:bg-[color-mix(in_srgb,var(--color-primary)_85%,white)]
     active:bg-[color-mix(in_srgb,var(--color-primary)_88%,black)]

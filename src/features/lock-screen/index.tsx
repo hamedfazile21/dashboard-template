@@ -24,7 +24,7 @@ function LockScreen() {
       lockPassword: '',
     } as LockScreenFrom,
     onSubmit: async ({ value }) => {
-      showObjectToast('Screen Lock Submitted', value)
+      showObjectToast(t('Screen Lock Submitted'), value)
     },
   })
 
@@ -49,17 +49,17 @@ function LockScreen() {
       <img
         src={GlassBlob1}
         alt=""
-        className="pointer-events-none absolute -top-20 -left-20 -z-10 size-128 opacity-70 dark:opacity-30"
+        className="pointer-events-none fixed -top-20 -left-20 -z-10 size-128 opacity-70 dark:opacity-30"
       />
       <img
         src={GlassBlob}
         alt=""
-        className="pointer-events-none absolute bottom-50 right-180 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none fixed bottom-50 right-180 -z-10 size-128 opacity-60 dark:opacity-25"
       />
       <img
         src={GlassBlob2}
         alt=""
-        className="pointer-events-none absolute -bottom-24 -right-16 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none fixed -bottom-24 -right-16 -z-10 size-128 opacity-60 dark:opacity-25"
       />
 
       {/* Clock */}

@@ -3,8 +3,11 @@ import { ArrowLeft, Mail, MailCheck } from 'lucide-react'
 import Input from '#/components/Input'
 import { GlassBlob, GlassBlob2, GlassBlob3 } from '../../../../public/assets'
 import { showObjectToast } from '#/helper/toast-helper'
+import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 function ForgotPasswordBasic() {
+  const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [sent, setSent] = useState(false)
@@ -25,7 +28,7 @@ function ForgotPasswordBasic() {
     // await api.sendResetLink(email)
     setSubmitting(false)
     setSent(true)
-    showObjectToast('Login From Submitted', { email })
+    showObjectToast(t('Login From Submitted'), { email })
   }
 
   return (
@@ -34,40 +37,38 @@ function ForgotPasswordBasic() {
       <img
         src={GlassBlob2}
         alt=""
-        className="pointer-events-none absolute -top-20 -left-20 -z-10 size-128 opacity-70 dark:opacity-30"
+        className="pointer-events-none fixed -top-20 left-0 lg:-left-20 -z-10 size-128 opacity-70 dark:opacity-30"
       />
       <img
         src={GlassBlob}
         alt=""
-        className="pointer-events-none absolute bottom-50 right-180 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="hidden lg:block pointer-events-none fixed bottom-50 right-0 lg:right-180 -z-10 size-128 opacity-60 dark:opacity-25"
       />
       <img
         src={GlassBlob3}
         alt=""
-        className="pointer-events-none absolute -bottom-24 -right-16 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none fixed -bottom-24 md:right-0 lg:-right-16 -z-10 size-128 opacity-60 dark:opacity-25"
       />
 
-      <div className="card w-full max-w-sm p-10">
-        <a
-          href="/login"
+      <div className="card w-full max-w-md p-10">
+        <Link
+          to={'/login-basic'}
           className="mb-6 inline-flex items-center gap-x-1.5 text-sm font-medium text-muted hover:text-primary"
         >
-          <ArrowLeft size={16} />
-          Back to sign in
-        </a>
+          <ArrowLeft className="rtl:rotate-180" size={16} />
+          {t('Back to sign in')}
+        </Link>
 
         {!sent ? (
           <>
-            <div className="mb-6 text-center">
-              <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary/15 text-primary">
-                <Mail size={22} />
-              </div>
+            <div className="mb-6">
               <h1 className="text-xl font-semibold text-foreground">
-                Forgot your password?
+                {t('Forgot your password?')}
               </h1>
               <p className="mt-1 text-sm text-muted">
-                Enter the email linked to your account and we'll send you a
-                reset link.
+                {t(
+                  "Enter the email linked to your account and we'll send you a reset link.",
+                )}
               </p>
             </div>
 
@@ -75,7 +76,7 @@ function ForgotPasswordBasic() {
               <Input
                 id="email"
                 type="email"
-                label="Email"
+                label={t('Email')}
                 placeholder="example@gmail.com"
                 value={email}
                 onChange={(e) => {
@@ -90,7 +91,7 @@ function ForgotPasswordBasic() {
                 disabled={submitting}
                 className="btn btn-primary mt-2 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {submitting ? 'Sending…' : 'Send reset link'}
+                {submitting ? t('Sending…') : t('Send reset link')}
               </button>
             </form>
           </>
@@ -100,19 +101,19 @@ function ForgotPasswordBasic() {
               <MailCheck size={26} />
             </div>
             <h1 className="mt-4 text-xl font-semibold text-foreground">
-              Check your inbox
+              {t('Check your inbox')}
             </h1>
             <p className="mt-2 max-w-xs text-sm text-muted">
-              We sent a password reset link to{' '}
+              {t('We sent a password reset link to')}{' '}
               <span className="font-medium text-foreground">{email}</span>.
-              It'll expire in 15 minutes.
+              {t("It'll expire in 15 minutes.")}
             </p>
             <button
               type="button"
               onClick={() => setSent(false)}
               className="mt-6 text-xs font-medium text-primary hover:underline"
             >
-              Didn't get it? Try a different email
+              {t("Didn't get it? Try a different email")}
             </button>
           </div>
         )}

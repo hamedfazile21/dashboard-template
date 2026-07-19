@@ -3,11 +3,13 @@ import { ArrowLeft, MailCheck, ShieldCheck } from 'lucide-react'
 import { EmailValidationSVG, GlassBlob } from '../../../../public/assets'
 import { showObjectToast } from '#/helper/toast-helper'
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 const CODE_LENGTH = 6
 const RESEND_COOLDOWN = 30 // seconds
 
 function EmailVerificationCover() {
+  const { t } = useTranslation()
   const [code, setCode] = useState<string[]>(Array(CODE_LENGTH).fill(''))
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -67,7 +69,7 @@ function EmailVerificationCover() {
     setError('')
     setSubmitting(true)
     setSubmitting(false)
-    showObjectToast('Login From Submitted', { code: value })
+    showObjectToast(t('Verification From Submitted'), { code: value })
   }
 
   const handleResend = () => {
@@ -76,50 +78,13 @@ function EmailVerificationCover() {
   }
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-hidden lg:flex-row">
+    <div className="relative flex justify-center items-center min-h-screen w-full flex-col overflow-hidden lg:flex-row">
       {/* Cover side */}
-      <div className="relative hidden h-screen w-[45%] items-center justify-center overflow-hidden p-10 lg:flex">
-        <img
-          src={EmailValidationSVG}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/20" />
-
-        <div className="card relative z-10 w-full max-w-md p-8">
-          <div className="flex size-12 items-center justify-center rounded-full bg-primary/15 text-primary">
-            <ShieldCheck size={22} />
-          </div>
-          <h2 className="mt-4 text-2xl font-semibold text-foreground">
-            One quick step to secure your account
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-muted">
-            Verifying your email helps us keep your account safe and makes sure
-            you never miss an important update.
-          </p>
-
-          <div className="mt-6 flex flex-col gap-y-3 border-t border-white/10 pt-6">
-            {[
-              'Takes less than 30 seconds',
-              'Code expires in 10 minutes',
-              "Didn't get it? You can resend anytime",
-            ].map((item) => (
-              <div
-                key={item}
-                className="flex items-center gap-x-2.5 text-sm text-foreground"
-              >
-                <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       <img
         src={GlassBlob}
         alt=""
-        className="pointer-events-none absolute bottom-50 right-100 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none fixed bottom-50 right-100 -z-10 size-128 opacity-60 dark:opacity-25"
       />
 
       {/* Form side */}
@@ -129,8 +94,8 @@ function EmailVerificationCover() {
             to="/login-cover"
             className="mb-6 inline-flex items-center gap-x-1.5 text-sm font-medium text-muted hover:text-primary"
           >
-            <ArrowLeft size={16} />
-            Back to sign in
+            <ArrowLeft className="rtl:rotate-180" size={16} />
+            {t('Back to sign in')}
           </Link>
 
           <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-primary/15 text-primary">
@@ -138,10 +103,10 @@ function EmailVerificationCover() {
           </div>
 
           <h1 className="text-xl font-semibold text-foreground">
-            Verify your email
+            {t('Verify your email')}
           </h1>
           <p className="mt-2 text-sm text-muted">
-            We sent a 6-digit code to{' '}
+            {t('We sent a 6-digit code to')}{' '}
             <span className="font-medium text-foreground">{email}</span>
           </p>
 
@@ -175,21 +140,62 @@ function EmailVerificationCover() {
               disabled={submitting}
               className="btn btn-primary mt-2 w-full disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting ? 'Verifying…' : 'Verify email'}
+              {submitting ? t('Verifying…') : t('Verify email')}
             </button>
           </form>
 
           <p className="mt-6 text-sm text-muted">
-            Didn't get a code?{' '}
+            {t("Didn't get a code?")}{' '}
             <button
               type="button"
               onClick={handleResend}
               disabled={coolDown > 0}
               className="font-medium text-primary hover:underline disabled:cursor-not-allowed disabled:text-muted disabled:no-underline"
             >
-              {coolDown > 0 ? `Resend in ${coolDown}s` : 'Resend code'}
+              {coolDown > 0
+                ? t('Resend in ${coolDown}s', { coolDown })
+                : t('Resend code')}
             </button>
           </p>
+        </div>
+      </div>
+
+      <div className="relative hidden h-screen w-[45%] items-center justify-center overflow-hidden p-10 lg:flex">
+        <img
+          src={EmailValidationSVG}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/20" />
+
+        <div className="card relative z-10 w-full max-w-md p-8">
+          <div className="flex size-12 items-center justify-center rounded-full bg-primary/15 text-primary">
+            <ShieldCheck size={22} />
+          </div>
+          <h2 className="mt-4 text-2xl font-semibold text-foreground">
+            {t('One quick step to secure your account')}
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted">
+            {t(
+              'Verifying your email helps us keep your account safe and makes sure you never miss an important update.',
+            )}
+          </p>
+
+          <div className="mt-6 flex flex-col gap-y-3 border-t border-white/10 pt-6">
+            {[
+              'Takes less than 30 seconds',
+              'Code expires in 10 minutes',
+              "Didn't get it? You can resend anytime",
+            ].map((item) => (
+              <div
+                key={item}
+                className="flex items-center gap-x-2.5 text-sm text-foreground"
+              >
+                <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                {t(item)}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
