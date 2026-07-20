@@ -186,7 +186,7 @@ button {
    Cards
    ========================================================================== */
 .card {
-  @apply glass relative rounded-xl p-4 transition-all duration-200 ease-out;
+  @apply glass relative rounded-xl p-4 transition-all duration-200 ease-out text-foreground;
 }
 
 .card-hover {

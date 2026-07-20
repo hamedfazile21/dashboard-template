@@ -1,5 +1,4 @@
 import {
-  AlertCircle,
   ChartNoAxesCombined,
   ClipboardCheck,
   ListTodo,
@@ -9,8 +8,6 @@ import {
   MailQuestion,
   MessageCircleMore,
   RefreshCcwDot,
-  Users,
-  VerifiedIcon,
   ScanLine,
   CircleQuestionMark,
 } from 'lucide-react'
@@ -39,7 +36,7 @@ export const sidebar_data: SidebarItem[] = [
         id: 'dashboard',
         title: 'Dashboard',
         icon: ChartNoAxesCombined,
-        href: '',
+        href: '/',
         children: [],
       },
     ],

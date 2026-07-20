@@ -11,6 +11,8 @@ import { toast } from 'sonner'
 import ObjectViewer from '#/components/object-viewer'
 import { showObjectToast } from '#/helper/toast-helper'
 import Popover from '#/components/popover'
+import Select from '#/components/input-select'
+import InputSelect from '#/components/input-select'
 const Dashboard = () => {
   const { t } = useTranslation()
   const handelChangeLanguage = (language: string) => {
