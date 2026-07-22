@@ -13,6 +13,8 @@ import { showObjectToast } from '#/helper/toast-helper'
 import Popover from '#/components/popover'
 import Select from '#/components/input-select'
 import InputSelect from '#/components/input-select'
+import Dialog from '#/components/dialog'
+import { useState } from 'react'
 const Dashboard = () => {
   const { t } = useTranslation()
   const handelChangeLanguage = (language: string) => {
@@ -37,6 +39,7 @@ const Dashboard = () => {
     document.documentElement.classList.toggle('dark')
   }
   const { counter } = useAppSelector((state) => state.dashboard)
+  const [openModal, setOpenModal] = useState<boolean>(false)
   return (
     <div className="bg-blue-500/20">
       <Popover
@@ -69,19 +72,30 @@ const Dashboard = () => {
       <div>
         <button onClick={handelChangeTheme}>Change Theme</button>
       </div>
-      <button
-        onClick={() =>
-          showObjectToast('Form submitted', {
-            name: 'Hamed Fazeli',
-            last_name: 'fazeli',
-            name1: 'Hamed Fazeli',
-            last_name1: 'fazeli',
-            name2: 'Hamed Fazeli',
-          })
+      <button onClick={() => setOpenModal(true)}>Modal</button>
+      <Dialog
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        title="New Task"
+        position="top"
+        closeOnOutsideClick={false}
+        footer={
+          <>
+            <button
+              type="button"
+              onClick={() => setOpenModal(false)}
+              className="btn btn-secondary"
+            >
+              Cancel
+            </button>
+            <button type="submit" form="task-form" className="btn btn-primary">
+              Create Task
+            </button>
+          </>
         }
       >
-        Give me a toast
-      </button>
+        <p>Ali</p>
+      </Dialog>
     </div>
   )
 }
