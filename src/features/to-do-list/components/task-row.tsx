@@ -2,7 +2,7 @@ import CheckBox from '#/components/Checkbox'
 import Dropdown from '#/components/drop-down'
 import { Ellipsis, SquarePen, Star, StarOff, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import type { Priority, TodoStatus } from '../todos'
+import type { Priority, TodoStatus } from '../data/todos'
 
 interface TaskRowProps {
   rowKey: number
@@ -16,6 +16,7 @@ interface TaskRowProps {
   status: TodoStatus
   completeAction: (id: number) => void
   handelToggleImportant: (id: number) => void
+  handelDeleteTask: (id: number) => void
 }
 
 const categoryStyles = {
@@ -37,6 +38,7 @@ function TaskRow({
   isImportant,
   completeAction,
   handelToggleImportant,
+  handelDeleteTask,
 }: TaskRowProps) {
   const { t } = useTranslation()
   const priorityStyle =
@@ -105,7 +107,7 @@ function TaskRow({
               },
               {
                 className: `text-red-500`,
-                onClick: () => {},
+                onClick: () => handelDeleteTask(id),
                 title: 'Delete',
                 icon: <Trash2 size={18} />,
               },

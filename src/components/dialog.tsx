@@ -136,7 +136,7 @@ export function Dialog({
               <div>{children}</div>
 
               {footer && (
-                <div className="mt-6 flex justify-end gap-x-2 border-t border-white/10 pt-4 dark:border-white/8">
+                <div className="mt-6 flex gap-x-2 border-t border-white/10 pt-4 dark:border-white/8">
                   {footer}
                 </div>
               )}

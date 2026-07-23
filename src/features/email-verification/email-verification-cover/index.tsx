@@ -138,7 +138,7 @@ function EmailVerificationCover() {
             <button
               type="submit"
               disabled={submitting}
-              className="btn btn-primary mt-2 w-full disabled:cursor-not-allowed disabled:opacity-60"
+              className="btn btn-primary mt-2 w-full! disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting ? t('Verifying…') : t('Verify email')}
             </button>

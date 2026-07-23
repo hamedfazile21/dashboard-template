@@ -1,10 +1,4 @@
-import {
-  Avatar1,
-  Avatar2,
-  Avatar3,
-  Avatar4,
-  Avatar5,
-} from '../../../../dist/assets'
+import { Avatar1, Avatar2, Avatar3, Avatar30, Avatar4, Avatar5 } from "../../../../public/assets"
 
 export type Priority = 'Low' | 'Medium' | 'High'
 export type TodoStatus = 'complete' | 'pending' | 'trashed'
@@ -45,7 +39,7 @@ export const todoData: TodoType[] = [
   {
     id: 3,
     title: 'Fix Dashboard Layout',
-    assignee: Avatar3,
+    assignee: Avatar30,
     priority: 'Medium',
     description:
       'Resolve responsive issues affecting tablet and mobile screen sizes.',

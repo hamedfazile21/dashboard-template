@@ -80,7 +80,7 @@ const Dashboard = () => {
         position="top"
         closeOnOutsideClick={false}
         footer={
-          <>
+          <div className='flex items-center gap-x-1'>
             <button
               type="button"
               onClick={() => setOpenModal(false)}
@@ -91,7 +91,7 @@ const Dashboard = () => {
             <button type="submit" form="task-form" className="btn btn-primary">
               Create Task
             </button>
-          </>
+          </div>
         }
       >
         <p>Ali</p>

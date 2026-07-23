@@ -89,7 +89,7 @@ function ForgotPasswordBasic() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="btn btn-primary mt-2 disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn btn-primary w-full! mt-2 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {submitting ? t('Sending…') : t('Send reset link')}
               </button>

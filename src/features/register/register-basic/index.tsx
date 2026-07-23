@@ -179,7 +179,7 @@ const RegisterBasic = () => {
 
           <button
             type="submit"
-            className="btn btn-primary mt-2"
+            className="btn btn-primary mt-2 w-full!"
             disabled={false}
           >
             {t('Create account')}

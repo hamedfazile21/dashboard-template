@@ -111,7 +111,7 @@ function ResetBasic() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="btn btn-primary mt-2 disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn btn-primary w-full! mt-2 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {submitting ? t('Resetting…') : t('Reset password')}
               </button>

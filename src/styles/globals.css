@@ -147,7 +147,7 @@ button {
    Buttons
    ========================================================================== */
 .btn {
-  @apply inline-flex w-full items-center justify-center gap-x-1.5 rounded-md p-2 text-sm font-semibold
+  @apply inline-flex w-fit items-center justify-center gap-x-1.5 rounded-md p-2 text-sm font-semibold
     text-foreground outline-none transition-all duration-200 ease-out
     disabled:pointer-events-none disabled:opacity-50
     focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background;

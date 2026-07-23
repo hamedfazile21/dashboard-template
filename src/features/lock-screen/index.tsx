@@ -113,7 +113,7 @@ function LockScreen() {
 
           <button
             type="submit"
-            className="btn btn-primary flex items-center justify-center gap-x-2"
+            className="btn btn-primary w-full! flex items-center justify-center gap-x-2"
           >
             <Lock size={16} />
             {t('Unlock')}
