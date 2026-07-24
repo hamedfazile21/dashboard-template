@@ -153,6 +153,10 @@ button {
     focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
 
+.btn-normal {
+  @applay;
+}
+
 .btn-primary {
   @apply border border-transparent bg-primary text-white dark:text-foreground
     shadow-sm shadow-primary/25
@@ -196,7 +200,7 @@ button {
 }
 
 .card-header {
-  @apply mb-3 flex items-center justify-between border-b border-white/10 pb-3 dark:border-white/8;
+  @apply mb-3 flex items-center justify-between border-b border-borderColor pb-3;
 }
 
 .card-title {
@@ -205,4 +209,8 @@ button {
 
 .card-body {
   @apply text-sm text-muted;
+}
+
+.card-footer {
+  @apply mt-3 flex items-center justify-between border-t border-borderColor pt-3;
 }

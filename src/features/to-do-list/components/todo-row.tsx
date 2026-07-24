@@ -2,7 +2,9 @@ import CheckBox from '#/components/Checkbox'
 import Dropdown from '#/components/drop-down'
 import { Ellipsis, SquarePen, Star, StarOff, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import type { Priority, TodoStatus } from '../data/todos'
+import type { Priority, TodoStatus, TodoType } from '../data/todos'
+import { useTodo } from './todo-provider'
+import type { Dispatch, SetStateAction } from 'react'
 
 interface TaskRowProps {
   rowKey: number
@@ -13,10 +15,8 @@ interface TaskRowProps {
   date: string
   assignee: string
   isImportant: boolean
-  status: TodoStatus
-  completeAction: (id: number) => void
-  handelToggleImportant: (id: number) => void
-  handelDeleteTask: (id: number) => void
+  status: TodoStatus,
+  setActiveItem : Dispatch<SetStateAction<number>>
 }
 
 const categoryStyles = {
@@ -26,7 +26,7 @@ const categoryStyles = {
   amber: 'border-amber-500/30 bg-amber-500/10 text-amber-500',
 }
 
-function TaskRow({
+function TodoRow({
   rowKey,
   id,
   title,
@@ -36,13 +36,50 @@ function TaskRow({
   assignee,
   status,
   isImportant,
-  completeAction,
-  handelToggleImportant,
-  handelDeleteTask,
+  setActiveItem
 }: TaskRowProps) {
   const { t } = useTranslation()
+  const { todos, setTodos } = useTodo()
   const priorityStyle =
     priority === 'Low' ? 'emerald' : priority === 'Medium' ? 'blue' : 'red'
+
+  const completeAction = (id: number) => {
+    const updatedData: TodoType[] = todos.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            status: item.status === 'complete' ? 'pending' : 'complete',
+          }
+        : item,
+    )
+    setTodos(updatedData)
+  }
+
+  const handelToggleImportant = (id: number) => {
+    const updatedData: TodoType[] = todos.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            isImportant: !item.isImportant,
+          }
+        : item,
+    )
+    setTodos(updatedData)
+  }
+
+  const handelDeleteTask = (id: number) => {
+    const deleteData: TodoType[] = todos.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            status: 'trashed',
+          }
+        : item,
+    )
+    setActiveItem(4)
+    setTodos(deleteData)
+  }
+
   return (
     <div key={rowKey} className={`group border-b border-borderColor`}>
       <div
@@ -85,7 +122,7 @@ function TaskRow({
 
           <Dropdown
             menuItemClassName="!w-[150px]"
-            menuButtonClassName="bg-transparent! border-0"
+            menuButtonClassName="bg-transparent! border-0! shadow-none! p-0!"
             menuButtonContent={
               <div className="flex items-center text-foreground">
                 <Ellipsis size={18} />
@@ -119,4 +156,4 @@ function TaskRow({
   )
 }
 
-export default TaskRow
+export default TodoRow

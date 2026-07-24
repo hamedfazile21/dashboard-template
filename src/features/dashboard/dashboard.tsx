@@ -51,6 +51,15 @@ const Dashboard = () => {
           <p className="text-xs text-muted">You're all caught up.</p>
         </div>
       </Popover>
+      <Popover
+        trigger={<button className="btn btn-secondary">Open</button>}
+        placement="bottom-start"
+      >
+        <div className="flex flex-col gap-y-1">
+          <p className="text-sm font-medium text-foreground">Notifications</p>
+          <p className="text-xs text-muted">You're all caught up.</p>
+        </div>
+      </Popover>
       <button
         className="px-5 bg-primary"
         onClick={() => handelChangeLanguage('fa')}
@@ -79,20 +88,7 @@ const Dashboard = () => {
         title="New Task"
         position="top"
         closeOnOutsideClick={false}
-        footer={
-          <div className='flex items-center gap-x-1'>
-            <button
-              type="button"
-              onClick={() => setOpenModal(false)}
-              className="btn btn-secondary"
-            >
-              Cancel
-            </button>
-            <button type="submit" form="task-form" className="btn btn-primary">
-              Create Task
-            </button>
-          </div>
-        }
+        
       >
         <p>Ali</p>
       </Dialog>

@@ -9,12 +9,15 @@ import {
   TransitionChild,
 } from '@headlessui/react'
 import { X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const sizeClasses = {
   sm: 'max-w-sm',
   md: 'max-w-md',
   lg: 'max-w-lg',
   xl: 'max-w-xl',
+  '2xl': 'max-w-2xl',
+  '3xl': 'max-w-3xl',
 }
 
 interface DialogProps {
@@ -23,7 +26,6 @@ interface DialogProps {
   title?: string
   description?: string
   children: ReactNode
-  footer?: ReactNode
   size?: keyof typeof sizeClasses
   /** 'center' = normal modal; 'top' = anchored near the top of the viewport */
   position?: 'center' | 'top'
@@ -46,14 +48,14 @@ export function Dialog({
   open,
   onClose,
   title,
-  description,
   children,
-  footer,
   size = 'md',
   position = 'center',
   showCloseButton = true,
   closeOnOutsideClick = true,
 }: DialogProps) {
+  const { t } = useTranslation()
+
   // Re-add Escape-to-close ourselves when outside-click is disabled,
   // since disabling Headless UI's onClose disables Escape too.
   useEffect(() => {
@@ -92,7 +94,7 @@ export function Dialog({
         {/* Panel wrapper — controls center vs top anchoring */}
         <div
           className={`fixed inset-0 flex justify-center overflow-y-auto p-4 ${
-            position === 'top' ? 'items-start pt-20' : 'items-center'
+            position === 'top' ? 'items-start pt-10' : 'items-center'
           }`}
         >
           <TransitionChild
@@ -106,17 +108,12 @@ export function Dialog({
           >
             <DialogPanel className={`card w-full ${sizeClasses[size]} p-6`}>
               {(title || showCloseButton) && (
-                <div className="mb-4 flex items-start border-b border-borderColor pb-2 justify-between gap-x-4">
+                <div className="card-header border-b! border-borderColor!">
                   <div>
                     {title && (
                       <DialogTitle className="text-base font-semibold text-foreground">
-                        {title}
+                        {t(title)}
                       </DialogTitle>
-                    )}
-                    {description && (
-                      <Description className="mt-1 text-sm text-muted">
-                        {description}
-                      </Description>
                     )}
                   </div>
 
@@ -133,13 +130,7 @@ export function Dialog({
                 </div>
               )}
 
-              <div>{children}</div>
-
-              {footer && (
-                <div className="mt-6 flex gap-x-2 border-t border-white/10 pt-4 dark:border-white/8">
-                  {footer}
-                </div>
-              )}
+              <>{children}</>
             </DialogPanel>
           </TransitionChild>
         </div>

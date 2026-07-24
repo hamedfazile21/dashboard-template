@@ -6,6 +6,7 @@ import { sidebar_data, type SidebarChild } from './data/sidebar-data'
 import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import { toggleSidebar } from '#/features/theme/slice/theme-slice'
 import Tooltip from '../tooltip'
+import { Transition } from '@headlessui/react'
 const Sidebar = () => {
   const { t } = useTranslation()
   const location = useLocation()
@@ -187,22 +188,28 @@ const Sidebar = () => {
         {/* inline submenu (expanded sidebar) */}
         {hasChildren && sidebarStatus !== 'collapsible-vertical' && (
           <div
-            className={`overflow-hidden transition-all duration-300 ease-in-out ${
-              isOpen ? 'mt-1 max-h-40 opacity-100' : 'max-h-0 opacity-0'
+            className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-in-out ${
+              isOpen ? 'mt-1 grid-rows-[1fr]' : 'grid-rows-[0fr]'
             }`}
           >
-            {renderSubNavItem(item)}
+            <div className="min-h-0">{renderSubNavItem(item)}</div>
           </div>
         )}
 
         {/* flyout submenu (collapsed sidebar) */}
-        {submenuActiveTab === item.id && (
-          <div
-            className={`card absolute! p-1.5! top-0 z-20 w-55 origin-top ltr:left-18 rtl:right-18`}
-          >
+        <Transition
+          show={submenuActiveTab === item.id}
+          enter="transition duration-150 ease-out"
+          enterFrom="opacity-0 scale-95 -translate-x-1 rtl:translate-x-1 rtl:scale-95"
+          enterTo="opacity-100 scale-100 translate-x-0"
+          leave="transition duration-100 ease-in"
+          leaveFrom="opacity-100 scale-100 translate-x-0"
+          leaveTo="opacity-0 scale-95 -translate-x-1 rtl:translate-x-1"
+        >
+          <div className="card absolute! p-1.5! top-0 z-20 w-55 origin-top ltr:left-18 rtl:right-18 [contain:layout_paint] will-change-transform">
             {renderSubNavItem(item)}
           </div>
-        )}
+        </Transition>
       </div>
     )
   }
