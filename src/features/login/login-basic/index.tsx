@@ -1,6 +1,5 @@
-import CheckBox from '#/components/Checkbox'
-import Input from '#/components/Input'
-import React, { useState } from 'react'
+import CheckBox from '#/components/checkbox'
+import Input from '#/components/input'
 import Github from '../../../../public/assets/media/github'
 import Google from '../../../../public/assets/media/google'
 import Linkedin from '../../../../public/assets/media/linkedin'

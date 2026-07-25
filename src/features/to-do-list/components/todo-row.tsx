@@ -1,4 +1,4 @@
-import CheckBox from '#/components/Checkbox'
+import CheckBox from '#/components/checkbox'
 import Dropdown from '#/components/drop-down'
 import { Ellipsis, SquarePen, Star, StarOff, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -15,8 +15,8 @@ interface TaskRowProps {
   date: string
   assignee: string
   isImportant: boolean
-  status: TodoStatus,
-  setActiveItem : Dispatch<SetStateAction<number>>
+  status: TodoStatus
+  setActiveItem: Dispatch<SetStateAction<number>>
 }
 
 const categoryStyles = {
@@ -36,10 +36,10 @@ function TodoRow({
   assignee,
   status,
   isImportant,
-  setActiveItem
+  setActiveItem,
 }: TaskRowProps) {
   const { t } = useTranslation()
-  const { todos, setTodos } = useTodo()
+  const { todos, setTodos, setOpen, setCurrentRow } = useTodo()
   const priorityStyle =
     priority === 'Low' ? 'emerald' : priority === 'Medium' ? 'blue' : 'red'
 
@@ -66,6 +66,11 @@ function TodoRow({
     )
     setTodos(updatedData)
   }
+
+  // const handelFormEdit = (id: number) => {
+  //   setOpen('update')
+  //   setCurrentRow(id)
+  // }
 
   const handelDeleteTask = (id: number) => {
     const deleteData: TodoType[] = todos.map((item) =>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, Mail, MailCheck } from 'lucide-react'
-import Input from '#/components/Input'
+import Input from '#/components/input'
 import { ForgotPasswordSVG, GlassBlob } from '../../../../public/assets'
 import { Link } from '@tanstack/react-router'
 import { showObjectToast } from '#/helper/toast-helper'
@@ -129,7 +129,9 @@ function ForgotPasswordCover() {
             {t('Account recovery, simplified')}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-foreground">
-            {t("We'll email you a secure link to reset your password — no security questions, no waiting on support.")}
+            {t(
+              "We'll email you a secure link to reset your password — no security questions, no waiting on support.",
+            )}
           </p>
 
           <div className="mt-6 flex flex-col gap-y-3 border-t border-white/10 pt-6">

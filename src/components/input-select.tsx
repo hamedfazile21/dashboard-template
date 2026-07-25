@@ -2,24 +2,32 @@ import ReactSelect, {
   components,
   type ClassNamesConfig,
   type DropdownIndicatorProps,
+  type ClearIndicatorProps,
+  type OptionProps,
   type GroupBase,
   type Props as ReactSelectProps,
+  type NoticeProps,
 } from 'react-select'
-import { Check, ChevronDown, X } from 'lucide-react'
+import { Check, ChevronDown, SearchX, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import type { TFunction } from 'i18next'
 
 export interface SelectOption {
   value: string
   label: string
 }
 
-interface SelectProps extends Omit<
-  ReactSelectProps<SelectOption, boolean, GroupBase<SelectOption>>,
+interface SelectProps<
+  Option extends SelectOption = SelectOption,
+  IsMulti extends boolean = false,
+> extends Omit<
+  ReactSelectProps<Option, IsMulti, GroupBase<Option>>,
   'classNames' | 'unstyled'
 > {
   label?: string
   error?: string
+  required?: boolean
 }
-
 const glassClassNames: ClassNamesConfig<
   SelectOption,
   boolean,
@@ -39,18 +47,22 @@ const glassClassNames: ClassNamesConfig<
     'text-muted hover:text-red-500 transition-colors cursor-pointer p-1',
   dropdownIndicator: () => 'text-muted p-1',
   menu: () =>
-    `z-50 mt-2 rounded-xl border border-black/8 bg-surface/70 p-1 shadow-lg shadow-black/5
+    `z-50 mt-2 rounded-xl border border-black/8 bg-surface/90 p-1 shadow-lg shadow-black/5
      backdrop-blur-xl backdrop-saturate-150
-     dark:border-white/10 dark:bg-surface/35 dark:shadow-black/20`,
+     dark:border-white/10 dark:bg-surface/80 dark:shadow-black/20`,
   menuList: () => 'space-y-0.5 max-h-60 overflow-y-auto scrollbar-thin',
   option: (state) =>
-    `flex items-center justify-between rounded-lg px-3 py-2 text-sm cursor-pointer transition-colors duration-150 ${
+    `flex items-center justify-between rounded-lg px-3 py-2 text-sm cursor-pointer! transition-colors duration-150 opacity-100 ${
       state.isSelected
         ? 'bg-primary/15 text-primary'
         : state.isFocused
           ? 'bg-surface-hover text-foreground'
-          : 'text-foreground'
-    } ${state.isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`,
+          : 'text-foreground hover:bg-surface-hover'
+    } ${
+      state.isDisabled
+        ? 'opacity-50 cursor-not-allowed hover:bg-transparent'
+        : ''
+    }`,
   noOptionsMessage: () => 'px-3 py-2 text-sm text-muted',
   loadingMessage: () => 'px-3 py-2 text-sm text-muted',
   multiValue: () =>
@@ -73,7 +85,9 @@ function DropdownIndicator(
   )
 }
 
-function ClearIndicator(props: any) {
+function ClearIndicator(
+  props: ClearIndicatorProps<SelectOption, boolean, GroupBase<SelectOption>>,
+) {
   return (
     <components.ClearIndicator {...props}>
       <X size={14} />
@@ -81,18 +95,52 @@ function ClearIndicator(props: any) {
   )
 }
 
-function OptionWithCheck(props: any) {
+function OptionWithCheck(
+  props: OptionProps<SelectOption, boolean, GroupBase<SelectOption>>,
+) {
   return (
     <components.Option {...props}>
-      <span className="truncate text-md">{props.label}</span>
-      {props.isSelected && (
-        <Check size={15} className="shrink-0 text-primary" />
-      )}
+      <div className="w-full flex items-center justify-between">
+        <span className="truncate text-sm">{props.label}</span>
+        {props.isSelected && (
+          <Check size={15} className="shrink-0 text-primary" />
+        )}
+      </div>
     </components.Option>
   )
 }
 
-function InputSelect({ label, error, id, ...props }: SelectProps) {
+function NoOptionsFound(
+  props: NoticeProps<SelectOption, boolean, GroupBase<SelectOption>>,
+  t: TFunction,
+) {
+  return (
+    <components.NoOptionsMessage {...props}>
+      <div className="flex flex-col items-center justify-center gap-y-2 py-4 text-center">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted/10">
+          <SearchX size={16} className="text-muted" />
+        </div>
+        <p className="text-sm font-medium text-foreground">
+          {t('No results found')}
+        </p>
+        <p className="text-xs text-muted">{t('Try a different search term')}</p>
+      </div>
+    </components.NoOptionsMessage>
+  )
+}
+
+function InputSelect<
+  Option extends SelectOption = SelectOption,
+  IsMulti extends boolean = false,
+>({
+  label,
+  error,
+  id,
+  components: customComponents,
+  required = false,
+  ...props
+}: SelectProps<Option, IsMulti>) {
+  const { t } = useTranslation()
   return (
     <div className="w-full">
       {label && (
@@ -100,18 +148,29 @@ function InputSelect({ label, error, id, ...props }: SelectProps) {
           htmlFor={id}
           className="mb-1.5 block text-sm font-medium text-foreground"
         >
-          {label}
+          {label}{' '}
+          {required && (
+            <span className="text-red-500 ltr:ml-0.5 rtl:mr-0.5">*</span>
+          )}
         </label>
       )}
 
-      <ReactSelect
+      <ReactSelect<Option, IsMulti, GroupBase<Option>>
         inputId={id}
         unstyled
-        classNames={glassClassNames}
+        classNames={
+          glassClassNames as ClassNamesConfig<
+            Option,
+            IsMulti,
+            GroupBase<Option>
+          >
+        }
         components={{
-          DropdownIndicator,
-          ClearIndicator,
-          Option: OptionWithCheck,
+          DropdownIndicator: DropdownIndicator as any,
+          ClearIndicator: ClearIndicator as any,
+          Option: OptionWithCheck as any,
+          NoOptionsMessage: (props: any) => NoOptionsFound(props, t) as any,
+          ...customComponents,
         }}
         {...props}
       />

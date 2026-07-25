@@ -11,8 +11,8 @@ import Github from '../../../../public/assets/media/github'
 import Google from '../../../../public/assets/media/google'
 import Linkedin from '../../../../public/assets/media/linkedin'
 import { Link } from '@tanstack/react-router'
-import CheckBox from '#/components/Checkbox'
-import Input from '#/components/Input'
+import CheckBox from '#/components/checkbox'
+import Input from '#/components/input'
 import { Check } from 'lucide-react'
 import { useForm } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
@@ -243,7 +243,9 @@ const RegisterCover = () => {
             {t('Get started in minutes')}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            {t('Everything you need to launch your workflow — no credit card, no setup calls, just sign up and go.')}
+            {t(
+              'Everything you need to launch your workflow — no credit card, no setup calls, just sign up and go.',
+            )}
           </p>
 
           <ul className="mt-6 flex flex-col gap-y-3">

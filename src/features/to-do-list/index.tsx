@@ -1,11 +1,11 @@
-import Input from '#/components/Input'
+import Input from '#/components/input'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { todoData, type TodoType } from './data/todos'
 import TodoRow from './components/todo-row'
 import SidePanelFilter from './components/side-panel-filter'
 import { TodoProvider, useTodo } from './components/todo-provider'
-import TodoDialog from './components/todo-dialog'
+import TodoDialog from './components/todo-dialogs'
 
 const FILTERS: Record<number, (item: TodoType) => boolean> = {
   1: () => true,
@@ -41,7 +41,7 @@ function TodoList() {
               .map((item, index) => {
                 return (
                   <TodoRow
-                    rowKey={index}
+                    rowKey={index + 1}
                     id={item.id}
                     title={item.title}
                     description={item.description}

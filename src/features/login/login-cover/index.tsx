@@ -9,8 +9,8 @@ import {
   GlassBlob2,
   LoginCoverPNG,
 } from '../../../../public/assets'
-import Input from '#/components/Input'
-import CheckBox from '#/components/Checkbox'
+import Input from '#/components/input'
+import CheckBox from '#/components/checkbox'
 import Github from '../../../../public/assets/media/github'
 import Google from '../../../../public/assets/media/google'
 import Linkedin from '../../../../public/assets/media/linkedin'

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { KeyRound, ShieldCheck } from 'lucide-react'
-import Input from '#/components/Input'
+import Input from '#/components/input'
 import { GlassBlob, GlassBlob1, GlassBlob2 } from '../../../../public/assets'
 import { showObjectToast } from '#/helper/toast-helper'
 import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
 
 function ResetBasic() {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errors, setErrors] = useState<{

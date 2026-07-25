@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, Mail, MailCheck } from 'lucide-react'
-import Input from '#/components/Input'
+import Input from '#/components/input'
 import { GlassBlob, GlassBlob2, GlassBlob3 } from '../../../../public/assets'
 import { showObjectToast } from '#/helper/toast-helper'
 import { Link } from '@tanstack/react-router'

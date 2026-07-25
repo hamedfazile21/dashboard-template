@@ -2,10 +2,10 @@ import { useTodo } from './todo-provider'
 import CreateTodoDialog from './create-todo-dialog'
 
 const TodoDialog = () => {
-  const { open, setOpen } = useTodo()
+  const { open, setOpen , currentRow } = useTodo()
   return (
     <>
-      <CreateTodoDialog open={open} setOpen={setOpen} />
+      <CreateTodoDialog key={'todo-create'} open={open} setOpen={setOpen} />
     </>
   )
 }

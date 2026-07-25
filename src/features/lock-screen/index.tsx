@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Lock } from 'lucide-react'
-import Input from '#/components/Input'
+import Input from '#/components/input'
 import {
   Avatar13,
   GlassBlob,
