@@ -1,4 +1,11 @@
-import { Avatar1, Avatar2, Avatar3, Avatar30, Avatar4, Avatar5 } from "../../../../public/assets"
+import {
+  Avatar1,
+  Avatar2,
+  Avatar3,
+  Avatar30,
+  Avatar4,
+  Avatar5,
+} from '../../../../public/assets'
 
 export type Priority = 'Low' | 'Medium' | 'High'
 export type TodoStatus = 'complete' | 'pending' | 'trashed'
@@ -112,6 +119,72 @@ export const todoData: TodoType[] = [
   },
   {
     id: 11,
+    title: 'Deploy Staging Version',
+    assignee: Avatar5,
+    priority: 'Low',
+    description:
+      'Deploy the latest build to the staging environment for QA testing.',
+    date: '20 Aug 2026',
+    status: 'pending',
+    isImportant: false,
+  },
+  {
+    id: 12,
+    title: 'Deploy Staging Version',
+    assignee: Avatar5,
+    priority: 'Low',
+    description:
+      'Deploy the latest build to the staging environment for QA testing.',
+    date: '20 Aug 2026',
+    status: 'pending',
+    isImportant: false,
+  },
+  {
+    id: 13,
+    title: 'Deploy Staging Version',
+    assignee: Avatar5,
+    priority: 'Low',
+    description:
+      'Deploy the latest build to the staging environment for QA testing.',
+    date: '20 Aug 2026',
+    status: 'pending',
+    isImportant: false,
+  },
+  {
+    id: 14,
+    title: 'Deploy Staging Version',
+    assignee: Avatar5,
+    priority: 'Low',
+    description:
+      'Deploy the latest build to the staging environment for QA testing.',
+    date: '20 Aug 2026',
+    status: 'pending',
+    isImportant: false,
+  },
+  {
+    id: 15,
+    title: 'Deploy Staging Version',
+    assignee: Avatar5,
+    priority: 'Low',
+    description:
+      'Deploy the latest build to the staging environment for QA testing.',
+    date: '20 Aug 2026',
+    status: 'pending',
+    isImportant: false,
+  },
+  {
+    id: 16,
+    title: 'Deploy Staging Version',
+    assignee: Avatar5,
+    priority: 'Low',
+    description:
+      'Deploy the latest build to the staging environment for QA testing.',
+    date: '20 Aug 2026',
+    status: 'pending',
+    isImportant: false,
+  },
+  {
+    id: 17,
     title: 'Deploy Staging Version',
     assignee: Avatar5,
     priority: 'Low',

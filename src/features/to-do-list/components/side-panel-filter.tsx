@@ -11,10 +11,10 @@ interface props {
 }
 
 const SidePanelFilter: React.FC<props> = ({ activeItem, setActiveItem }) => {
-  const { setOpen, todos } = useTodo()
+  const { setOpen, todos , paginateData} = useTodo()
   const { t } = useTranslation()
   return (
-    <div className="card h-[calc(100vh-7rem)] w-[20%] relative">
+    <div className="hidden! md:block! card h-[calc(100vh-7rem)] w-[20%] relative">
       <div className="card-header flex items-center justify-between border-b border-borderColor">
         <h1>{t('To Do List')}</h1>
       </div>
@@ -34,7 +34,7 @@ const SidePanelFilter: React.FC<props> = ({ activeItem, setActiveItem }) => {
               <span>{t('Inbox')}</span>
             </div>
             <span className="text-sm rounded-lg bg-surface p-1">
-              {todos.length}
+              {paginateData.length}
             </span>
           </button>
           <button
@@ -49,7 +49,7 @@ const SidePanelFilter: React.FC<props> = ({ activeItem, setActiveItem }) => {
               <span>{t('Done')}</span>
             </div>
             <span className="text-sm rounded-lg bg-surface p-1">
-              {todos.filter((item) => item.status === 'complete').length}
+              {paginateData.filter((item) => item.status === 'complete').length}
             </span>
           </button>
           <button
@@ -64,7 +64,7 @@ const SidePanelFilter: React.FC<props> = ({ activeItem, setActiveItem }) => {
               <span>{t('Important')}</span>
             </div>
             <span className="text-sm rounded-lg bg-surface p-1">
-              {todos.filter((item) => item.isImportant).length}
+              {paginateData.filter((item) => item.isImportant).length}
             </span>
           </button>
           <button
@@ -79,7 +79,7 @@ const SidePanelFilter: React.FC<props> = ({ activeItem, setActiveItem }) => {
               <span>{t('Trash')}</span>
             </div>
             <span className="text-sm text-muted rounded-lg bg-surface p-1">
-              {todos.filter((item) => item.status === 'trashed').length}
+              {paginateData.filter((item) => item.status === 'trashed').length}
             </span>
           </button>
         </div>
@@ -116,7 +116,7 @@ const SidePanelFilter: React.FC<props> = ({ activeItem, setActiveItem }) => {
             <span className="text-red-500">{t('Hight')}</span>
           </button>
         </div>
-        <div className="absolute bottom-3 w-[90%]">
+        <div className="absolute bottom-3 w-[90%] border-t border-borderColor pt-2">
           <button
             onClick={() => setOpen('create')}
             className="btn btn-primary w-full!"

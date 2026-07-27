@@ -15,7 +15,6 @@ function AppLayoutComponent() {
         <Header />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full p-6">
-            <Setting />
             <Outlet />
           </div>
         </main>

@@ -2,21 +2,14 @@ import CheckBox from '#/components/checkbox'
 import Dropdown from '#/components/drop-down'
 import { Ellipsis, SquarePen, Star, StarOff, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import type { Priority, TodoStatus, TodoType } from '../data/todos'
+import type { TodoType } from '../data/todos'
 import { useTodo } from './todo-provider'
 import type { Dispatch, SetStateAction } from 'react'
 
 interface TaskRowProps {
   rowKey: number
-  id: number
-  title: string
-  description: string
-  priority: Priority
-  date: string
-  assignee: string
-  isImportant: boolean
-  status: TodoStatus
   setActiveItem: Dispatch<SetStateAction<number>>
+  item: TodoType
 }
 
 const categoryStyles = {
@@ -26,22 +19,15 @@ const categoryStyles = {
   amber: 'border-amber-500/30 bg-amber-500/10 text-amber-500',
 }
 
-function TodoRow({
-  rowKey,
-  id,
-  title,
-  description,
-  priority,
-  date,
-  assignee,
-  status,
-  isImportant,
-  setActiveItem,
-}: TaskRowProps) {
+function TodoRow({ rowKey, setActiveItem, item }: TaskRowProps) {
   const { t } = useTranslation()
   const { todos, setTodos, setOpen, setCurrentRow } = useTodo()
   const priorityStyle =
-    priority === 'Low' ? 'emerald' : priority === 'Medium' ? 'blue' : 'red'
+    item.priority === 'Low'
+      ? 'emerald'
+      : item.priority === 'Medium'
+        ? 'blue'
+        : 'red'
 
   const completeAction = (id: number) => {
     const updatedData: TodoType[] = todos.map((item) =>
@@ -67,10 +53,10 @@ function TodoRow({
     setTodos(updatedData)
   }
 
-  // const handelFormEdit = (id: number) => {
-  //   setOpen('update')
-  //   setCurrentRow(id)
-  // }
+  const handelFormEdit = (currentItem: TodoType) => {
+    setOpen('update')
+    setCurrentRow(currentItem)
+  }
 
   const handelDeleteTask = (id: number) => {
     const deleteData: TodoType[] = todos.map((item) =>
@@ -92,37 +78,39 @@ function TodoRow({
       >
         <div className="shrink-0 flex items-start gap-x-2 text-sm text-muted">
           <CheckBox
-            checked={status === 'complete'}
-            onChange={() => completeAction(id)}
+            checked={item.status === 'complete'}
+            onChange={() => completeAction(item.id)}
           />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col items-start">
           <h3
             className={`w-full truncate text-sm font-medium ${
-              status === 'complete'
+              item.status === 'complete'
                 ? 'text-muted line-through'
                 : 'text-foreground'
             }`}
           >
-            {title}
+            {item.title}
           </h3>
-          <p className="w-full truncate text-xs text-muted">{description}</p>
+          <p className="w-full truncate text-xs text-muted">
+            {item.description}
+          </p>
         </div>
 
         <div className="hidden shrink-0 sm:block">
           <span
             className={`rounded-full border px-3 py-1 text-xs font-medium ${categoryStyles[priorityStyle]}`}
           >
-            {priority}
+            {item.priority}
           </span>
         </div>
 
         <div className="flex shrink-0 items-center gap-x-3">
-          <p className="hidden text-xs text-muted md:block">{date}</p>
+          <p className="hidden text-xs text-muted md:block">{item.date}</p>
 
           <div className="flex size-9 items-center justify-center rounded-full border border-borderColor bg-surface-hover text-xs font-medium text-foreground">
-            <img src={assignee} />
+            <img src={item.assignee} />
           </div>
 
           <Dropdown
@@ -136,20 +124,24 @@ function TodoRow({
             menuItemContent={[
               {
                 className: ``,
-                onClick: () => {},
+                onClick: () => handelFormEdit(item),
                 title: 'Edit',
                 icon: <SquarePen size={18} />,
               },
 
               {
                 className: ``,
-                onClick: () => handelToggleImportant(id),
-                title: isImportant ? 'Not Important' : 'Important',
-                icon: isImportant ? <StarOff size={18} /> : <Star size={18} />,
+                onClick: () => handelToggleImportant(item.id),
+                title: item.isImportant ? 'Not Important' : 'Important',
+                icon: item.isImportant ? (
+                  <StarOff size={18} />
+                ) : (
+                  <Star size={18} />
+                ),
               },
               {
                 className: `text-red-500`,
-                onClick: () => handelDeleteTask(id),
+                onClick: () => handelDeleteTask(item.id),
                 title: 'Delete',
                 icon: <Trash2 size={18} />,
               },

@@ -1,5 +1,5 @@
 import Dialog from '#/components/dialog'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTodo, type TodoDialogType } from './todo-provider'
 import { useTranslation } from 'react-i18next'
 import { useForm } from '@tanstack/react-form'
@@ -11,14 +11,13 @@ import {
   OptionWithAvatar,
   OptionWithIconColor,
 } from '../helper/select-custom-component'
-import type { OnChangeValue } from 'react-select'
 import Textarea from '#/components/textarea'
 import CheckBox from '#/components/checkbox'
 
 interface props {
-  open: TodoDialogType | null
+  open: boolean
   setOpen: (str: TodoDialogType | null) => void
-  currentRow? : number
+  currentRow?: TodoType | null
 }
 
 interface TodoFrom {
@@ -35,7 +34,7 @@ interface UserOption {
   avatarUrl: string
 }
 
-const CreateTodoDialog: React.FC<props> = ({ open, setOpen , currentRow }) => {
+const CreateTodoDialog: React.FC<props> = ({ open, setOpen, currentRow }) => {
   const { todos, setTodos } = useTodo()
   const { t } = useTranslation()
 
@@ -56,7 +55,7 @@ const CreateTodoDialog: React.FC<props> = ({ open, setOpen , currentRow }) => {
 
   // const initial
 
-  const { Field, handleSubmit, reset } = useForm({
+  const { Field, handleSubmit, reset , setFieldValue } = useForm({
     defaultValues: {
       assignee: '',
       description: '',
@@ -74,28 +73,55 @@ const CreateTodoDialog: React.FC<props> = ({ open, setOpen , currentRow }) => {
         year: 'numeric',
       })
 
+      const currentStatus = currentRow?.status || 'pending'
+      const currentId = currentRow?.id || todos.length + 1
+      const currentDate = currentRow?.date || formatted
+
       const newRecord: TodoType = {
         assignee: value.assignee,
         description: value.description,
         isImportant: value.isImportant,
         priority: value.priority as Priority,
         title: value.title,
-        id: todos.length + 1,
-        status: 'pending',
-        date: formatted,
+        id: currentId,
+        status: currentStatus,
+        date: currentDate,
       }
 
-      setTodos((prev) => [...prev, newRecord])
+      console.log(newRecord, 'Good Man')
+
+      if (currentRow) {
+        const updatedData: TodoType[] = todos.map((item) =>
+          item.id === currentRow.id ? newRecord : item,
+        )
+        setTodos(updatedData)
+      } else {
+        setTodos((prev) => [...prev, newRecord])
+      }
       closeDialog()
     },
   })
+
+  useEffect(() => {
+    if (currentRow) {
+      reset({
+        assignee: currentRow.assignee,
+        description: currentRow.description,
+        isImportant: currentRow.isImportant,
+        priority: currentRow.priority,
+        title: currentRow.title,
+      })
+      console.log(currentRow)
+    }
+  }, [currentRow, open])
+
   const closeDialog = () => {
     setOpen('create')
     reset()
   }
   return (
     <Dialog
-      open={open === 'create'}
+      open={open}
       onClose={closeDialog}
       title="New To Do"
       position="top"

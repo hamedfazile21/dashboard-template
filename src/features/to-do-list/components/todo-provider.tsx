@@ -17,6 +17,10 @@ type TodoContextType = {
   setTodos: Dispatch<SetStateAction<TodoType[]>>
   currentRow: TodoType | null
   setCurrentRow: Dispatch<SetStateAction<TodoType | null>>
+  totalPage: number
+  page: number
+  setPage: Dispatch<SetStateAction<number>>
+  paginateData: TodoType[]
 }
 
 const TodoContext = createContext<TodoContextType | null>(null)
@@ -25,10 +29,30 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useDialogState<TodoDialogType>(null)
   const [todos, setTodos] = useState<TodoType[]>(todoData)
   const [currentRow, setCurrentRow] = useState<TodoType | null>(null)
+  const [page, setPage] = useState(1)
+  const [todoPerPage] = useState<number>(10)
+
+  const totalPage = Math.ceil(todos.length / todoPerPage)
+
+  const lastIndex = todoPerPage * page
+  const firstIndex = lastIndex - todoPerPage
+
+  const sendTodo = todos.slice(firstIndex, lastIndex)
 
   return (
     <TodoContext.Provider
-      value={{ open, setOpen, todos, setTodos, currentRow, setCurrentRow }}
+      value={{
+        open,
+        setOpen,
+        todos,
+        setTodos,
+        currentRow,
+        setCurrentRow,
+        totalPage,
+        page,
+        setPage,
+        paginateData: sendTodo,
+      }}
     >
       {children}
     </TodoContext.Provider>
