@@ -13,10 +13,9 @@ interface TaskRowProps {
 }
 
 const categoryStyles = {
-  red: 'border-red-500/30 bg-red-500/10 text-red-500',
-  blue: 'border-blue-500/30 bg-blue-500/10 text-blue-500',
-  emerald: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-500',
-  amber: 'border-amber-500/30 bg-amber-500/10 text-amber-500',
+  red: 'border-danger/30 bg-danger/10 text-danger',
+  blue: 'border-info/30 bg-info/10 text-info',
+  emerald: 'border-success/30 bg-success/10 text-success',
 }
 
 function TodoRow({ rowKey, setActiveItem, item }: TaskRowProps) {
@@ -72,7 +71,14 @@ function TodoRow({ rowKey, setActiveItem, item }: TaskRowProps) {
   }
 
   return (
-    <div key={rowKey} className={`group border-b border-borderColor`}>
+    <div
+      key={rowKey}
+      onClick={() => {
+        setOpen('details')
+        setCurrentRow(item)
+      }}
+      className={`group border-b border-borderColor cursor-pointer hover:bg-surface-hover ${item.status === 'trashed' && "bg-gray-200 dark:bg-gray-800"}`}
+    >
       <div
         className={`w-full flex items-center gap-x-3 rounded-lg px-2 py-2.5 transition-colors duration-150 hover:bg-surface-hover/40  ${status === 'complete' && 'bg-surface/30'}`}
       >

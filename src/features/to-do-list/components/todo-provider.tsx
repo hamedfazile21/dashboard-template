@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { todoData, type TodoType } from '../data/todos'
 
-export type TodoDialogType = 'create' | 'update' | 'delete'
+export type TodoDialogType = 'create' | 'update' | 'details'
 
 type TodoContextType = {
   open: TodoDialogType | null

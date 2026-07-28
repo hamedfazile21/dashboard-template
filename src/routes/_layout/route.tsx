@@ -1,6 +1,5 @@
 import Header from '#/components/layout/header'
 import Sidebar from '#/components/layout/sidebar'
-import Setting from '#/components/layout/setting'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_layout')({

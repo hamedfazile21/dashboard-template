@@ -19,6 +19,11 @@
   --glass-blur: 24px; /* = Tailwind's backdrop-blur-xl */
   --glass-saturate: 150%;
   --glass-shadow-opacity: 0.1;
+
+  --danger: #ef4444; /* red-500 */
+  --info: #3b82f6; /* blue-500 */
+  --success: #22c55e; /* green-500 */
+  --warning: #f59e0b;
 }
 
 .dark {
@@ -41,4 +46,9 @@
   --glass-bg-opacity: 0.55;
   --glass-border-opacity: 0.08;
   --glass-shadow-opacity: 0.25;
+
+  --danger: #f87171; /* red-400 — lighter, less harsh on dark glass */
+  --info: #60a5fa; /* blue-400 */
+  --success: #4ade80; /* green-400 */
+  --warning: #fbbf24;
 }

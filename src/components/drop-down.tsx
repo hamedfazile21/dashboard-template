@@ -36,6 +36,10 @@ const Dropdown: React.FC<props> = ({
     <>
       <Menu as="div" className="relative inline-block">
         <MenuButton
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+          }}
           className={`btn btn-secondary btn-rounded-full ${menuButtonClassName}`}
         >
           {menuButtonContent}
@@ -57,7 +61,12 @@ const Dropdown: React.FC<props> = ({
             return (
               <MenuItem key={index}>
                 <button
-                  onClick={item.onClick}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+
+                    item.onClick()
+                  }}
                   className={`group relative flex w-full items-center gap-x-2 rounded-lg px-4 py-2 text-start text-sm text-foreground
                   transition-colors duration-150
                   data-focus:outline-hidden

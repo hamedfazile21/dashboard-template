@@ -84,6 +84,10 @@
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
 }
 
 @layer base {
@@ -139,7 +143,7 @@ button {
    (form inputs, dense data) — still glass, just less transparent.
    Use sparingly; .glass should be the default everywhere else. */
 @utility glass-solid {
-  @apply border border-borderColor bg-surface/60
+  @apply border border-borderColor bg-surface/40
     backdrop-blur-xl backdrop-saturate-150;
 }
 
