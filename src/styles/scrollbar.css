@@ -4,15 +4,28 @@
    imported once at the app root.
    ========================================================================== */
 
+:root {
+  --scrollbar-thumb: rgba(64, 64, 64, 0.2);
+  --scrollbar-thumb-hover: rgba(64, 64, 64, 0.35);
+  --scrollbar-track: transparent;
+  --scrollbar-corner: transparent;
+}
+
+.dark {
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+  --scrollbar-track: var(--color-surface);
+  --scrollbar-corner: var(--color-surface);
+}
+
 /* ---- Firefox ---- */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(var(--color-foreground) / 0.2) transparent;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 .dark * {
-  scrollbar-color: rgb(var(--color-foreground) / 0.15)
-    rgb(var(--color-surface) / 0.4);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 /* ---- WebKit (Chrome, Safari, Edge) — default page/app scrollbar ---- */
@@ -26,11 +39,11 @@
 }
 
 .dark ::-webkit-scrollbar-track {
-  background-color: rgb(var(--color-surface) / 0.4);
+  background-color: var(--color-surface);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-foreground) / 0.2);
+  background-color: var(--scrollbar-thumb);
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: padding-box;
@@ -38,16 +51,16 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(var(--color-foreground) / 0.35);
+  background-color: var(--scrollbar-thumb-hover);
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-foreground) / 0.15);
+  background-color: var(--scrollbar-thumb);
   background-clip: padding-box; /* keep the border "gap" transparent, not surface-colored */
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(var(--color-foreground) / 0.3);
+  background-color: var(--scrollbar-thumb-hover);
 }
 
 ::-webkit-scrollbar-corner {
@@ -55,7 +68,7 @@
 }
 
 .dark ::-webkit-scrollbar-corner {
-  background-color: rgb(var(--color-surface) / 0.4);
+  background-color: var(--scrollbar-corner);
 }
 
 /* ==========================================================================
@@ -69,23 +82,22 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: rgb(var(--color-foreground) / 0.25);
+  background-color: var(--scrollbar-thumb);
   border-radius: 9999px;
   border: none;
 }
 
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgb(var(--color-foreground) / 0.25) transparent;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 .dark .scrollbar-thin::-webkit-scrollbar-track {
-  background-color: rgb(var(--color-surface) / 0.4);
+  background-color: var(--scrollbar-track);
 }
 
 .dark .scrollbar-thin {
-  scrollbar-color: rgb(var(--color-foreground) / 0.2)
-    rgb(var(--color-surface) / 0.4);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 /* ==========================================================================
