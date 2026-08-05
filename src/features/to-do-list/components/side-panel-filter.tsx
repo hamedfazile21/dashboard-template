@@ -16,7 +16,7 @@ const SidePanelFilter: React.FC<props> = ({ activeItem, setActiveItem }) => {
   return (
     <div className="hidden! md:block! card h-[calc(100vh-7rem)] w-[20%] relative">
       <div className="card-header flex items-center justify-between border-b border-borderColor">
-        <h1>{t('To Do List')}</h1>
+        <h1 className='text-lg font-semibold text-foreground'>{t('To Do List')}</h1>
       </div>
       <div className="card-body w-full space-y-1">
         <div className="border-b border-borderColor pb-2">
