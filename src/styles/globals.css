@@ -92,7 +92,7 @@
 
 @layer base {
   html {
-    @apply font-jost rtl:font-shabnam overflow-hidden;
+    @apply font-jost rtl:font-shabnam;
   }
 }
 * {

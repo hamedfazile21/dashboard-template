@@ -259,42 +259,44 @@ const Sidebar = () => {
   return (
     <div
       ref={sidebarRef}
-      className={`relative  h-screen overflow-visible transition-all duration-300  ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'}  ltr:border-r rtl:border-l border-borderColor`}
+      className={`sticky top-0 h-screen shrink-0 overflow-hidden transition-all duration-300 ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'} ltr:border-r rtl:border-l border-borderColor`}
     >
-      <div className="flex h-14 items-center justify-between border-b border-borderColor py-1 px-3 bg-surface/40 backdrop-blur-xl backdrop-saturate-150">
+      <div className="flex h-14 items-center justify-between border-b border-borderColor bg-surface/40 px-3 py-1 backdrop-blur-xl backdrop-saturate-150">
         <p className="font-medium text-foreground">{t('Name')}</p>
         {sidebarStatus === 'vertical' && (
           <p className="text-foreground">{t('Icon')}</p>
         )}
       </div>
-      {/* TODO : Create the scroll */}
-      <div className="flex flex-col p-2 ">
-        {sidebar_data.map((item, index) => {
-          if (item.type === 'group') {
-            return (
-              <div key={index} className=" first:mt-0">
-                {sidebarStatus === 'vertical' && (
-                  <div
-                    className={`${index !== 0 && 'mt-2 '} pb-1 px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400 flex items-center gap-x-3 `}
-                  >
-                    <div className={`w-fit`}>{t(item.title)}</div>
-                    {/* <div className="border border-dashed  w-full" /> */}
-                  </div>
-                )}
-                <div className="flex flex-col">
-                  {item.children?.map((child: any) => renderNavItem(child))}
-                </div>
-              </div>
-            )
-          }
 
-          return renderNavItem(item)
-        })}
+      <div className="h-[calc(100vh-3.5rem)] overflow-y-auto p-2">
+        <div className="flex flex-col">
+          {sidebar_data.map((item, index) => {
+            if (item.type === 'group') {
+              return (
+                <div key={index} className="first:mt-0">
+                  {sidebarStatus === 'vertical' && (
+                    <div
+                      className={`${index !== 0 && 'mt-2 '} flex items-center gap-x-3 px-2 pb-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-400`}
+                    >
+                      <div className="w-fit">{t(item.title)}</div>
+                    </div>
+                  )}
+                  <div className="flex flex-col">
+                    {item.children?.map((child: any) => renderNavItem(child))}
+                  </div>
+                </div>
+              )
+            }
+
+            return renderNavItem(item)
+          })}
+        </div>
       </div>
+
       <div>
         <button
           onClick={handedToggleSidebar}
-          className="absolute bottom-3 ltr:right-3 rtl:left-3 rounded-full border border-borderColor p-2 text-foreground shadow-sm transition bg-background hover:bg-surface-hover hover:text-primary"
+          className="absolute bottom-3 ltr:right-3 rtl:left-3 rounded-full border border-borderColor bg-background p-2 text-foreground shadow-sm transition hover:bg-surface-hover hover:text-primary"
         >
           <ChevronFirst
             className={`transition-transform duration-300 ${sidebarStatus === 'collapsible-vertical' ? 'rotate-180' : 'rotate-0'}`}

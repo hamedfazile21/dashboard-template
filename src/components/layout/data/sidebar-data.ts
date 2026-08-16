@@ -10,6 +10,11 @@ import {
   RefreshCcwDot,
   ScanLine,
   CircleQuestionMark,
+  Box,
+  ChartPie,
+  Pyramid,
+  Table,
+  RectangleEllipsis,
 } from 'lucide-react'
 
 export type SidebarChild = {
@@ -164,6 +169,83 @@ export const sidebar_data: SidebarItem[] = [
         href: '/lock-screen',
         type: 'simple',
         children: [],
+      },
+    ],
+  },
+  {
+    id: 'user-interface',
+    title: 'User Interface',
+    type: 'group',
+    children: [
+      {
+        id: 'components',
+        title: 'Components',
+        icon: Box,
+        href: '',
+        children: [
+          {
+            title: 'Modals',
+            href: '/modals',
+          },
+          {
+            title: 'Tabs',
+            href: '/tabs',
+          },
+        ],
+      },
+      {
+        id: 'charts',
+        title: 'Charts',
+        icon: ChartPie,
+        href: '/charts',
+        type: 'simple',
+        children: [],
+      },
+      {
+        id: 'icons',
+        title: 'Icons',
+        icon: Pyramid,
+        href: '/icons',
+        type: 'simple',
+        children: [],
+      }
+    ],
+  },
+  {
+    id: 'table-and-forms',
+    title: 'Tables and Forms',
+    type: 'group',
+    children: [
+      {
+        id: 'tables',
+        title: 'Tables',
+        icon: Table,
+        children: [
+          {
+            title: 'Modals',
+            href: '/modals',
+          },
+          {
+            title: 'Tabs',
+            href: '/tabs',
+          },
+        ],
+      },
+      {
+        id: 'forms',
+        title: 'Forms',
+        icon: RectangleEllipsis,
+        href: '/forms',
+        children: [
+          {
+            title: 'Modals',
+            href: '/modals',
+          },
+          {
+            title: 'Tabs',
+            href: '/tabs',
+          },
+        ],
       },
     ],
   },

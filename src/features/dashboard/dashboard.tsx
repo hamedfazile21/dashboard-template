@@ -1,97 +1,118 @@
-import i18n from '#/app/i18n'
-import Custome from '#/components/custome'
-import Dropdown from '#/components/drop-down'
-import AnimateTooltip from '#/components/tooltip'
-import Tippy from '@tippyjs/react'
-import { useAppSelector } from '#/hooks/redux'
-import { useTranslation } from 'react-i18next'
-import Tooltip from '#/components/tooltip'
-import { User } from 'lucide-react'
-import { toast } from 'sonner'
-import ObjectViewer from '#/components/object-viewer'
-import { showObjectToast } from '#/helper/toast-helper'
-import Popover from '#/components/popover'
-import Select from '#/components/input-select'
-import InputSelect from '#/components/input-select'
-import Dialog from '#/components/dialog'
-import { useState } from 'react'
-const Dashboard = () => {
-  const { t } = useTranslation()
-  const handelChangeLanguage = (language: string) => {
-    if (language === 'fa') {
-      document.dir = 'rtl'
-      localStorage.setItem('dir', 'rtl')
-      i18n.changeLanguage('fa')
-    } else {
-      document.dir = 'ltr'
-      localStorage.setItem('dir', 'ltr')
-      i18n.changeLanguage('en')
-    }
-  }
-  const handelChangeThemeColor = () => {
-    document.documentElement.style.setProperty(
-      '--color-primary',
-      'rgb(16 185 129)',
-    )
-    localStorage.setItem('primary-color', 'rgb(16 185 129)')
-  }
-  const handelChangeTheme = () => {
-    document.documentElement.classList.toggle('dark')
-  }
-  const { counter } = useAppSelector((state) => state.dashboard)
-  const [openModal, setOpenModal] = useState<boolean>(false)
+import { Ellipsis } from 'lucide-react'
+
+import RevenueChart from './components/revenue-chart'
+import TaskDistribution from './components/task-distribution'
+import MonthlyGoal from './components/monthly-goal'
+import SalesByCategory from './components/sales-by-category'
+import WeeklyActivity from './components/weekly-activity'
+import CardInfo from './components/card-info'
+
+export function ChartTooltip({ active, payload, label }: any) {
+  if (!active || !payload?.length) return null
+
   return (
-    <div className="bg-blue-500/20">
-      <Popover
-        trigger={<button className="btn btn-secondary">Open</button>}
-        placement="bottom-start"
-      >
-        <div className="flex flex-col gap-y-1">
-          <p className="text-sm font-medium text-foreground">Notifications</p>
-          <p className="text-xs text-muted">You're all caught up.</p>
+    <div className="card rounded-lg border border-black/8 bg-surface/90 px-3 py-2 text-xs shadow-lg shadow-black/10 backdrop-blur-xl dark:border-white/10 dark:bg-surface/90">
+      <p className="mb-1 font-medium text-foreground">{label}</p>
+      {payload.map((item: any) => (
+        <div key={item.name} className="flex items-center gap-x-1.5 text-muted">
+          <span
+            className="size-1.5 rounded-full"
+            style={{ backgroundColor: item.color || item.fill }}
+          />
+          {item.name}:{' '}
+          <span className="font-medium text-foreground">{item.value}</span>
         </div>
-      </Popover>
-      <Popover
-        trigger={<button className="btn btn-secondary">Open</button>}
-        placement="bottom-start"
-      >
-        <div className="flex flex-col gap-y-1">
-          <p className="text-sm font-medium text-foreground">Notifications</p>
-          <p className="text-xs text-muted">You're all caught up.</p>
+      ))}
+    </div>
+  )
+}
+
+const Dashboard = () => {
+  return (
+    <div className="flex flex-col gap-y-5 p-4">
+      {/* Stat cards */}
+      <CardInfo />
+
+      {/* Revenue + Task distribution */}
+      <div className="flex flex-col items-stretch gap-5 lg:flex-row">
+        {/* Revenue chart */}
+        <RevenueChart />
+
+        {/* Task distribution donut */}
+        <div className="card w-full p-0 lg:w-1/3">
+          <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
+            <h3 className="text-sm font-semibold text-foreground">
+              Task Distribution
+            </h3>
+            <button
+              type="button"
+              aria-label="Chart options"
+              className="rounded-md p-1.5 text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+            >
+              <Ellipsis size={18} />
+            </button>
+          </div>
+
+          <TaskDistribution />
         </div>
-      </Popover>
-      <button
-        className="px-5 bg-primary"
-        onClick={() => handelChangeLanguage('fa')}
-      >
-        Fa
-      </button>
-      <button
-        className="px-5 bg-primary"
-        onClick={() => handelChangeLanguage('en')}
-      >
-        EN
-      </button>
-
-      <div className="bg-primary text-primary-foreground ">{t('name')}</div>
-
-      <div>
-        <button onClick={handelChangeThemeColor}>Change Theme Color</button>
       </div>
-      <div>
-        <button onClick={handelChangeTheme}>Change Theme</button>
+
+      {/* Sales by category + Goal progress */}
+      <div className="flex flex-col items-stretch gap-5 lg:flex-row">
+        <div className="card flex w-full flex-col p-0 lg:w-1/3">
+          <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
+            <h3 className="text-sm font-semibold text-foreground">
+              Monthly Goal
+            </h3>
+            <button
+              type="button"
+              aria-label="Chart options"
+              className="rounded-md p-1.5 text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+            >
+              <Ellipsis size={18} />
+            </button>
+          </div>
+
+          <MonthlyGoal />
+        </div>
+
+        {/* Sales by category — horizontal bar */}
+        <div className="card w-full p-0 lg:w-2/3">
+          <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
+            <h3 className="text-sm font-semibold text-foreground">
+              Sales by Category
+            </h3>
+            <button
+              type="button"
+              aria-label="Chart options"
+              className="rounded-md p-1.5 text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+            >
+              <Ellipsis size={18} />
+            </button>
+          </div>
+          <SalesByCategory />
+        </div>
+
+        {/* Goal progress — radial */}
       </div>
-      <button onClick={() => setOpenModal(true)}>Modal</button>
-      <Dialog
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        title="New Task"
-        position="top"
-        closeOnOutsideClick={false}
-        
-      >
-        <p>Ali</p>
-      </Dialog>
+
+      {/* Weekly activity */}
+      <div className="card w-full p-0">
+        <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
+          <h3 className="text-sm font-semibold text-foreground">
+            Weekly Activity
+          </h3>
+          <button
+            type="button"
+            aria-label="Chart options"
+            className="rounded-md p-1.5 text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+          >
+            <Ellipsis size={18} />
+          </button>
+        </div>
+
+        <WeeklyActivity />
+      </div>
     </div>
   )
 }
