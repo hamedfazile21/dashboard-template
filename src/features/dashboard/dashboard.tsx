@@ -6,6 +6,7 @@ import MonthlyGoal from './components/monthly-goal'
 import SalesByCategory from './components/sales-by-category'
 import WeeklyActivity from './components/weekly-activity'
 import CardInfo from './components/card-info'
+import { useTranslation } from 'react-i18next'
 
 export function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null
@@ -28,21 +29,19 @@ export function ChartTooltip({ active, payload, label }: any) {
 }
 
 const Dashboard = () => {
+  const { t } = useTranslation()
   return (
     <div className="flex flex-col gap-y-5 p-4">
       {/* Stat cards */}
       <CardInfo />
 
-      {/* Revenue + Task distribution */}
       <div className="flex flex-col items-stretch gap-5 lg:flex-row">
-        {/* Revenue chart */}
         <RevenueChart />
 
-        {/* Task distribution donut */}
         <div className="card w-full p-0 lg:w-1/3">
           <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
             <h3 className="text-sm font-semibold text-foreground">
-              Task Distribution
+              {t('Task Distribution')}
             </h3>
             <button
               type="button"
@@ -57,12 +56,11 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Sales by category + Goal progress */}
       <div className="flex flex-col items-stretch gap-5 lg:flex-row">
         <div className="card flex w-full flex-col p-0 lg:w-1/3">
           <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
             <h3 className="text-sm font-semibold text-foreground">
-              Monthly Goal
+              {t('Monthly Goal')}
             </h3>
             <button
               type="button"
@@ -76,11 +74,10 @@ const Dashboard = () => {
           <MonthlyGoal />
         </div>
 
-        {/* Sales by category — horizontal bar */}
         <div className="card w-full p-0 lg:w-2/3">
           <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
             <h3 className="text-sm font-semibold text-foreground">
-              Sales by Category
+              {t('Sales by Category')}
             </h3>
             <button
               type="button"
@@ -92,15 +89,12 @@ const Dashboard = () => {
           </div>
           <SalesByCategory />
         </div>
-
-        {/* Goal progress — radial */}
       </div>
 
-      {/* Weekly activity */}
       <div className="card w-full p-0">
         <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
           <h3 className="text-sm font-semibold text-foreground">
-            Weekly Activity
+            {t('Weekly Activity')}
           </h3>
           <button
             type="button"

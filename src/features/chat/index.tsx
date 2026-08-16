@@ -13,7 +13,6 @@ import {
   X,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { GlassBlob } from '../../../dist/assets'
 import { conversations, messages } from './data/chat-data'
 import TypingIndicator from './components/typing-indicator'
 import MessageBubble from './components/message-bubble'
@@ -21,6 +20,7 @@ import ConversationItem from './components/conversation-item'
 import ContactPanel from './components/contact-panel'
 import NotActiveConversation from './components/not-active-conversation'
 import EmptyMessagesConversation from './components/empty-messages-conversation'
+import { GlassBlob } from '../../../public/assets'
 
 export default function Chat() {
   const { t } = useTranslation()

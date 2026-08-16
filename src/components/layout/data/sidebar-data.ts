@@ -223,7 +223,7 @@ export const sidebar_data: SidebarItem[] = [
         children: [
           {
             title: 'Modals',
-            href: '/modals',
+            href: '/modals-',
           },
           {
             title: 'Tabs',
@@ -239,7 +239,7 @@ export const sidebar_data: SidebarItem[] = [
         children: [
           {
             title: 'Modals',
-            href: '/modals',
+            href: '/modals-',
           },
           {
             title: 'Tabs',
