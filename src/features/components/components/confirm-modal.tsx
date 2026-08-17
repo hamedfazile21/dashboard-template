@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import  { type FC } from 'react'
 import type { ModalDialogType } from './modal-provider'
 import Dialog from '#/components/dialog'
 import { AlertTriangle } from 'lucide-react'

@@ -1,4 +1,3 @@
-import React from 'react'
 import PatternCard from './pattern-card'
 import {
   AlertTriangle,

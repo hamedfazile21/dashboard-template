@@ -1,5 +1,5 @@
 import Dialog from '#/components/dialog'
-import React, { type FC } from 'react'
+import  { type FC } from 'react'
 import type { ModalDialogType, Size, sizeOption } from './modal-provider'
 import { useTranslation } from 'react-i18next'
 
