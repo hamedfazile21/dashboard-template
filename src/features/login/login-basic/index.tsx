@@ -32,12 +32,12 @@ const LoginBasic = () => {
     <div className="h-screen w-full flex items-center justify-center relative">
       <img
         src={GlassBlob1}
-        className="fixed top-14 lg:left-137.5 -z-10 size-130"
+        className="fixed top-14 ltr:lg:left-137.5 rtl:lg:right-137.5 -z-10 size-130"
       />
 
       <img
         src={GlassBlob2}
-        className="fixed bottom-12 lg:left-212.5 -z-10 size-130"
+        className="fixed bottom-12 ltr:lg:left-212.5 rtl:lg:right-212.5 -z-10 size-130"
       />
       <div className="card w-132.5! p-10!">
         <div className="mb-6 text-center">

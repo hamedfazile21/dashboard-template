@@ -49,7 +49,7 @@ const Header = () => {
     bg-surface/40 px-5 backdrop-blur-xl backdrop-saturate-150"
     >
       <div>
-        <p>Header</p>
+        <p className='text-foreground'>Header</p>
       </div>
       <div className="flex items-center gap-x-3">
         <button
@@ -109,13 +109,13 @@ const Header = () => {
             {
               className: `${language === 'english' && '!bg-surface-hover'}`,
               onClick: () => handelChangeLanguage('en'),
-              title: 'English',
+              title: t('English'),
               icon: <img src={EnglishFlag} />,
             },
             {
               className: `${language === 'farsi' && '!bg-surface-hover'}`,
               onClick: () => handelChangeLanguage('fa'),
-              title: 'Farsi',
+              title: t('Farsi'),
               icon: <img src={AfghanistanFlag} />,
             },
           ]}

@@ -132,7 +132,7 @@ button {
    ========================================================================== */
 
 @utility glass {
-  @apply relative border border-black/8 bg-surface/70
+  @apply relative border border-black/8 bg-surface/50
     backdrop-blur-xl backdrop-saturate-150
     shadow-md shadow-black/5
     inset-ring-1 inset-ring-white/40
@@ -143,7 +143,7 @@ button {
    (form inputs, dense data) — still glass, just less transparent.
    Use sparingly; .glass should be the default everywhere else. */
 @utility glass-solid {
-  @apply border border-borderColor bg-surface/40
+  @apply border border-borderColor bg-surface/50
     backdrop-blur-xl backdrop-saturate-150;
 }
 

@@ -25,6 +25,7 @@ import { Route as PageForgotPasswordForgotPasswordCoverIndexRouteImport } from '
 import { Route as PageForgotPasswordForgotPasswordBasicIndexRouteImport } from './routes/_page/_forgot-password/forgotPassword-basic/index'
 import { Route as PageEmailVerificationEmailVerificationCoverIndexRouteImport } from './routes/_page/_email-verification/emailVerification-cover/index'
 import { Route as PageEmailVerificationEmailVerificationBasicIndexRouteImport } from './routes/_page/_email-verification/emailVerification-basic/index'
+import { Route as LayoutComponentsTabsIndexRouteImport } from './routes/_layout/_components/tabs/index'
 import { Route as LayoutComponentsModalsIndexRouteImport } from './routes/_layout/_components/modals/index'
 
 const LayoutRouteRoute = LayoutRouteRouteImport.update({
@@ -117,6 +118,12 @@ const PageEmailVerificationEmailVerificationBasicIndexRoute =
     path: '/emailVerification-basic/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const LayoutComponentsTabsIndexRoute =
+  LayoutComponentsTabsIndexRouteImport.update({
+    id: '/_components/tabs/',
+    path: '/tabs/',
+    getParentRoute: () => LayoutRouteRoute,
+  } as any)
 const LayoutComponentsModalsIndexRoute =
   LayoutComponentsModalsIndexRouteImport.update({
     id: '/_components/modals/',
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/to-do-list/': typeof LayoutToDoListIndexRoute
   '/lock-screen/': typeof PageLockScreenIndexRoute
   '/modals/': typeof LayoutComponentsModalsIndexRoute
+  '/tabs/': typeof LayoutComponentsTabsIndexRoute
   '/emailVerification-basic/': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
   '/emailVerification-cover/': typeof PageEmailVerificationEmailVerificationCoverIndexRoute
   '/forgotPassword-basic/': typeof PageForgotPasswordForgotPasswordBasicIndexRoute
@@ -149,6 +157,7 @@ export interface FileRoutesByTo {
   '/to-do-list': typeof LayoutToDoListIndexRoute
   '/lock-screen': typeof PageLockScreenIndexRoute
   '/modals': typeof LayoutComponentsModalsIndexRoute
+  '/tabs': typeof LayoutComponentsTabsIndexRoute
   '/emailVerification-basic': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
   '/emailVerification-cover': typeof PageEmailVerificationEmailVerificationCoverIndexRoute
   '/forgotPassword-basic': typeof PageForgotPasswordForgotPasswordBasicIndexRoute
@@ -169,6 +178,7 @@ export interface FileRoutesById {
   '/_layout/to-do-list/': typeof LayoutToDoListIndexRoute
   '/_page/lock-screen/': typeof PageLockScreenIndexRoute
   '/_layout/_components/modals/': typeof LayoutComponentsModalsIndexRoute
+  '/_layout/_components/tabs/': typeof LayoutComponentsTabsIndexRoute
   '/_page/_email-verification/emailVerification-basic/': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
   '/_page/_email-verification/emailVerification-cover/': typeof PageEmailVerificationEmailVerificationCoverIndexRoute
   '/_page/_forgot-password/forgotPassword-basic/': typeof PageForgotPasswordForgotPasswordBasicIndexRoute
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/to-do-list/'
     | '/lock-screen/'
     | '/modals/'
+    | '/tabs/'
     | '/emailVerification-basic/'
     | '/emailVerification-cover/'
     | '/forgotPassword-basic/'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/to-do-list'
     | '/lock-screen'
     | '/modals'
+    | '/tabs'
     | '/emailVerification-basic'
     | '/emailVerification-cover'
     | '/forgotPassword-basic'
@@ -226,6 +238,7 @@ export interface FileRouteTypes {
     | '/_layout/to-do-list/'
     | '/_page/lock-screen/'
     | '/_layout/_components/modals/'
+    | '/_layout/_components/tabs/'
     | '/_page/_email-verification/emailVerification-basic/'
     | '/_page/_email-verification/emailVerification-cover/'
     | '/_page/_forgot-password/forgotPassword-basic/'
@@ -367,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageEmailVerificationEmailVerificationBasicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_layout/_components/tabs/': {
+      id: '/_layout/_components/tabs/'
+      path: '/tabs'
+      fullPath: '/tabs/'
+      preLoaderRoute: typeof LayoutComponentsTabsIndexRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
     '/_layout/_components/modals/': {
       id: '/_layout/_components/modals/'
       path: '/modals'
@@ -383,6 +403,7 @@ interface LayoutRouteRouteChildren {
   LayoutTaskManagementIndexRoute: typeof LayoutTaskManagementIndexRoute
   LayoutToDoListIndexRoute: typeof LayoutToDoListIndexRoute
   LayoutComponentsModalsIndexRoute: typeof LayoutComponentsModalsIndexRoute
+  LayoutComponentsTabsIndexRoute: typeof LayoutComponentsTabsIndexRoute
 }
 
 const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
@@ -391,6 +412,7 @@ const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
   LayoutTaskManagementIndexRoute: LayoutTaskManagementIndexRoute,
   LayoutToDoListIndexRoute: LayoutToDoListIndexRoute,
   LayoutComponentsModalsIndexRoute: LayoutComponentsModalsIndexRoute,
+  LayoutComponentsTabsIndexRoute: LayoutComponentsTabsIndexRoute,
 }
 
 const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(

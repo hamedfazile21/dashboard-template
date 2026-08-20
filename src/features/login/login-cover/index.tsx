@@ -45,7 +45,7 @@ const LoginCover = () => {
 
       <img
         src={GlassBlob}
-        className="fixed bottom-22 right-20 -z-10 size-120"
+        className="fixed bottom-22 rtl:right-20 ltr:left-20 -z-10 size-120"
       />
       {/* <img
         src={GlassBlob2}

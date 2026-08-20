@@ -1,4 +1,4 @@
-import { ModalProvider } from '#/features/components/components/modal-provider'
+import { ModalProvider } from '#/features/components/modals/components/modal-provider'
 import Modals from '#/features/components/modals'
 import { createFileRoute } from '@tanstack/react-router'
 

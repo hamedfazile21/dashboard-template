@@ -84,7 +84,7 @@ function EmailVerificationCover() {
       <img
         src={GlassBlob}
         alt=""
-        className="pointer-events-none fixed bottom-50 right-100 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none fixed bottom-50 rtl:right-100 ltr:left-100 -z-10 size-128 opacity-60 dark:opacity-25"
       />
 
       {/* Form side */}

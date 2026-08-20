@@ -1,8 +1,8 @@
-import Dialogs from '../components/dialogs'
+import Dialogs from './components/dialogs'
 import { useTranslation } from 'react-i18next'
-import PatternsSection from '../components/patterns-section'
-import TransitionsSection from '../components/transitions-section'
-import SizeSection from '../components/size-section'
+import PatternsSection from './components/patterns-section'
+import TransitionsSection from './components/transitions-section'
+import SizeSection from './components/size-section'
 
 function Modals() {
   const { t } = useTranslation()

@@ -37,18 +37,18 @@ function ForgotPasswordBasic() {
       <img
         src={GlassBlob2}
         alt=""
-        className="pointer-events-none fixed -top-20 left-0 lg:-left-20 -z-10 size-128 opacity-70 dark:opacity-30"
+        className="pointer-events-none fixed -top-20 left-0 rtl:lg:-left-20 ltr:lg:left-20 -z-10 size-128 opacity-70 dark:opacity-30"
       />
       <img
         src={GlassBlob}
         alt=""
-        className="hidden lg:block pointer-events-none fixed bottom-50 right-0 lg:right-180 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="hidden lg:block pointer-events-none fixed bottom-50 right-0 rtl:lg:right-180 ltr:lg:left-180 -z-10 size-128 opacity-60 dark:opacity-25"
       />
-      <img
+      {/* <img
         src={GlassBlob3}
         alt=""
-        className="pointer-events-none fixed -bottom-24 md:right-0 lg:-right-16 -z-10 size-128 opacity-60 dark:opacity-25"
-      />
+        className="pointer-events-none fixed -bottom-24 md:right-0 rtl:lg:-right-16 ltr:lg:-left-16 -z-10 size-128 opacity-60 dark:opacity-25"
+      /> */}
 
       <div className="card w-full max-w-md p-10">
         <Link

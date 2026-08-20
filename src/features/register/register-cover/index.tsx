@@ -46,12 +46,12 @@ const RegisterCover = () => {
     <div className="flex items-center w-full h-screen relative">
       <img
         src={GlassBlob1}
-        className="fixed top-10 md:right-70 lg:right-110 -z-10 size-130"
+        className="fixed top-10 rtl:md:right-70 rtl:lg:right-110 ltr:md:left-70 ltr:lg:left-110 -z-10 size-130"
       />
 
       <img
         src={GlassBlob2}
-        className="fixed bottom-10 right-30 -z-10 size-130"
+        className="fixed bottom-10 rtl:right-30 ltr:left-30 -z-10 size-130"
       />
       <div className="flex w-full items-center justify-center lg:w-[55%] z-10 ">
         <div className="card  p-10! w-132.5!  sm:p-10">

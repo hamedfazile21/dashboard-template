@@ -208,7 +208,7 @@ export const sidebar_data: SidebarItem[] = [
         href: '/icons',
         type: 'simple',
         children: [],
-      }
+      },
     ],
   },
   {
@@ -227,7 +227,7 @@ export const sidebar_data: SidebarItem[] = [
           },
           {
             title: 'Tabs',
-            href: '/tabs',
+            href: '/tabs-',
           },
         ],
       },
@@ -243,7 +243,7 @@ export const sidebar_data: SidebarItem[] = [
           },
           {
             title: 'Tabs',
-            href: '/tabs',
+            href: '/tabs-',
           },
         ],
       },
@@ -251,4 +251,3 @@ export const sidebar_data: SidebarItem[] = [
   },
 ]
 
-// Authentication

@@ -38,12 +38,12 @@ const RegisterBasic = () => {
     <div className="flex items-center justify-center h-screen relative">
       <img
         src={GlassBlob1}
-        className=" fixed top-14 right-0 left-0 lg:right-120 -z-10 size-130"
+        className=" fixed top-14 right-0 left-0 rtl:lg:right-120 ltr:lg:left-120 -z-10 size-130"
       />
 
       <img
         src={GlassBlob2}
-        className=" fixed bottom-10 right-0 left-0 lg:right-200 -z-10 size-130"
+        className=" fixed bottom-10 right-0 left-0 rtl:lg:right-200 ltr:lg:left-200 -z-10 size-130"
       />
       <div className="card  p-10! w-132.5!  sm:p-10">
         <div className="mb-6 text-center">

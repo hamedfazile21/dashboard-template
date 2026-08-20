@@ -38,7 +38,7 @@ function ForgotPasswordCover() {
       <img
         src={GlassBlob}
         alt=""
-        className="pointer-events-none absolute bottom-50 lg:right-100 -z-10 size-128 opacity-60 dark:opacity-25"
+        className="pointer-events-none absolute bottom-50 rtl:lg:right-100 ltr:lg:left-100 -z-10 size-128 opacity-60 dark:opacity-25"
       />
 
       {/* Form side */}
