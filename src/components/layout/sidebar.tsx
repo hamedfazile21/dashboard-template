@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import { toggleSidebar } from '#/features/theme/slice/theme-slice'
 import Tooltip from '../tooltip'
 import { Transition } from '@headlessui/react'
-import { GlassBlob1 } from '../../../public/assets'
+import { GlassBlob1, LogoDarkRow } from '../../../public/assets'
 const Sidebar = () => {
   const { t } = useTranslation()
   const location = useLocation()
@@ -263,10 +263,12 @@ const Sidebar = () => {
       className={`sticky top-0 h-screen shrink-0 overflow-hidden transition-all duration-300 ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'} ltr:border-r rtl:border-l border-borderColor`}
     >
       <div className="flex h-14 items-center justify-between border-b border-borderColor bg-surface/40 px-3 py-1 backdrop-blur-xl backdrop-saturate-150">
-        <p className="font-medium text-foreground">{t('Name')}</p>
-        {sidebarStatus === 'vertical' && (
+        <p className="font-medium text-foreground">
+          <img src={LogoDarkRow} className='size-[350px]' />
+        </p>
+        {/* {sidebarStatus === 'vertical' && (
           <p className="text-foreground">{t('Icon')}</p>
-        )}
+        )} */}
       </div>
 
       <div className="h-[calc(100vh-3.5rem)] overflow-y-auto p-2">

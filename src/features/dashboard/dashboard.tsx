@@ -31,7 +31,7 @@ export function ChartTooltip({ active, payload, label }: any) {
 const Dashboard = () => {
   const { t } = useTranslation()
   return (
-    <div className="flex flex-col gap-y-5 p-4">
+    <div className="flex flex-col gap-y-5">
       {/* Stat cards */}
       <CardInfo />
 

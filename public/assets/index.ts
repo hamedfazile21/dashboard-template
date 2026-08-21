@@ -46,6 +46,14 @@ import RegisterCoverPNG from './illustration/register-cover.jpg'
 import ForgotPasswordSVG from './illustration/forgot-password-cover.svg'
 import EmailValidationSVG from './illustration/email-validation-cover.svg'
 import ResetPasswordPNG from './illustration/reset-cover.jpg'
+import LogoDarkVertical from './logo/dark-vertical.svg'
+import LogoDarkRow from './logo/dark-row.svg'
+
+import LogoLightVertical from './logo/light-vertical.svg'
+import LogoLightRow from './logo/light-row.svg'
+
+import LogoLight from './logo/light-logo.svg'
+import LogoDark from './logo/dark-logo.svg'
 export {
   AfghanistanFlag,
   EnglishFlag,
@@ -95,4 +103,10 @@ export {
   ForgotPasswordSVG,
   EmailValidationSVG,
   ResetPasswordPNG,
+  LogoDarkVertical,
+  LogoDarkRow,
+  LogoLightVertical,
+  LogoLightRow,
+  LogoLight,
+  LogoDark,
 }
