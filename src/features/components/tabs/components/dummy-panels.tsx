@@ -1,4 +1,4 @@
-import Tabs from './tabs'
+import Tabs from '../../../../components/tabs/tabs'
 
 const dummyPanels = (prefix: string) => (
   <>

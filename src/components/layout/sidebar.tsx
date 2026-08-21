@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import { toggleSidebar } from '#/features/theme/slice/theme-slice'
 import Tooltip from '../tooltip'
 import { Transition } from '@headlessui/react'
+import { GlassBlob1 } from '../../../public/assets'
 const Sidebar = () => {
   const { t } = useTranslation()
   const location = useLocation()

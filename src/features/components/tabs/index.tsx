@@ -1,9 +1,11 @@
 import { BicepsFlexed, HatGlasses, Settings, ShieldMinus } from 'lucide-react'
-import Tabs from './components/tabs'
+import Tabs from '../../../components/tabs/tabs'
 import dummyPanels from './components/dummy-panels'
 import { GlassBlob1, GlassBlob2 } from '../../../../public/assets'
+import { useTranslation } from 'react-i18next'
 
 function TabsShowcase() {
+  const { t } = useTranslation()
   return (
     <div className="relative mx-auto flex w-full flex-col gap-y-8">
       <img src={GlassBlob1} className="absolute size-100 left-0 top-0 -z-10" />
@@ -13,14 +15,14 @@ function TabsShowcase() {
       />
 
       <div>
-        <h1 className="text-xl font-semibold text-foreground">Tabs</h1>
+        <h1 className="text-xl font-semibold text-foreground">{t('Tabs')}</h1>
         <p className="mt-1 text-sm text-muted">
-          Four visual styles, all built on the same compound Tabs component —
-          only the{' '}
+          {t(`Six visual styles, all built on the same compound Tabs component —
+          only the`)}{' '}
           <code className="rounded bg-surface-hover px-1 py-0.5 text-xs">
             variant
           </code>{' '}
-          prop changes.
+          {t('prop changes')}.
         </p>
       </div>
 
@@ -28,18 +30,18 @@ function TabsShowcase() {
       <div className="flex flex-col lg:flex-row lg:items-start gap-5 justify-between">
         <section className="card p-5 w-full lg:w-1/2!">
           <p className="mb-3 text-sm font-semibold text-foreground">
-            Segmented Control
+            {t('Segmented Control')}
             <span className="ml-2 text-xs font-normal text-muted">
               variant="pill"
             </span>
           </p>
           <Tabs defaultValue="overview" variant="pill">
             <Tabs.List>
-              <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
-              <Tabs.Trigger value="activity">Activity</Tabs.Trigger>
-              <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+              <Tabs.Trigger value="overview">{t('Overview')}</Tabs.Trigger>
+              <Tabs.Trigger value="activity">{t('Activity')}</Tabs.Trigger>
+              <Tabs.Trigger value="settings">{t('Settings')}</Tabs.Trigger>
               <Tabs.Trigger disabled value="disable">
-                Disable
+                {t('Disable')}
               </Tabs.Trigger>
             </Tabs.List>
             {dummyPanels('Segmented Control')}
@@ -49,18 +51,18 @@ function TabsShowcase() {
         {/* Underline Tabs */}
         <section className="card p-5 w-full lg:w-1/2!">
           <p className="mb-3 text-sm font-semibold text-foreground">
-            Underline Tabs
+            {t('Underline Tabs')}
             <span className="ml-2 text-xs font-normal text-muted">
               variant="underline"
             </span>
           </p>
           <Tabs defaultValue="overview" variant="underline">
             <Tabs.List>
-              <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
-              <Tabs.Trigger value="activity">Activity</Tabs.Trigger>
-              <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+              <Tabs.Trigger value="overview">{t('Overview')}</Tabs.Trigger>
+              <Tabs.Trigger value="activity">{t('Activity')}</Tabs.Trigger>
+              <Tabs.Trigger value="settings">{t('Settings')}</Tabs.Trigger>
               <Tabs.Trigger disabled value="disable">
-                Disable
+                {t('Disable')}
               </Tabs.Trigger>
             </Tabs.List>
             {dummyPanels('Underline Tabs')}
@@ -71,7 +73,7 @@ function TabsShowcase() {
       {/* Boxed / card Tabs */}
       <section className="card p-5">
         <p className="mb-3 text-sm font-semibold text-foreground">
-          Boxed Tabs
+          {t('Boxed Tabs')}
           <span className="ml-2 text-xs font-normal text-muted">
             variant="boxed"
           </span>
@@ -81,19 +83,19 @@ function TabsShowcase() {
             <Tabs.Trigger value="overview">
               <div className="flex items-center gap-x-2">
                 <HatGlasses size={18} />
-                <p>Overview</p>
+                <p>{t('Overview')}</p>
               </div>
             </Tabs.Trigger>
             <Tabs.Trigger value="activity">
               <div className="flex items-center gap-x-2">
                 <BicepsFlexed size={18} />
-                <p>Activity</p>
+                <p>{t('Activity')}</p>
               </div>
             </Tabs.Trigger>
             <Tabs.Trigger value="settings">
               <div className="flex items-center gap-x-2">
                 <Settings size={18} />
-                <p>Settings</p>
+                <p>{t('Settings')}</p>
               </div>
             </Tabs.Trigger>
           </Tabs.List>
@@ -104,7 +106,7 @@ function TabsShowcase() {
       {/* Vertical Tabs */}
       <section className="card p-5">
         <p className="mb-3 text-sm font-semibold text-foreground">
-          Vertical Tabs
+          {t('Vertical Tabs')}
           <span className="ml-2 text-xs font-normal text-muted">
             variant="vertical"
           </span>
@@ -114,19 +116,19 @@ function TabsShowcase() {
             <Tabs.Trigger value="overview">
               <div className="flex items-center gap-x-2">
                 <HatGlasses size={18} />
-                <p>Overview</p>
+                <p>{t('Overview')}</p>
               </div>
             </Tabs.Trigger>
             <Tabs.Trigger value="activity">
               <div className="flex items-center gap-x-2">
                 <BicepsFlexed size={18} />
-                <p>Activity</p>
+                <p>{t('Activity')}</p>
               </div>
             </Tabs.Trigger>
             <Tabs.Trigger value="settings">
               <div className="flex items-center gap-x-2">
                 <Settings size={18} />
-                <p>Settings</p>
+                <p>{t('Settings')}</p>
               </div>
             </Tabs.Trigger>
           </Tabs.List>
@@ -137,7 +139,7 @@ function TabsShowcase() {
       <div className="flex flex-col lg:flex-row items-start gap-5 justify-between">
         <section className="card p-5 w-full lg:w-1/2!">
           <p className="mb-3 text-sm font-semibold text-foreground">
-            Circle Tabs
+            {t('Circle Tabs')}
             <span className="ml-2 text-xs font-normal text-muted">
               variant="circle"
             </span>
@@ -163,7 +165,7 @@ function TabsShowcase() {
 
         <section className="card p-5 w-full lg:w-1/2!">
           <p className="mb-3 text-sm font-semibold text-foreground">
-            Circle Vertical Tabs
+            {t('Circle Vertical Tabs')}
             <span className="ml-2 text-xs font-normal text-muted">
               variant="circle-vertical"
             </span>

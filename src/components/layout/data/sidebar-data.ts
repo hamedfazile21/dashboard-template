@@ -191,6 +191,10 @@ export const sidebar_data: SidebarItem[] = [
             title: 'Tabs',
             href: '/tabs',
           },
+          {
+            title: 'Accordions',
+            href: '/accordions',
+          },
         ],
       },
       {

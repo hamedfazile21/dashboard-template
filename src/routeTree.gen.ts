@@ -27,6 +27,7 @@ import { Route as PageEmailVerificationEmailVerificationCoverIndexRouteImport } 
 import { Route as PageEmailVerificationEmailVerificationBasicIndexRouteImport } from './routes/_page/_email-verification/emailVerification-basic/index'
 import { Route as LayoutComponentsTabsIndexRouteImport } from './routes/_layout/_components/tabs/index'
 import { Route as LayoutComponentsModalsIndexRouteImport } from './routes/_layout/_components/modals/index'
+import { Route as LayoutComponentsAccordionsIndexRouteImport } from './routes/_layout/_components/accordions/index'
 
 const LayoutRouteRoute = LayoutRouteRouteImport.update({
   id: '/_layout',
@@ -130,6 +131,12 @@ const LayoutComponentsModalsIndexRoute =
     path: '/modals/',
     getParentRoute: () => LayoutRouteRoute,
   } as any)
+const LayoutComponentsAccordionsIndexRoute =
+  LayoutComponentsAccordionsIndexRouteImport.update({
+    id: '/_components/accordions/',
+    path: '/accordions/',
+    getParentRoute: () => LayoutRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/task-management/': typeof LayoutTaskManagementIndexRoute
   '/to-do-list/': typeof LayoutToDoListIndexRoute
   '/lock-screen/': typeof PageLockScreenIndexRoute
+  '/accordions/': typeof LayoutComponentsAccordionsIndexRoute
   '/modals/': typeof LayoutComponentsModalsIndexRoute
   '/tabs/': typeof LayoutComponentsTabsIndexRoute
   '/emailVerification-basic/': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
@@ -156,6 +164,7 @@ export interface FileRoutesByTo {
   '/task-management': typeof LayoutTaskManagementIndexRoute
   '/to-do-list': typeof LayoutToDoListIndexRoute
   '/lock-screen': typeof PageLockScreenIndexRoute
+  '/accordions': typeof LayoutComponentsAccordionsIndexRoute
   '/modals': typeof LayoutComponentsModalsIndexRoute
   '/tabs': typeof LayoutComponentsTabsIndexRoute
   '/emailVerification-basic': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
@@ -177,6 +186,7 @@ export interface FileRoutesById {
   '/_layout/task-management/': typeof LayoutTaskManagementIndexRoute
   '/_layout/to-do-list/': typeof LayoutToDoListIndexRoute
   '/_page/lock-screen/': typeof PageLockScreenIndexRoute
+  '/_layout/_components/accordions/': typeof LayoutComponentsAccordionsIndexRoute
   '/_layout/_components/modals/': typeof LayoutComponentsModalsIndexRoute
   '/_layout/_components/tabs/': typeof LayoutComponentsTabsIndexRoute
   '/_page/_email-verification/emailVerification-basic/': typeof PageEmailVerificationEmailVerificationBasicIndexRoute
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/task-management/'
     | '/to-do-list/'
     | '/lock-screen/'
+    | '/accordions/'
     | '/modals/'
     | '/tabs/'
     | '/emailVerification-basic/'
@@ -217,6 +228,7 @@ export interface FileRouteTypes {
     | '/task-management'
     | '/to-do-list'
     | '/lock-screen'
+    | '/accordions'
     | '/modals'
     | '/tabs'
     | '/emailVerification-basic'
@@ -237,6 +249,7 @@ export interface FileRouteTypes {
     | '/_layout/task-management/'
     | '/_layout/to-do-list/'
     | '/_page/lock-screen/'
+    | '/_layout/_components/accordions/'
     | '/_layout/_components/modals/'
     | '/_layout/_components/tabs/'
     | '/_page/_email-verification/emailVerification-basic/'
@@ -394,6 +407,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutComponentsModalsIndexRouteImport
       parentRoute: typeof LayoutRouteRoute
     }
+    '/_layout/_components/accordions/': {
+      id: '/_layout/_components/accordions/'
+      path: '/accordions'
+      fullPath: '/accordions/'
+      preLoaderRoute: typeof LayoutComponentsAccordionsIndexRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
   }
 }
 
@@ -402,6 +422,7 @@ interface LayoutRouteRouteChildren {
   LayoutChatIndexRoute: typeof LayoutChatIndexRoute
   LayoutTaskManagementIndexRoute: typeof LayoutTaskManagementIndexRoute
   LayoutToDoListIndexRoute: typeof LayoutToDoListIndexRoute
+  LayoutComponentsAccordionsIndexRoute: typeof LayoutComponentsAccordionsIndexRoute
   LayoutComponentsModalsIndexRoute: typeof LayoutComponentsModalsIndexRoute
   LayoutComponentsTabsIndexRoute: typeof LayoutComponentsTabsIndexRoute
 }
@@ -411,6 +432,7 @@ const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
   LayoutChatIndexRoute: LayoutChatIndexRoute,
   LayoutTaskManagementIndexRoute: LayoutTaskManagementIndexRoute,
   LayoutToDoListIndexRoute: LayoutToDoListIndexRoute,
+  LayoutComponentsAccordionsIndexRoute: LayoutComponentsAccordionsIndexRoute,
   LayoutComponentsModalsIndexRoute: LayoutComponentsModalsIndexRoute,
   LayoutComponentsTabsIndexRoute: LayoutComponentsTabsIndexRoute,
 }
