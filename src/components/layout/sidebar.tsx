@@ -7,14 +7,19 @@ import { useAppDispatch, useAppSelector } from '#/hooks/redux'
 import { toggleSidebar } from '#/features/theme/slice/theme-slice'
 import Tooltip from '../tooltip'
 import { Transition } from '@headlessui/react'
-import { GlassBlob1, LogoDarkRow } from '../../../public/assets'
+import {
+  LogoDark,
+  LogoDarkRow,
+  LogoLight,
+  LogoLightRow,
+} from '../../../public/assets'
 const Sidebar = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const dispatch = useAppDispatch()
   const sidebarRef = useRef<HTMLDivElement | null>(null)
   const [openItem, setOpenItem] = useState<string | null>(null)
-  const { sidebarStatus, direction } = useAppSelector(
+  const { sidebarStatus, direction, themeMode } = useAppSelector(
     (state) => state.themeConfig,
   )
   const navigate = useNavigate()
@@ -262,13 +267,26 @@ const Sidebar = () => {
       ref={sidebarRef}
       className={`sticky top-0 h-screen shrink-0 overflow-hidden transition-all duration-300 ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'} ltr:border-r rtl:border-l border-borderColor`}
     >
-      <div className="flex h-14 items-center justify-between border-b border-borderColor bg-surface/40 px-3 py-1 backdrop-blur-xl backdrop-saturate-150">
-        <p className="font-medium text-foreground">
-          <img src={LogoDarkRow} className='size-[350px]' />
-        </p>
-        {/* {sidebarStatus === 'vertical' && (
-          <p className="text-foreground">{t('Icon')}</p>
-        )} */}
+      <div
+        className={`flex h-14 items-center ${sidebarStatus === 'collapsible-vertical' && 'justify-center'}  border-b border-borderColor bg-surface/40 px-3 py-1 backdrop-blur-xl backdrop-saturate-150`}
+      >
+        {sidebarStatus === 'vertical' ? (
+          <>
+            {themeMode === 'dark' ? (
+              <img src={LogoDarkRow} className="w-32.5" />
+            ) : (
+              <img src={LogoLightRow} className="w-32.5" />
+            )}
+          </>
+        ) : (
+          <>
+            {themeMode === 'dark' ? (
+              <img src={LogoDark} className="size-10" />
+            ) : (
+              <img src={LogoLight} className="size-10" />
+            )}
+          </>
+        )}
       </div>
 
       <div className="h-[calc(100vh-3.5rem)] overflow-y-auto p-2">

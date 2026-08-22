@@ -22,7 +22,9 @@ import type { ThemeMode } from '#/features/theme/slice/theme-types'
 import { AfghanistanFlag, EnglishFlag, UserPNG } from '../../../public/assets'
 import i18n from '#/app/i18n'
 import { useNavigate } from '@tanstack/react-router'
+import { HeaderSearchTrigger, useHeaderSearch } from './header-search-trigger'
 const Header = () => {
+  const { searchOpen, setSearchOpen } = useHeaderSearch()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const {
@@ -49,7 +51,7 @@ const Header = () => {
     bg-surface/40 px-5 backdrop-blur-xl backdrop-saturate-150"
     >
       <div>
-        <p className='text-foreground'>Header</p>
+        <HeaderSearchTrigger onOpen={() => setSearchOpen(true)} />
       </div>
       <div className="flex items-center gap-x-3">
         <button

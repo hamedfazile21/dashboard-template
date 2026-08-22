@@ -7,6 +7,7 @@ import Toaster from './components/toast'
 
 export function App() {
   const [ready, setReady] = useState(false)
+
   useEffect(() => {
     async function initialize() {
       await startup()
@@ -22,9 +23,7 @@ export function App() {
 
   return (
     <>
-      <Toaster
-        position={"bottom-right"}
-      />
+      <Toaster position={'bottom-right'} />
       <RouterProvider router={getRouter()} />
     </>
   )
