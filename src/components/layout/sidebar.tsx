@@ -13,6 +13,14 @@ import {
   LogoLight,
   LogoLightRow,
 } from '../../../public/assets'
+import {
+  autoUpdate,
+  flip,
+  FloatingPortal,
+  offset,
+  shift,
+  useFloating,
+} from '@floating-ui/react'
 const Sidebar = () => {
   const { t } = useTranslation()
   const location = useLocation()
@@ -26,7 +34,7 @@ const Sidebar = () => {
   const [submenuActiveTab, setSubmenuActiveTab] = useState<string>('')
 
   const getTruncatedTitle = (title: string) => {
-    const limit = sidebarStatus === 'collapsible-vertical' ? 9 : 20
+    const limit = sidebarStatus === 'collapsible-vertical' ? 7 : 20
     return title.length > limit ? `${title.slice(0, limit)}...` : title
   }
 
@@ -62,6 +70,22 @@ const Sidebar = () => {
       dispatch(toggleSidebar('collapsible-vertical'))
     }
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth
+
+      // Tailwind `md` range is 768px to 1023px (before `lg` at 1024px)
+      if (width >= 768 && width < 1024) {
+        dispatch(toggleSidebar('collapsible-vertical'))
+      } 
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Clean up listener on component unmount
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const renderSubNavItem = (item: any) => {
     const titleMessage = getTruncatedTitle(item.title)
@@ -121,75 +145,90 @@ const Sidebar = () => {
     const Icon = item.icon
     const hasChildren = Array.isArray(item.children) && item.children.length > 0
     const isOpen = openItem === item.id
+    const isFlyoutOpen = submenuActiveTab === item.id
     const titleLabel = getTruncatedTitle(t(item.title))
     const isParentActive =
       isRouteActive(item.href) ||
       (hasChildren &&
         item.children?.some((child: any) => isRouteActive(child.href)))
 
+    // Floating UI computes real viewport coordinates for the flyout,
+    // anchored to the trigger button — this is what lets it escape the
+    // sidebar's scroll-container clipping entirely, instead of relying
+    // on CSS absolute/fixed positioning that gets clipped by any
+    // scrollable ancestor.
+    const { refs, floatingStyles } = useFloating({
+      open: isFlyoutOpen,
+      placement: direction === 'ltr' ? 'right-start' : 'left-start',
+      whileElementsMounted: autoUpdate, // repositions on scroll/resize automatically
+      middleware: [offset(8), flip(), shift({ padding: 8 })],
+    })
+
     return (
       <div key={item.id} className="relative">
-        <Tooltip
+        {/* <Tooltip
           className={sidebarStatus !== 'vertical' ? '' : 'hidden'}
           content={t(item.title)}
           placement={direction === 'ltr' ? 'left' : 'right'}
         >
-          <button
-            type="button"
-            onClick={() =>
-              hasChildren ? toggleItem(item.id) : navigate({ to: item.href })
-            }
-            aria-haspopup={hasChildren ? 'true' : undefined}
-            aria-expanded={hasChildren ? isOpen : undefined}
-            className={`group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.75 transition-all duration-200 ease-out
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
-        ${
-          sidebarStatus === 'collapsible-vertical'
-            ? 'mb-1 min-h-14.5 flex-col items-center justify-center gap-y-1 p-1'
-            : ''
-        }
-        ${hasChildren ? 'cursor-pointer' : 'cursor-default'}
-        ${
-          isParentActive
-            ? 'bg-primary/10 text-primary'
-            : 'text-foreground hover:bg-surface hover:text-primary'
-        }`}
+         
+        </Tooltip> */}
+
+        <button
+          ref={refs.setReference}
+          type="button"
+          onClick={() =>
+            hasChildren ? toggleItem(item.id) : navigate({ to: item.href })
+          }
+          className={`group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.75 transition-all duration-200 ease-out
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
+          ${sidebarStatus === 'collapsible-vertical' && 'mb-1 min-h-14.5 flex-col items-center justify-center gap-y-1 p-1'}
+          ${hasChildren ? 'cursor-pointer' : 'cursor-default'}
+          ${isParentActive ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-surface hover:text-primary'}`}
+        >
+          <div
+            className={`flex ${
+              sidebarStatus === 'collapsible-vertical'
+                ? 'flex-col items-center justify-center gap-y-1'
+                : 'items-center gap-x-2'
+            }`}
           >
             <div
-              className={`flex ${
-                sidebarStatus === 'collapsible-vertical'
-                  ? 'flex-col items-center justify-center gap-y-1'
-                  : 'items-center gap-x-2'
+              className={`flex items-center justify-center transition-transform duration-200 ${
+                isParentActive ? 'scale-105' : 'group-hover:scale-105'
               }`}
             >
-              <div
-                className={`flex items-center justify-center transition-transform duration-200 ${
-                  isParentActive ? 'scale-105' : 'group-hover:scale-105'
-                }`}
-              >
-                <Icon size={18} />
-              </div>
-              <span
-                className={`max-w-full truncate font-medium transition-colors ${
-                  sidebarStatus === 'collapsible-vertical'
-                    ? 'text-center text-[10px] leading-3'
-                    : 'text-sm'
-                }`}
-              >
-                {t(titleLabel)}
-              </span>
+              <Icon size={18} />
             </div>
+            <span
+              className={`max-w-full truncate font-medium transition-colors ${
+                sidebarStatus === 'collapsible-vertical'
+                  ? 'text-center text-[10px] leading-3'
+                  : 'text-sm'
+              }`}
+            >
+              {t(titleLabel)}
+            </span>
+          </div>
 
-            {hasChildren ? (
-              <ChevronRight
-                size={18}
-                className={`shrink-0 transition-transform duration-200 ease-out ${
-                  sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''
-                } ${isOpen ? 'rotate-90' : 'ltr:rotate-0 rtl:rotate-180'}`}
-              />
-            ) : null}
-          </button>
-        </Tooltip>
+          {hasChildren ? (
+            <ChevronRight
+              size={18}
+              className={`shrink-0 transition-transform duration-200 ease-out ${
+                sidebarStatus === 'collapsible-vertical' ? 'hidden' : ''
+              } ${isOpen ? 'rotate-90' : 'ltr:rotate-0 rtl:rotate-180'}`}
+            />
+          ) : null}
+
+          {hasChildren ? (
+            <ChevronRight
+              size={18}
+              className={`absolute rtl:-left-1.5 ltr:-right-1.5 -bottom-1.5  rotate-45 fill-foreground group-hover:fill-primary shrink-0 transition-color duration-200 ease-out ${
+                sidebarStatus !== 'collapsible-vertical' && 'hidden'
+              }`}
+            />
+          ) : null}
+        </button>
 
         {/* inline submenu (expanded sidebar) */}
         {hasChildren && sidebarStatus !== 'collapsible-vertical' && (
@@ -203,19 +242,25 @@ const Sidebar = () => {
         )}
 
         {/* flyout submenu (collapsed sidebar) */}
-        <Transition
-          show={submenuActiveTab === item.id}
-          enter="transition duration-150 ease-out"
-          enterFrom="opacity-0 scale-95 -translate-x-1 rtl:translate-x-1 rtl:scale-95"
-          enterTo="opacity-100 scale-100 translate-x-0"
-          leave="transition duration-100 ease-in"
-          leaveFrom="opacity-100 scale-100 translate-x-0"
-          leaveTo="opacity-0 scale-95 -translate-x-1 rtl:translate-x-1"
-        >
-          <div className="card absolute! p-1.5! top-0 z-20 w-55 origin-top ltr:left-18 rtl:right-18 [contain:layout_paint] will-change-transform">
-            {renderSubNavItem(item)}
-          </div>
-        </Transition>
+        <FloatingPortal>
+          <Transition
+            show={isFlyoutOpen}
+            enter="transition duration-150 ease-out"
+            enterFrom="opacity-0 scale-95 -translate-x-1 rtl:translate-x-1 rtl:scale-95"
+            enterTo="opacity-100 scale-100 translate-x-0"
+            leave="transition duration-100 ease-in"
+            leaveFrom="opacity-100 scale-100 translate-x-0"
+            leaveTo="opacity-0 scale-95 -translate-x-1 rtl:translate-x-1"
+          >
+            <div
+              ref={refs.setFloating}
+              style={floatingStyles}
+              className="card z-50 w-55 origin-top p-1.5! [contain:layout_paint] will-change-transform"
+            >
+              {renderSubNavItem(item)}
+            </div>
+          </Transition>
+        </FloatingPortal>
       </div>
     )
   }
@@ -289,7 +334,7 @@ const Sidebar = () => {
         )}
       </div>
 
-      <div className="h-[calc(100vh-3.5rem)] overflow-y-auto p-2">
+      <div className="h-[calc(100vh-3.5rem)] overflow-y-auto overflow-x-hidden p-2">
         <div className="flex flex-col">
           {sidebar_data.map((item, index) => {
             if (item.type === 'group') {
@@ -308,8 +353,6 @@ const Sidebar = () => {
                 </div>
               )
             }
-
-            return renderNavItem(item)
           })}
         </div>
       </div>
@@ -317,7 +360,7 @@ const Sidebar = () => {
       <div>
         <button
           onClick={handedToggleSidebar}
-          className="absolute bottom-3 ltr:right-3 rtl:left-3 rounded-full border border-borderColor bg-background p-2 text-foreground shadow-sm transition hover:bg-surface-hover hover:text-primary"
+          className="hidden lg:block absolute bottom-3 ltr:right-3 rtl:left-3 rounded-full border border-borderColor bg-background p-2 text-foreground shadow-sm transition hover:bg-surface-hover hover:text-primary"
         >
           <ChevronFirst
             className={`transition-transform duration-300 ${sidebarStatus === 'collapsible-vertical' ? 'rotate-180' : 'rotate-0'}`}
