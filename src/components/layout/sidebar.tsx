@@ -78,7 +78,7 @@ const Sidebar = () => {
       // Tailwind `md` range is 768px to 1023px (before `lg` at 1024px)
       if (width >= 768 && width < 1024) {
         dispatch(toggleSidebar('collapsible-vertical'))
-      } 
+      }
     }
 
     window.addEventListener('resize', handleResize)
@@ -223,7 +223,7 @@ const Sidebar = () => {
           {hasChildren ? (
             <ChevronRight
               size={18}
-              className={`absolute rtl:-left-1.5 ltr:-right-1.5 -bottom-1.5  rotate-45 fill-foreground group-hover:fill-primary shrink-0 transition-color duration-200 ease-out ${
+              className={`absolute rtl:-left-1.5 ltr:-right-1.5 -bottom-1.5  rotate-45 shrink-0 transition-color duration-200 ease-out ${
                 sidebarStatus !== 'collapsible-vertical' && 'hidden'
               }`}
             />
@@ -310,7 +310,7 @@ const Sidebar = () => {
   return (
     <div
       ref={sidebarRef}
-      className={`sticky top-0 h-screen shrink-0 overflow-hidden transition-all duration-300 ${sidebarStatus === 'vertical' ? 'w-75' : 'w-20'} ltr:border-r rtl:border-l border-borderColor`}
+      className={`sticky top-0 h-screen shrink-0 overflow-hidden transition-all duration-300 ${sidebarStatus === 'vertical' ? 'w-75' : 'w-22 p-0!'} ltr:border-r rtl:border-l border-borderColor`}
     >
       <div
         className={`flex h-14 items-center ${sidebarStatus === 'collapsible-vertical' && 'justify-center'}  border-b border-borderColor bg-surface/40 px-3 py-1 backdrop-blur-xl backdrop-saturate-150`}
@@ -334,7 +334,7 @@ const Sidebar = () => {
         )}
       </div>
 
-      <div className="h-[calc(100vh-3.5rem)] overflow-y-auto overflow-x-hidden p-2">
+      <div className="h-[calc(100vh-3.5rem)] overflow-y-auto overflow-x-hidden p-2 pb-13">
         <div className="flex flex-col">
           {sidebar_data.map((item, index) => {
             if (item.type === 'group') {
@@ -360,7 +360,7 @@ const Sidebar = () => {
       <div>
         <button
           onClick={handedToggleSidebar}
-          className="hidden lg:block absolute bottom-3 ltr:right-3 rtl:left-3 rounded-full border border-borderColor bg-background p-2 text-foreground shadow-sm transition hover:bg-surface-hover hover:text-primary"
+          className={`hidden lg:block absolute bottom-3 ${sidebarStatus === 'vertical' ? "ltr:right-3 rtl:left-3" : "ltr:right-6 rtl:left-6"} rounded-full border border-borderColor bg-background p-2 text-foreground shadow-sm transition hover:bg-surface-hover hover:text-primary`}
         >
           <ChevronFirst
             className={`transition-transform duration-300 ${sidebarStatus === 'collapsible-vertical' ? 'rotate-180' : 'rotate-0'}`}
