@@ -1,5 +1,6 @@
 {
-  "name": "dashboard-template",
+  "name": "brash-dashboard-template",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "imports": {
