@@ -14,6 +14,7 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as PageLockScreenIndexRouteImport } from './routes/_page/lock-screen/index'
 import { Route as LayoutToDoListIndexRouteImport } from './routes/_layout/to-do-list/index'
 import { Route as LayoutTaskManagementIndexRouteImport } from './routes/_layout/task-management/index'
+import { Route as LayoutTablesIndexRouteImport } from './routes/_layout/tables/index'
 import { Route as LayoutIconsIndexRouteImport } from './routes/_layout/icons/index'
 import { Route as LayoutChatIndexRouteImport } from './routes/_layout/chat/index'
 import { Route as PageResetResetCoverIndexRouteImport } from './routes/_page/_reset/reset-cover/index'
@@ -55,6 +56,11 @@ const LayoutTaskManagementIndexRoute =
     path: '/task-management/',
     getParentRoute: () => LayoutRouteRoute,
   } as any)
+const LayoutTablesIndexRoute = LayoutTablesIndexRouteImport.update({
+  id: '/tables/',
+  path: '/tables/',
+  getParentRoute: () => LayoutRouteRoute,
+} as any)
 const LayoutIconsIndexRoute = LayoutIconsIndexRouteImport.update({
   id: '/icons/',
   path: '/icons/',
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/chat/': typeof LayoutChatIndexRoute
   '/icons/': typeof LayoutIconsIndexRoute
+  '/tables/': typeof LayoutTablesIndexRoute
   '/task-management/': typeof LayoutTaskManagementIndexRoute
   '/to-do-list/': typeof LayoutToDoListIndexRoute
   '/lock-screen/': typeof PageLockScreenIndexRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/chat': typeof LayoutChatIndexRoute
   '/icons': typeof LayoutIconsIndexRoute
+  '/tables': typeof LayoutTablesIndexRoute
   '/task-management': typeof LayoutTaskManagementIndexRoute
   '/to-do-list': typeof LayoutToDoListIndexRoute
   '/lock-screen': typeof PageLockScreenIndexRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/chat/': typeof LayoutChatIndexRoute
   '/_layout/icons/': typeof LayoutIconsIndexRoute
+  '/_layout/tables/': typeof LayoutTablesIndexRoute
   '/_layout/task-management/': typeof LayoutTaskManagementIndexRoute
   '/_layout/to-do-list/': typeof LayoutToDoListIndexRoute
   '/_page/lock-screen/': typeof PageLockScreenIndexRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chat/'
     | '/icons/'
+    | '/tables/'
     | '/task-management/'
     | '/to-do-list/'
     | '/lock-screen/'
@@ -236,6 +246,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chat'
     | '/icons'
+    | '/tables'
     | '/task-management'
     | '/to-do-list'
     | '/lock-screen'
@@ -258,6 +269,7 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/chat/'
     | '/_layout/icons/'
+    | '/_layout/tables/'
     | '/_layout/task-management/'
     | '/_layout/to-do-list/'
     | '/_page/lock-screen/'
@@ -326,6 +338,13 @@ declare module '@tanstack/react-router' {
       path: '/task-management'
       fullPath: '/task-management/'
       preLoaderRoute: typeof LayoutTaskManagementIndexRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
+    '/_layout/tables/': {
+      id: '/_layout/tables/'
+      path: '/tables'
+      fullPath: '/tables/'
+      preLoaderRoute: typeof LayoutTablesIndexRouteImport
       parentRoute: typeof LayoutRouteRoute
     }
     '/_layout/icons/': {
@@ -440,6 +459,7 @@ interface LayoutRouteRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutChatIndexRoute: typeof LayoutChatIndexRoute
   LayoutIconsIndexRoute: typeof LayoutIconsIndexRoute
+  LayoutTablesIndexRoute: typeof LayoutTablesIndexRoute
   LayoutTaskManagementIndexRoute: typeof LayoutTaskManagementIndexRoute
   LayoutToDoListIndexRoute: typeof LayoutToDoListIndexRoute
   LayoutComponentsAccordionsIndexRoute: typeof LayoutComponentsAccordionsIndexRoute
@@ -451,6 +471,7 @@ const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutChatIndexRoute: LayoutChatIndexRoute,
   LayoutIconsIndexRoute: LayoutIconsIndexRoute,
+  LayoutTablesIndexRoute: LayoutTablesIndexRoute,
   LayoutTaskManagementIndexRoute: LayoutTaskManagementIndexRoute,
   LayoutToDoListIndexRoute: LayoutToDoListIndexRoute,
   LayoutComponentsAccordionsIndexRoute: LayoutComponentsAccordionsIndexRoute,

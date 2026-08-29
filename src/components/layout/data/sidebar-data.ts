@@ -224,16 +224,8 @@ export const sidebar_data: SidebarItem[] = [
         id: 'tables',
         title: 'Tables',
         icon: Table,
-        children: [
-          {
-            title: 'Modals',
-            href: '/modals-',
-          },
-          {
-            title: 'Tabs',
-            href: '/tabs-',
-          },
-        ],
+        href: '/tables',
+        children: [],
       },
       {
         id: 'forms',
