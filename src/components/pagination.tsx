@@ -78,7 +78,7 @@ export function Pagination({
     <div className="flex items-center w-full justify-between">
       {perPage && setPerPage && (
         <>
-          <div className="w-fit flex items-center gap-x-1">
+          <div className="w-fit flex items-center gap-x-2">
             <Popover
               className="w-25 p-1!"
               trigger={
