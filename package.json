@@ -28,7 +28,7 @@
     "@tanstack/react-form": "^1.33.2",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
-    "@tanstack/react-table": "^9.2.4",
+    "@tanstack/react-table": "^8.21.3",
     "@tanstack/router-plugin": "^1.132.0",
     "@tippyjs/react": "^4.2.6",
     "i18next": "^26.3.3",

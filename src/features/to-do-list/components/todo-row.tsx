@@ -77,7 +77,7 @@ function TodoRow({ rowKey, setActiveItem, item }: TaskRowProps) {
         setOpen('details')
         setCurrentRow(item)
       }}
-      className={`group border-b border-borderColor cursor-pointer hover:bg-surface-hover ${item.status === 'trashed' && "bg-gray-200 dark:bg-gray-800"}`}
+      className={`group border-b border-borderColor cursor-pointer hover:bg-surface-hover ${item.status === 'trashed' && 'bg-gray-200 dark:bg-gray-800'}`}
     >
       <div
         className={`w-full flex items-center gap-x-3 rounded-lg px-2 py-2.5 transition-colors duration-150 hover:bg-surface-hover/40  ${status === 'complete' && 'bg-surface/30'}`}

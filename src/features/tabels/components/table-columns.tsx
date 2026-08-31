@@ -1,51 +1,58 @@
-import {
-  legacyCreateColumnHelper,
-  type LegacyColumnDef,
-} from '@tanstack/react-table/legacy'
-import type { Task } from '..'
+import { createColumnHelper } from '@tanstack/react-table'
+import type { Person } from '..'
 
-const columnHelper = legacyCreateColumnHelper<Task>()
+const columnHelper = createColumnHelper<Person>()
 
-const priorityStyles: Record<Task['priority'], string> = {
-  Low: 'bg-emerald-500/15 text-emerald-500',
-  Medium: 'bg-amber-500/15 text-amber-500',
-  High: 'bg-red-500/15 text-red-500',
-}
-export const TaskColumns: LegacyColumnDef<Task, any>[] = [
-  columnHelper.accessor('id', {
-    header: 'ID',
-    cell: (info) => (
-      <span className="font-mono text-xs text-muted">{info.getValue()}</span>
-    ),
+export const columns = [
+  columnHelper.accessor('firstName', {
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('title', {
-    header: 'Title',
-    cell: (info) => (
-      <span
-        className={
-          info.row.original.completed
-            ? 'text-muted line-through'
-            : 'text-foreground'
-        }
-      >
-        {info.getValue()}
-      </span>
-    ),
+  columnHelper.accessor((row) => row.lastName, {
+    id: 'lastName',
+    cell: (info) => <i>{info.getValue()}</i>,
+    header: () => <span>Last Name</span>,
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('assignee', {
-    header: 'Assignee',
+  columnHelper.accessor('age', {
+    header: () => 'Age',
+    cell: (info) => info.renderValue(),
+    footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('priority', {
-    header: 'Priority',
-    cell: (info) => {
-      const priority = info.getValue()
-      return (
-        <span
-          className={`rounded-full px-2 py-0.5 text-xs font-medium`}
-        >
-          {priority}
-        </span>
-      )
-    },
+  columnHelper.accessor('visits', {
+    header: () => <span>Visits</span>,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor('status', {
+    header: 'Status',
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor('progress', {
+    header: 'Profile Progress',
+    footer: (info) => info.column.id,
   }),
 ]
+
+export const selectColumn = columnHelper.display({
+  id: 'select',
+  size: 10,
+  header: ({ table }) => (
+    <input
+      type="checkbox"
+      className="checkbox"
+      checked={table.getIsAllRowsSelected()}
+      // indeterminate={table.getIsSomeRowsSelected()}
+      onChange={table.getToggleAllRowsSelectedHandler()}
+      aria-label="Select all rows"
+    />
+  ),
+  cell: ({ row }) => (
+    <input
+      type="checkbox"
+      className="checkbox"
+      checked={row.getIsSelected()}
+      onChange={row.getToggleSelectedHandler()}
+      aria-label="Select row"
+    />
+  ),
+})
