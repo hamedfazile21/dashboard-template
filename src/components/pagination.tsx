@@ -1,4 +1,6 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import Popover from './popover'
+import { useTranslation } from 'react-i18next'
 
 interface PaginationProps {
   currentPage: number
@@ -7,6 +9,8 @@ interface PaginationProps {
   /** How many page numbers to show on each side of the current page */
   siblingCount?: number
   className?: string
+  perPage?: number
+  setPerPage?: (page: number) => void
 }
 
 const DOTS = '...'
@@ -57,10 +61,12 @@ export function Pagination({
   totalPages,
   onPageChange,
   siblingCount = 1,
+  perPage,
+  setPerPage,
   className = '',
 }: PaginationProps) {
-  if (totalPages <= 1) return null
-
+  // if (totalPages <= 1) return null
+  const { t } = useTranslation()
   const pages = getPageRange(currentPage, totalPages, siblingCount)
 
   const goTo = (page: number) => {
@@ -69,11 +75,65 @@ export function Pagination({
   }
 
   return (
-    <>
+    <div className="flex items-center w-full justify-between">
+      {perPage && setPerPage && (
+        <>
+          <div className="w-fit flex items-center gap-x-1">
+            <Popover
+              className="w-25 p-1!"
+              trigger={
+                <button
+                  type="button"
+                  aria-label="Toggle columns"
+                  className="flex items-center gap-x-1.5 rounded-md border border-borderColor px-3 py-2 text-xs font-medium text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+                >
+                  {perPage}
+                  <ChevronDown size={18} />
+                </button>
+              }
+
+              placement="bottom-end"
+            >
+              <div className="flex flex-col gap-y-1 ">
+                <button
+                  onClick={() => setPerPage(10)}
+                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
+                >
+                  10
+                </button>
+                <button
+                  onClick={() => setPerPage(20)}
+                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
+                >
+                  20
+                </button>
+                <button
+                  onClick={() => setPerPage(30)}
+                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
+                >
+                  30
+                </button>
+                <button
+                  onClick={() => setPerPage(40)}
+                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
+                >
+                  40
+                </button>
+              </div>
+            </Popover>
+            <span className="text-sm font-medium text-foreground">
+              {t('Rows per page')}
+            </span>
+          </div>
+        </>
+      )}
       <nav
         aria-label="Pagination"
         className={`flex items-center gap-x-1 ${className}`}
       >
+        <span className="text-sm font-medium text-foreground me-2">
+          {t('Page')} {currentPage} {t('of')} {totalPages}
+        </span>
         <button
           type="button"
           onClick={() => goTo(currentPage - 1)}
@@ -127,7 +187,7 @@ export function Pagination({
           <ChevronRight size={16} />
         </button>
       </nav>
-    </>
+    </div>
   )
 }
 
