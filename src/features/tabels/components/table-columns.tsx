@@ -1,10 +1,12 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import type { Person } from '..'
+import CheckBox from '#/components/checkbox'
 
 const columnHelper = createColumnHelper<Person>()
 
 export const columns = [
   columnHelper.accessor('firstName', {
+    header: () => <span className="w-full ">First Name</span>,
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
@@ -35,24 +37,37 @@ export const columns = [
 
 export const selectColumn = columnHelper.display({
   id: 'select',
-  size: 10,
-  header: ({ table }) => (
-    <input
-      type="checkbox"
-      className="checkbox"
-      checked={table.getIsAllRowsSelected()}
-      // indeterminate={table.getIsSomeRowsSelected()}
-      onChange={table.getToggleAllRowsSelectedHandler()}
-      aria-label="Select all rows"
-    />
-  ),
+  size: 25,
+  minSize: 25,
+  maxSize: 25,
+  meta: { width: '25px' },
+  header: ({ table }) => {
+    const isIndeterminate = table.getIsSomeRowsSelected()
+
+    return (
+      <div
+        style={{ width: '25px', display: 'flex', justifyContent: 'flex-start' }}
+      >
+        <CheckBox
+          checked={table.getIsAllRowsSelected()}
+          onChange={table.getToggleAllRowsSelectedHandler()}
+          isIndeterminate={isIndeterminate}
+          rounded
+          aria-label="Select all rows"
+        />
+      </div>
+    )
+  },
   cell: ({ row }) => (
-    <input
-      type="checkbox"
-      className="checkbox"
-      checked={row.getIsSelected()}
-      onChange={row.getToggleSelectedHandler()}
-      aria-label="Select row"
-    />
+    <div
+      style={{ width: '25px', display: 'flex', justifyContent: 'flex-start' }}
+    >
+      <CheckBox
+        checked={row.getIsSelected()}
+        onChange={row.getToggleSelectedHandler()}
+        rounded
+        aria-label="Select row"
+      />
+    </div>
   ),
 })

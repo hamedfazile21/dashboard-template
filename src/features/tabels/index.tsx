@@ -51,7 +51,10 @@ function TablesShowCase() {
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
-
+    defaultColumn: {
+      minSize: 0,
+      size: 0,
+    },
     // search
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: (row, _columnId, filterValue) => {
@@ -82,12 +85,12 @@ function TablesShowCase() {
         </p>
       </div>
       <div className="card w-full overflow-hidden p-0!">
-        <div className="flex items-center justify-between border-b border-borderColor py-4 px-5">
+        <div className="flex items-center justify-between border-b border-borderColor p-4">
           <div>
             <Input
               onChange={(e) => setGlobalFilter(e.target.value)}
               value={globalFilter}
-              className='py-1!'
+              className="py-1!"
               type="text"
               placeholder="Search Task ..."
             />
@@ -102,7 +105,14 @@ function TablesShowCase() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr className="table-header-row" key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <th className="table-header-cell" key={header.id}>
+                    <th
+                      style={{
+                        width:
+                          header.getSize() !== 0 ? header.getSize() : undefined,
+                      }}
+                      className="table-header-cell"
+                      key={header.id}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -130,7 +140,16 @@ function TablesShowCase() {
                     className="table-body-row"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <td className="table-body-cell" key={cell.id}>
+                      <td
+                        className="table-body-cell"
+                        style={{
+                          width:
+                            cell.column.getSize() !== 0
+                              ? cell.column.getSize()
+                              : undefined,
+                        }}
+                        key={cell.id}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

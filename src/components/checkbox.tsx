@@ -2,26 +2,29 @@ import React from 'react'
 
 interface props {
   checked: boolean
-  onChange: () => void
-  reset?: any
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  isIndeterminate?: boolean
+  reset?: React.ComponentProps<'input'>
+  rounded?: boolean
 }
 
-const CheckBox: React.FC<props> = ({ checked, onChange, reset }) => {
+const CheckBox: React.FC<props> = ({
+  checked,
+  onChange,
+  isIndeterminate,
+  rounded,
+  reset,
+}) => {
   return (
-    // <Checkbox
-    //   checked={checked}
-    //   onChange={onChange}
-    //   className={`group size-5 rounded-md bg-surface p-1 ring-1 ring-borderColor ring-inset focus:not-data-focus:outline-none data-focus:outline data-focus:outline-offset-2 data-focus:outline-white cursor-pointer`}
-    // >
-    //   <CheckIcon
-    //     strokeWidth={4}
-    //     className="hidden size-3 group-data-checked:block"
-    //   />
-    // </Checkbox>
     <input
-      className="checkbox"
       type="checkbox"
+      className={`${rounded ? 'checkbox-rounded-full' : 'checkbox'}`}
       checked={checked}
+      ref={(element) => {
+        if (element) {
+          element.indeterminate = isIndeterminate ?? false
+        }
+      }}
       onChange={onChange}
       {...reset}
     />

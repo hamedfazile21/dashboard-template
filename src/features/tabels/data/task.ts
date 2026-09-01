@@ -81,7 +81,7 @@ export const defaultData: Array<Person> = [
     status: 'Single',
     progress: 70,
   },
-   {
+  {
     firstName: 'kevin',
     lastName: 'vandy',
     age: 12,
@@ -89,7 +89,7 @@ export const defaultData: Array<Person> = [
     status: 'Single',
     progress: 70,
   },
-   {
+  {
     firstName: 'kevin',
     lastName: 'vandy',
     age: 12,
@@ -97,7 +97,7 @@ export const defaultData: Array<Person> = [
     status: 'Single',
     progress: 70,
   },
-   {
+  {
     firstName: 'kevin',
     lastName: 'vandy',
     age: 12,
@@ -105,7 +105,7 @@ export const defaultData: Array<Person> = [
     status: 'Single',
     progress: 70,
   },
-   {
+  {
     firstName: 'kevin',
     lastName: 'vandy',
     age: 12,
@@ -113,7 +113,7 @@ export const defaultData: Array<Person> = [
     status: 'Single',
     progress: 70,
   },
-   {
+  {
     firstName: 'kevin',
     lastName: 'vandy',
     age: 12,
@@ -121,7 +121,7 @@ export const defaultData: Array<Person> = [
     status: 'Single',
     progress: 70,
   },
-   {
+  {
     firstName: 'kevin',
     lastName: 'vandy',
     age: 12,
@@ -129,5 +129,4 @@ export const defaultData: Array<Person> = [
     status: 'Single',
     progress: 70,
   },
-  
 ]
