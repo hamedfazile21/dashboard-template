@@ -94,7 +94,7 @@ const Dashboard = () => {
       <div className="card w-full p-0">
         <div className="flex w-full items-center justify-between border-b border-borderColor pb-3">
           <h3 className="text-sm font-semibold text-foreground">
-            {t('Weekly Activity')}
+            {t('Monthly Activity')}
           </h3>
           <button
             type="button"

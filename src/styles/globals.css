@@ -273,7 +273,7 @@ button {
 
 /* <td> */
 .table-body-cell {
-  @apply px-4 py-3 align-top text-sm text-foreground;
+  @apply px-4 py-3 align-top text-sm text-start text-foreground;
 }
 
 /* Empty / loading state, spans the full row */

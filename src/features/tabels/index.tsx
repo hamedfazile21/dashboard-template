@@ -13,8 +13,7 @@ import { columns, selectColumn } from './components/table-columns'
 import { useState } from 'react'
 import Input from '#/components/input'
 import Pagination from '#/components/pagination'
-import Popover from '#/components/popover'
-import { SlidersHorizontal } from 'lucide-react'
+
 export type Person = {
   firstName: string
   lastName: string
@@ -160,37 +159,8 @@ function TablesShowCase() {
                 ))
               )}
             </tbody>
-
-            {table
-              .getFooterGroups()
-              .some((fg) =>
-                fg.headers.some((h) => h.column.columnDef.footer),
-              ) && (
-              <tfoot>
-                {table.getFooterGroups().map((footerGroup) => (
-                  <tr
-                    key={footerGroup.id}
-                    className="border-t border-borderColor bg-surface-hover/40"
-                  >
-                    {footerGroup.headers.map((header) => (
-                      <th
-                        key={header.id}
-                        className="px-4 py-3 text-left text-xs font-semibold text-foreground"
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.footer,
-                              header.getContext(),
-                            )}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </tfoot>
-            )}
           </table>
-          <div className="flex items-center justify-between py-4 px-5">
+          <div className="flex items-center justify-between py-4 px-5 border-t border-borderColor">
             <Pagination
               currentPage={pageIndex + 1} // Pagination is 1-indexed, TanStack's pageIndex is 0-indexed
               totalPages={Math.max(table.getPageCount(), 1)}

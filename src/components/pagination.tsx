@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Check, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import Popover from './popover'
 import { useTranslation } from 'react-i18next'
 
@@ -95,30 +95,23 @@ export function Pagination({
               placement="bottom-end"
             >
               <div className="flex flex-col gap-y-1 ">
-                <button
-                  onClick={() => setPerPage(10)}
-                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
-                >
-                  10
-                </button>
-                <button
-                  onClick={() => setPerPage(20)}
-                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
-                >
-                  20
-                </button>
-                <button
-                  onClick={() => setPerPage(30)}
-                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
-                >
-                  30
-                </button>
-                <button
-                  onClick={() => setPerPage(40)}
-                  className="text-xs hover:bg-surface-hover p-2 rounded-md w-full text-start"
-                >
-                  40
-                </button>
+                {Array.from({ length: 5 }).map((_, index) => {
+                  const pageSize = (index + 1) * 10
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setPerPage(pageSize)}
+                      className="flex items-center justify-between text-xs text-foreground hover:bg-surface-hover p-2 rounded-md w-full text-start"
+                    >
+                      {pageSize}
+                      {perPage === pageSize && (
+                        <span>
+                          <Check size={18} />
+                        </span>
+                      )}
+                    </button>
+                  )
+                })}
               </div>
             </Popover>
             <span className="text-sm font-medium text-foreground">
