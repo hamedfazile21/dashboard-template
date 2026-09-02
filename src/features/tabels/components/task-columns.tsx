@@ -7,18 +7,13 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUp,
-  ArrowUpDown,
-  CheckCheck,
   ChevronsUpDown,
   CircleAlert,
   CircleCheckBig,
   CircleOff,
   CirclePlay,
-  EyeOff,
-  OctagonAlert,
 } from 'lucide-react'
 import { useAppSelector } from '#/hooks/redux'
-import Popover from '#/components/popover'
 import TaskSortPopover from './task-sort-popover'
 
 const columnHelper = createColumnHelper<Task>()
@@ -35,7 +30,7 @@ export const columns = [
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('title', {
-    header: () => {
+    header: ({ column }) => {
       const { t } = useTranslation()
       return (
         <div className="">
@@ -44,48 +39,27 @@ export const columns = [
               <div className="hover:bg-surface-hover cursor-pointer py-1.5 px-2 rounded-lg flex items-center gap-x-1 w-fit ">
                 <span className="">{t('Title')}</span>
                 <span>
-                  <ChevronsUpDown className="text-muted" size={16} />
+                  {column.getIsSorted() === 'desc' && (
+                    <ArrowUp className="text-muted" size={16} />
+                  )}
+                  {column.getIsSorted() === 'asc' && (
+                    <ArrowDown className="text-muted" size={16} />
+                  )}
+                  {column.getIsSorted() === false && (
+                    <ChevronsUpDown className="text-muted" size={16} />
+                  )}
                 </span>
               </div>
             }
-            setSortBy={() => {}}
-            sortBy="asc"
-          />
-          {/* <Popover
-            className="w-34 p-1!"
-            trigger={
-              <div className="hover:bg-surface-hover cursor-pointer py-1.5 px-2 rounded-lg flex items-center gap-x-1 w-fit">
-                <span className="">{t('Title')}</span>
-                <span>
-                  <ChevronsUpDown className="text-muted" size={16} />
-                </span>
-              </div>
-            }
+            sortBy={column.getIsSorted() ?? 'hidden'}
+            setSortBy={(value) => {
+              if (value === 'hidden') {
+                column.getIsVisible() && column.toggleVisibility(false)
+              }
 
-            placement="bottom-end"
-          >
-            <div className="flex flex-col gap-y-1 ">
-              <button className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start">
-                <span>
-                  <ArrowUp className="text-muted text-sm" size={17} />
-                </span>
-                <span className="text-system">{t('Asc')}</span>
-              </button>
-              <button className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start">
-                <span>
-                  <ArrowDown className="text-muted text-sm" size={17} />
-                </span>
-                <span className="text-system">{t('Desc')}</span>
-              </button>
-              <div className="border-t border-borderColor" />
-              <button className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start">
-                <span>
-                  <EyeOff className="text-muted text-sm" size={17} />
-                </span>
-                <span className="text-system">{t('Hidden')}</span>
-              </button>
-            </div>
-          </Popover> */}
+              column.toggleSorting(value === 'asc')
+            }}
+          />
         </div>
       )
     },
@@ -107,13 +81,41 @@ export const columns = [
   }),
 
   columnHelper.accessor('priority', {
-    header: () => {
+    header: ({ column }) => {
       const { t } = useTranslation()
-      return <span>{t('Priority')}</span>
+      return (
+        <div className="">
+          <TaskSortPopover
+            children={
+              <div className="hover:bg-surface-hover cursor-pointer py-1.5 px-2 rounded-lg flex items-center gap-x-1 w-fit ">
+                <span className="">{t('Priority')}</span>
+                <span>
+                  {column.getIsSorted() === 'desc' && (
+                    <ArrowUp className="text-muted" size={16} />
+                  )}
+                  {column.getIsSorted() === 'asc' && (
+                    <ArrowDown className="text-muted" size={16} />
+                  )}
+                  {column.getIsSorted() === false && (
+                    <ChevronsUpDown className="text-muted" size={16} />
+                  )}
+                </span>
+              </div>
+            }
+            sortBy={column.getIsSorted() ?? 'hidden'}
+            setSortBy={(value) => {
+              if (value === 'hidden') {
+                column.getIsVisible() && column.toggleVisibility(false)
+              }
+
+              column.toggleSorting(value === 'asc')
+            }}
+          />
+        </div>
+      )
     },
     cell: (info) => {
       const { direction } = useAppSelector((state) => state.themeConfig)
-      // const task = info.row.original
       return (
         <div className="flex items-center gap-x-2">
           <span className="text-muted">
@@ -134,9 +136,36 @@ export const columns = [
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('status', {
-    header: () => {
+    header: ({ column }) => {
       const { t } = useTranslation()
-      return <span>{t('Status')}</span>
+      return (
+        <TaskSortPopover
+          children={
+            <div className="hover:bg-surface-hover cursor-pointer py-1.5 px-2 rounded-lg flex items-center gap-x-1 w-fit ">
+              <span className="">{t('Status')}</span>
+              <span>
+                {column.getIsSorted() === 'desc' && (
+                  <ArrowUp className="text-muted" size={16} />
+                )}
+                {column.getIsSorted() === 'asc' && (
+                  <ArrowDown className="text-muted" size={16} />
+                )}
+                {column.getIsSorted() === false && (
+                  <ChevronsUpDown className="text-muted" size={16} />
+                )}
+              </span>
+            </div>
+          }
+          sortBy={column.getIsSorted() ?? 'hidden'}
+          setSortBy={(value) => {
+            if (value === 'hidden') {
+              column.getIsVisible() && column.toggleVisibility(false)
+            }
+
+            column.toggleSorting(value === 'asc')
+          }}
+        />
+      )
     },
     cell: (info) => {
       return (

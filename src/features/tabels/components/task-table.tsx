@@ -9,6 +9,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
   type PaginationState,
   type RowSelectionState,
@@ -21,7 +22,14 @@ import { columns, selectColumn } from './task-columns'
 import { useTask } from './task-provider'
 
 const TaskTable = () => {
-  const { globalFilter, setGlobalFilter } = useTask()
+  const {
+    globalFilter,
+    setGlobalFilter,
+    sorting,
+    setSorting,
+    setColumnVisibility,
+    columnVisibility,
+  } = useTask()
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -35,6 +43,8 @@ const TaskTable = () => {
       rowSelection,
       globalFilter,
       pagination,
+      sorting,
+      columnVisibility,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
@@ -56,6 +66,13 @@ const TaskTable = () => {
     // pagination
     onPaginationChange: setPagination,
     getPaginationRowModel: getPaginationRowModel(),
+
+    // sorting
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+
+    //visible
+    onColumnVisibilityChange: setColumnVisibility,
   })
 
   const { pageIndex, pageSize } = table.getState().pagination

@@ -1,11 +1,12 @@
 import Popover from '#/components/popover'
+import type { SortDirection } from '@tanstack/react-table'
 import { ArrowDown, ArrowUp, EyeOff } from 'lucide-react'
 import React, { type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface props {
   children: React.ReactNode
-  sortBy: 'asc' | 'desc' | 'hidden'
+  sortBy: false | SortDirection
   setSortBy: (sortBy: 'asc' | 'desc' | 'hidden') => void
 }
 
@@ -19,20 +20,29 @@ const TaskSortPopover: FC<props> = ({ children, sortBy, setSortBy }) => {
       placement="bottom-end"
     >
       <div className="flex flex-col gap-y-1 ">
-        <button className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start">
+        <button
+          onClick={() => setSortBy('asc')}
+          className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start"
+        >
           <span>
             <ArrowUp className="text-muted text-sm" size={17} />
           </span>
           <span className="text-system">{t('Asc')}</span>
         </button>
-        <button className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start">
+        <button
+          onClick={() => setSortBy('desc')}
+          className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start"
+        >
           <span>
             <ArrowDown className="text-muted text-sm" size={17} />
           </span>
           <span className="text-system">{t('Desc')}</span>
         </button>
         <div className="border-t border-borderColor" />
-        <button className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start">
+        <button
+          onClick={() => setSortBy('hidden')}
+          className="flex items-center gap-x-2 text-foreground hover:bg-surface-hover px-2 py-1.5 rounded-md w-full text-start"
+        >
           <span>
             <EyeOff className="text-muted text-sm" size={17} />
           </span>
