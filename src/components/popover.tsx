@@ -29,6 +29,8 @@ type Placement =
   | 'left'
   | 'right'
 
+type CloseBehavior = 'select' | 'outside' | 'both'
+
 interface PopoverProps {
   /** The trigger element — must accept a ref (a native element or forwardRef component) */
   trigger: ReactElement
@@ -39,6 +41,8 @@ interface PopoverProps {
   /** Controlled open state (optional — falls back to internal state if omitted) */
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  /** Close when an item inside the popover is clicked; useful for menus */
+  closeOn?: CloseBehavior
   /** Show the little pointer arrow */
   showArrow?: boolean
   className?: string
@@ -51,6 +55,7 @@ export function Popover({
   triggerType = 'click',
   open: controlledOpen,
   onOpenChange,
+  closeOn = 'both',
   showArrow = true,
   className = '',
 }: PopoverProps) {
@@ -78,11 +83,28 @@ export function Popover({
   })
 
   const click = useClick(context, { enabled: triggerType === 'click' })
-  const hover = useHover(context, { enabled: triggerType === 'hover', delay: { open: 80, close: 100 } })
-  const dismiss = useDismiss(context)
+  const hover = useHover(context, {
+    enabled: triggerType === 'hover',
+    delay: { open: 80, close: 100 },
+  })
+  const dismiss = useDismiss(context, {
+    enabled: closeOn === 'outside' || closeOn === 'both',
+  })
   const role = useRole(context)
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([click, hover, dismiss, role])
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    hover,
+    dismiss,
+    role,
+  ])
+  const shouldCloseOnSelect = closeOn === 'select' || closeOn === 'both'
+
+  const handleContentClick = () => {
+    if (shouldCloseOnSelect) {
+      setOpen(false)
+    }
+  }
 
   const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
     duration: { open: 150, close: 100 },
@@ -102,7 +124,10 @@ export function Popover({
     <>
       {cloneElement(
         trigger as ReactElement<any>,
-        getReferenceProps({ ref: refs.setReference, ...(trigger.props as object) })
+        getReferenceProps({
+          ref: refs.setReference,
+          ...(trigger.props as object),
+        }),
       )}
 
       {isMounted && (
@@ -116,6 +141,7 @@ export function Popover({
             >
               <div
                 style={transitionStyles}
+                onClick={handleContentClick}
                 className={` rounded-xl border border-white/10 bg-surface/40 p-3
                   backdrop-blur-xl backdrop-saturate-150
                   shadow-lg shadow-black/10 ring-1 ring-black/5

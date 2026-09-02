@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 @import 'tailwindcss';
 @import './theme.css';
@@ -73,7 +73,7 @@
 @theme {
   --color-primary: var(--color-primary);
   --color-primary-foreground: var(--color-primary-foreground);
-  --font-jost: 'Jost', sans-serif;
+  --font-inter: 'Inter', sans-serif;
   --font-shabnam: 'Shabnam', sans-serif;
   --text-system: 14px;
   --color-borderColor: var(--border);
@@ -90,7 +90,7 @@
 
 @layer base {
   html {
-    @apply font-jost rtl:font-shabnam;
+    @apply font-inter rtl:font-shabnam;
   }
 }
 * {
@@ -253,7 +253,7 @@ button {
 
 /* <th> */
 .table-header-cell {
-  @apply whitespace-nowrap px-4 py-3 text-start font-medium text-foreground;
+  @apply whitespace-nowrap px-4 py-2 text-start font-medium text-foreground;
 }
 
 /* Sortable header's inner button (icon + label) */

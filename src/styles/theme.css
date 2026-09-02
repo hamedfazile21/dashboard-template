@@ -9,7 +9,7 @@
 
   /* Text */
   --foreground: rgb(64, 64, 64);
-  --muted-foreground: rgb(55, 55, 55);
+  --muted-foreground: oklch(55.4% 0.046 257.417);
 
   /* Borders */
   --border: rgb(219, 219, 219);

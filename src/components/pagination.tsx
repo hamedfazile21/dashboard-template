@@ -81,6 +81,7 @@ export function Pagination({
           <div className="w-fit flex items-center gap-x-2">
             <Popover
               className="w-25 p-1!"
+              closeOn="select"
               trigger={
                 <button
                   type="button"
