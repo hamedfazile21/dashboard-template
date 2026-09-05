@@ -17,6 +17,8 @@ const statusOptions = [
   'Canceled',
 ] as const
 
+const priorityOptions = ['Low', 'Medium', 'High', 'Critical'] as const
+
 interface TableToolbarProps {
   table: Table<Task>
 }
@@ -24,6 +26,7 @@ interface TableToolbarProps {
 const TableToolbar = ({ table }: TableToolbarProps) => {
   const { t } = useTranslation()
   const [statusSearch, setStatusSearch] = useState('')
+  const [prioritySearch, setPrioritySearch] = useState('')
 
   const { setGlobalFilter, globalFilter } = useTask()
   const selectedStatuses =
@@ -38,6 +41,19 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
   const visibleStatuses = statusOptions.filter((status) =>
     status.toLowerCase().includes(statusSearch.toLowerCase()),
   )
+  const selectedPriorities =
+    (table.getColumn('priority')?.getFilterValue() as string[] | undefined) ??
+    []
+  const priorityCounts = table
+    .getPreFilteredRowModel()
+    .rows.reduce<Record<string, number>>((counts, row) => {
+      const priority = String(row.getValue('priority'))
+      counts[priority] = (counts[priority] ?? 0) + 1
+      return counts
+    }, {})
+  const visiblePriorities = priorityOptions.filter((priority) =>
+    priority.toLowerCase().includes(prioritySearch.toLowerCase()),
+  )
 
   return (
     <div className="flex items-center justify-between border-b border-borderColor p-4">
@@ -49,6 +65,7 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
           type="text"
           placeholder="Search Task ..."
         />
+
         <Popover
           className="w-48 p-1!"
           trigger={
@@ -153,7 +170,112 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
             )}
           </div>
         </Popover>
+
+        <Popover
+          className="w-48 p-1!"
+          trigger={
+            <button className="border border-dashed border-borderColor py-1.5 text-[13px] px-3 rounded-md flex items-center gap-x-2 hover:bg-surface-hover transition-colors">
+              <span>
+                <Sparkles size={17} className="text-muted" />
+              </span>
+              <span className="font-medium">{t('Priority')}</span>
+
+              {selectedPriorities.length > 0 && (
+                <div className="border-l border-borderColor h-5" />
+              )}
+              {selectedPriorities.length >= 3 ? (
+                <span className="text-xs bg-muted/20 rounded-lg px-2 py-0.5 w-20">
+                  {selectedPriorities.length} {t('Selected')}
+                </span>
+              ) : (
+                selectedPriorities.map((item, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className={`text-xs bg-muted/20 rounded-lg px-2 py-0.5 ${item === 'In Progress' ? 'w-24' : 'w-fit'}`}
+                    >
+                      {item}
+                    </span>
+                  )
+                })
+              )}
+            </button>
+          }
+          placement="bottom-start"
+          closeOn="outside"
+        >
+          <div className="flex flex-col gap-y-1">
+            <div className="px-3 py-2 border-b border-borderColor relative">
+              <Search
+                size={17}
+                className="text-muted absolute ltr:right-2 rtl:left-2 top-3"
+              />
+              <input
+                className="border-0 w-34.5 outline-none text-system text-foreground"
+                placeholder={t('Search...')}
+                value={prioritySearch}
+                onChange={(event) => setPrioritySearch(event.target.value)}
+              />
+            </div>
+            {visiblePriorities.length > 0 ? (
+              <>
+                {visiblePriorities.map((priority) => {
+                  const isSelected = selectedPriorities.includes(priority)
+
+                  return (
+                    <button
+                      key={priority}
+                      type="button"
+                      onClick={() => {
+                        const nextPriorities = isSelected
+                          ? selectedPriorities.filter(
+                              (value) => value !== priority,
+                            )
+                          : [...selectedPriorities, priority]
+
+                        table
+                          .getColumn('priority')
+                          ?.setFilterValue(nextPriorities)
+                      }}
+                      className="flex items-center justify-between gap-x-1.5 text-foreground hover:bg-surface-hover px-3 py-1.5 rounded-md w-full text-start text-system"
+                    >
+                      <span className="flex items-center gap-x-1.5">
+                        <CheckBox
+                          size="sm"
+                          checked={isSelected}
+                          onChange={() => undefined}
+                        />
+                        <span>{priority}</span>
+                      </span>
+                      <span className="text-xs">
+                        {priorityCounts[priority] ?? 0}
+                      </span>
+                    </button>
+                  )
+                })}
+                {selectedPriorities.length > 0 && (
+                  <div className="border-t border-borderColor p-1">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        table.getColumn('priority')?.setFilterValue([])
+                      }
+                      className="flex items-center gap-x-1.5 text-foreground hover:bg-surface-hover px-3 py-1.5 rounded-md w-full text-system"
+                    >
+                      {t('Clear Filters')}
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <p className="p-2 text-system w-full text-center text-foreground">
+                {t('No results found.')}
+              </p>
+            )}
+          </div>
+        </Popover>
       </div>
+
       <Popover
         className="w-38 p-0! py-1!"
         trigger={
@@ -170,7 +292,9 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
       >
         <div className="flex flex-col gap-y-1 ">
           <div className="px-3 py-2 border-b border-borderColor">
-            <span className="text-system">{t('Toggle columns')}</span>
+            <span className="text-system text-foreground">
+              {t('Toggle columns')}
+            </span>
           </div>
           {table
             .getAllLeafColumns()

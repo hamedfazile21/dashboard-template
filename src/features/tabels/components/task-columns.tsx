@@ -27,6 +27,7 @@ export const statusIcon = {
 
 export const columns = [
   columnHelper.accessor('id', {
+    enableHiding: false,
     header: () => {
       const { t } = useTranslation()
       return <span>{t('Task')}</span>
@@ -88,6 +89,13 @@ export const columns = [
   }),
 
   columnHelper.accessor('priority', {
+    filterFn: (row, columnId, filterValue) => {
+      const selectedPriorities = filterValue as string[]
+      return (
+        selectedPriorities.length === 0 ||
+        selectedPriorities.includes(String(row.getValue(columnId)))
+      )
+    },
     header: ({ column }) => {
       const { t } = useTranslation()
       return (
@@ -185,11 +193,6 @@ export const columns = [
       return (
         <div className="flex items-center gap-x-2">
           <span className="text-muted">
-            {/* {info.getValue() === 'Canceled' && <CircleOff size={17} />}
-            {info.getValue() === 'Done' && <CircleCheckBig size={17} />}
-            {info.getValue() === 'Backlog' && <CircleAlert size={17} />}
-            {info.getValue() === 'In Progress' && <AlarmClock size={17} />}
-            {info.getValue() === 'Todo' && <CirclePlay size={17} />} */}
             {statusIcon[info.getValue() as keyof typeof statusIcon]}
           </span>
           <span className="text-system font-medium">{info.getValue()}</span>
