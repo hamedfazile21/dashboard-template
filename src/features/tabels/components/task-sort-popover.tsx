@@ -17,7 +17,7 @@ const TaskSortPopover: FC<props> = ({ children, sortBy, setSortBy }) => {
       className="w-34 p-1!"
       trigger={<div className="w-fit">{children}</div>}
 
-      placement="bottom-end"
+      placement="bottom-start"
     >
       <div className="flex flex-col gap-y-1 ">
         <button

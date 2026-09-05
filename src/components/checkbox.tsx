@@ -6,6 +6,7 @@ interface props {
   isIndeterminate?: boolean
   reset?: React.ComponentProps<'input'>
   rounded?: boolean
+  size?: 'sm' | 'md' | 'lg'
 }
 
 const CheckBox: React.FC<props> = ({
@@ -14,11 +15,12 @@ const CheckBox: React.FC<props> = ({
   isIndeterminate,
   rounded,
   reset,
+  size = 'md',
 }) => {
   return (
     <input
       type="checkbox"
-      className={`${rounded ? 'checkbox-rounded-full' : 'checkbox'}`}
+      className={`${rounded ? 'checkbox-rounded-full' : 'checkbox'} checkbox-${size}`}
       checked={checked}
       ref={(element) => {
         if (element) {

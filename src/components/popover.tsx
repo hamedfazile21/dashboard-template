@@ -51,7 +51,7 @@ interface PopoverProps {
 export function Popover({
   trigger,
   children,
-  placement = 'bottom',
+  placement = 'bottom-start',
   triggerType = 'click',
   open: controlledOpen,
   onOpenChange,

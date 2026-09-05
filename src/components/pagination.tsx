@@ -93,7 +93,7 @@ export function Pagination({
                 </button>
               }
 
-              placement="bottom-end"
+              placement="bottom-start"
             >
               <div className="flex flex-col gap-y-1 ">
                 {Array.from({ length: 5 }).map((_, index) => {

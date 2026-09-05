@@ -20,6 +20,7 @@ const columnHelper = createColumnHelper<Task>()
 
 export const columns = [
   columnHelper.accessor('id', {
+    enableHiding: false,
     header: () => {
       const { t } = useTranslation()
       return <span>{t('Task')}</span>
