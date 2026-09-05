@@ -2,7 +2,7 @@ import CheckBox from '#/components/checkbox'
 import Input from '#/components/input'
 import Popover from '#/components/popover'
 import type { Table } from '@tanstack/react-table'
-import { Search, SlidersHorizontal, Sparkles } from 'lucide-react'
+import { Search, SlidersHorizontal, Sparkles, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useTask } from './task-provider'
@@ -54,6 +54,11 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
   const visiblePriorities = priorityOptions.filter((priority) =>
     priority.toLowerCase().includes(prioritySearch.toLowerCase()),
   )
+
+  const removeFilters = () => {
+    table.getColumn('status')?.setFilterValue([])
+    table.getColumn('priority')?.setFilterValue([])
+  }
 
   return (
     <div className="flex items-center justify-between border-b border-borderColor p-4">
@@ -274,6 +279,18 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
             )}
           </div>
         </Popover>
+        {selectedPriorities.length > 0 ||
+          (selectedStatuses.length > 0 && (
+            <div className="">
+              <button
+                onClick={removeFilters}
+                className="text-system font-medium ms-5 flex items-center gap-x-1"
+              >
+                <span>{t('Reset')}</span>
+                <X size={17} />
+              </button>
+            </div>
+          ))}
       </div>
 
       <Popover
