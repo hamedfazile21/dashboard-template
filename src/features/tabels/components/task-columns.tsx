@@ -20,7 +20,6 @@ const columnHelper = createColumnHelper<Task>()
 
 export const columns = [
   columnHelper.accessor('id', {
-    enableHiding: false,
     header: () => {
       const { t } = useTranslation()
       return <span>{t('Task')}</span>
@@ -137,6 +136,13 @@ export const columns = [
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('status', {
+    filterFn: (row, columnId, filterValue) => {
+      const selectedStatuses = filterValue as string[]
+      return (
+        selectedStatuses.length === 0 ||
+        selectedStatuses.includes(String(row.getValue(columnId)))
+      )
+    },
     header: ({ column }) => {
       const { t } = useTranslation()
       return (

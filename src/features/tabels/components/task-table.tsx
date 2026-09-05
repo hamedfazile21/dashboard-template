@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  type Dispatch,
-  type FC,
-  type SetStateAction,
-} from 'react'
+import { useState } from 'react'
 import {
   flexRender,
   getCoreRowModel,
@@ -11,6 +6,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type ColumnFiltersState,
   type PaginationState,
   type RowSelectionState,
 } from '@tanstack/react-table'
@@ -23,8 +19,16 @@ import { useTask } from './task-provider'
 import Input from '#/components/input'
 import { useTranslation } from 'react-i18next'
 import Popover from '#/components/popover'
-import { Check, SlidersHorizontal } from 'lucide-react'
+import { Search, SlidersHorizontal, Sparkles } from 'lucide-react'
 import CheckBox from '#/components/checkbox'
+
+const statusOptions = [
+  'Backlog',
+  'Todo',
+  'In Progress',
+  'Done',
+  'Canceled',
+] as const
 
 const TaskTable = () => {
   const { t } = useTranslation()
@@ -41,6 +45,8 @@ const TaskTable = () => {
     pageIndex: 0,
     pageSize: 10,
   })
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [statusSearch, setStatusSearch] = useState('')
   const table = useReactTable({
     data: defaultData,
     columns: [selectColumn, ...columns],
@@ -51,6 +57,7 @@ const TaskTable = () => {
       pagination,
       sorting,
       columnVisibility,
+      columnFilters,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
@@ -68,7 +75,6 @@ const TaskTable = () => {
       })
     },
     getFilteredRowModel: getFilteredRowModel(),
-
     // pagination
     onPaginationChange: setPagination,
     getPaginationRowModel: getPaginationRowModel(),
@@ -79,7 +85,14 @@ const TaskTable = () => {
 
     //visible
     onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
   })
+
+  const selectedStatuses =
+    (table.getColumn('status')?.getFilterValue() as string[] | undefined) ?? []
+  const visibleStatuses = statusOptions.filter((status) =>
+    status.toLowerCase().includes(statusSearch.toLowerCase()),
+  )
 
   const { pageIndex, pageSize } = table.getState().pagination
 
@@ -97,15 +110,14 @@ const TaskTable = () => {
             type="text"
             placeholder="Search Task ..."
           />
-
           <Popover
-            className="w-38 p-0!"
+            className="w-48 p-0! py-1!"
             trigger={
-              <button className="border border-borderColor py-1.5 text-[13px] px-3 rounded-md flex items-center gap-x-2 hover:bg-surface-hover transition-colors">
+              <button className="border border-dashed border-borderColor py-1.5 text-[13px] px-3 rounded-md flex items-center gap-x-2 hover:bg-surface-hover transition-colors">
                 <span>
-                  <SlidersHorizontal size={17} className="text-muted" />
+                  <Sparkles size={17} className="text-muted" />
                 </span>
-                <span className="font-medium">{t('View')}</span>
+                <span className="font-medium">{t('Status')}</span>
               </button>
             }
 
@@ -113,49 +125,98 @@ const TaskTable = () => {
             closeOn="outside"
           >
             <div className="flex flex-col gap-y-1 ">
-              <div className="px-3 py-2 border-b border-borderColor">
-                <span className="text-system">{t('Toggle columns')}</span>
+              <div className="px-3 py-2 border-b border-borderColor relative">
+                <Search
+                  size={17}
+                  className="text-muted absolute ltr:right-2 rtl:left-2 top-3"
+                />
+                <input
+                  className="border-0 w-34.5 outline-none text-system"
+                  placeholder={t('Search...')}
+                  value={statusSearch}
+                  onChange={(event) => setStatusSearch(event.target.value)}
+                />
               </div>
-              {table
-                .getAllLeafColumns()
-                .filter((column) => column.id !== 'select')
-                .map((column) => {
-                  const headerLabels: Record<string, string> = {
-                    id: t('Task'),
-                    title: t('Title'),
-                    priority: t('Priority'),
-                    status: t('Status'),
-                  }
+              {visibleStatuses.map((status) => {
+                const isSelected = selectedStatuses.includes(status)
 
-                  if (!column.getCanHide()) return
+                return (
+                  <button
+                    key={status}
+                    type="button"
+                    onClick={() => {
+                      const nextStatuses = isSelected
+                        ? selectedStatuses.filter((value) => value !== status)
+                        : [...selectedStatuses, status]
 
-                  return (
-                    <button
-                      key={column.id}
-                      type="button"
-                      disabled={!column.getCanHide()}
-                      onClick={() => column.toggleVisibility()}
-                      className="flex items-center justify-between gap-x-2 text-foreground hover:bg-surface-hover px-3 py-1.5 rounded-md w-full text-start text-system disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
-                    >
-                      <div className="flex items-center gap-x-1.5">
-                        <CheckBox
-                          size="md"
-                          rounded
-                          checked={column.getIsVisible()}
-                          onChange={() => column.toggleVisibility()}
-                        />
-                        <span>{headerLabels[column.id] ?? column.id}</span>
-                      </div>
-                      {/* {column.getIsVisible() && <Check size={16} />} */}
-                    </button>
-                  )
-                })}
+                      table.getColumn('status')?.setFilterValue(nextStatuses)
+                    }}
+                    className="flex items-center gap-x-1.5 text-foreground hover:bg-surface-hover px-3 py-1.5 rounded-md w-full text-start text-system"
+                  >
+                    <CheckBox
+                      size="sm"
+                      checked={isSelected}
+                      onChange={() => undefined}
+                    />
+                    <span>{status}</span>
+                  </button>
+                )
+              })}
             </div>
           </Popover>
         </div>
-        <div>
-          <button className="btn btn-primary">{t('New Task')}</button>
-        </div>
+        <Popover
+          className="w-38 p-0! py-1!"
+          trigger={
+            <button className="border border-dashed border-borderColor py-1.5 text-[13px] px-3 rounded-md flex items-center gap-x-2 hover:bg-surface-hover transition-colors">
+              <span>
+                <SlidersHorizontal size={17} className="text-muted" />
+              </span>
+              <span className="font-medium">{t('View')}</span>
+            </button>
+          }
+
+          placement="bottom-start"
+          closeOn="outside"
+        >
+          <div className="flex flex-col gap-y-1 ">
+            <div className="px-3 py-2 border-b border-borderColor">
+              <span className="text-system">{t('Toggle columns')}</span>
+            </div>
+            {table
+              .getAllLeafColumns()
+              .filter((column) => column.id !== 'select')
+              .map((column) => {
+                const headerLabels: Record<string, string> = {
+                  id: t('Task'),
+                  title: t('Title'),
+                  priority: t('Priority'),
+                  status: t('Status'),
+                }
+
+                if (!column.getCanHide()) return
+
+                return (
+                  <button
+                    key={column.id}
+                    type="button"
+                    disabled={!column.getCanHide()}
+                    onClick={() => column.toggleVisibility()}
+                    className="flex items-center justify-between gap-x-2 text-foreground hover:bg-surface-hover px-3 py-1.5 rounded-md w-full text-start text-system disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+                  >
+                    <div className="flex items-center gap-x-1.5">
+                      <CheckBox
+                        size="sm"
+                        checked={column.getIsVisible()}
+                        onChange={() => column.toggleVisibility()}
+                      />
+                      <span>{headerLabels[column.id] ?? column.id}</span>
+                    </div>
+                  </button>
+                )
+              })}
+          </div>
+        </Popover>
       </div>
       <div className="table-wrapper">
         <table className="w-full text-left text-sm">
