@@ -17,6 +17,13 @@ import { useAppSelector } from '#/hooks/redux'
 import TaskSortPopover from './task-sort-popover'
 
 const columnHelper = createColumnHelper<Task>()
+export const statusIcon = {
+  Backlog: <CircleAlert size={17} />,
+  Todo: <CirclePlay size={17} />,
+  'In Progress': <AlarmClock size={17} />,
+  Done: <CircleCheckBig size={17} />,
+  Canceled: <CircleOff size={17} />,
+}
 
 export const columns = [
   columnHelper.accessor('id', {
@@ -178,11 +185,12 @@ export const columns = [
       return (
         <div className="flex items-center gap-x-2">
           <span className="text-muted">
-            {info.getValue() === 'Canceled' && <CircleOff size={17} />}
+            {/* {info.getValue() === 'Canceled' && <CircleOff size={17} />}
             {info.getValue() === 'Done' && <CircleCheckBig size={17} />}
             {info.getValue() === 'Backlog' && <CircleAlert size={17} />}
             {info.getValue() === 'In Progress' && <AlarmClock size={17} />}
-            {info.getValue() === 'Todo' && <CirclePlay size={17} />}
+            {info.getValue() === 'Todo' && <CirclePlay size={17} />} */}
+            {statusIcon[info.getValue() as keyof typeof statusIcon]}
           </span>
           <span className="text-system font-medium">{info.getValue()}</span>
         </div>
