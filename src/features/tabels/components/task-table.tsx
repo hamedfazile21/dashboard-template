@@ -151,6 +151,7 @@ const TaskTable = () => {
             onPageChange={(page) => table.setPageIndex(page - 1)}
             perPage={pageSize}
             setPerPage={handelChangePageSize}
+            siblingCount={0}
           />
         </div>
       </div>

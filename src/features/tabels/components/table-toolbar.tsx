@@ -2,8 +2,14 @@ import CheckBox from '#/components/checkbox'
 import Input from '#/components/input'
 import Popover from '#/components/popover'
 import type { Table } from '@tanstack/react-table'
-import { Search, SlidersHorizontal, Sparkles, X } from 'lucide-react'
-import { useState } from 'react'
+import {
+  LoaderCircle,
+  Search,
+  SlidersHorizontal,
+  Sparkles,
+  X,
+} from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useTask } from './task-provider'
 import type { Task } from '..'
@@ -25,10 +31,19 @@ interface TableToolbarProps {
 
 const TableToolbar = ({ table }: TableToolbarProps) => {
   const { t } = useTranslation()
+  const { setGlobalFilter, globalFilter } = useTask()
   const [statusSearch, setStatusSearch] = useState('')
   const [prioritySearch, setPrioritySearch] = useState('')
+  const [searchValue, setSearchValue] = useState(globalFilter)
+  const isSearching = searchValue !== globalFilter
 
-  const { setGlobalFilter, globalFilter } = useTask()
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setGlobalFilter(searchValue)
+    }, 250)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [searchValue, setGlobalFilter])
   const selectedStatuses =
     (table.getColumn('status')?.getFilterValue() as string[] | undefined) ?? []
   const statusCounts = table
@@ -63,13 +78,23 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
   return (
     <div className="flex items-center justify-between border-b border-borderColor p-4">
       <div className="flex items-center gap-x-2">
-        <Input
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          value={globalFilter}
-          className="py-1.5!"
-          type="text"
-          placeholder="Search Task ..."
-        />
+        <div className="relative w-64">
+          <Input
+            onChange={(e) => setSearchValue(e.target.value)}
+            value={searchValue}
+            className="py-1.5! pr-9"
+            type="text"
+            placeholder={t('Search Task ...')}
+            aria-busy={isSearching}
+          />
+          {isSearching && (
+            <LoaderCircle
+              size={16}
+              aria-label="Searching"
+              className="pointer-events-none absolute top-1/2 ltr:right-3 rtl:left-3 -translate-y-1/2 animate-spin text-muted"
+            />
+          )}
+        </div>
 
         <Popover
           className="w-48 p-1!"
@@ -280,18 +305,17 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
             )}
           </div>
         </Popover>
-        {selectedPriorities.length > 0 ||
-          (selectedStatuses.length > 0 && (
-            <div className="">
-              <button
-                onClick={removeFilters}
-                className="text-system font-medium ms-5 flex items-center gap-x-1"
-              >
-                <span>{t('Reset')}</span>
-                <X size={17} />
-              </button>
-            </div>
-          ))}
+        {(selectedPriorities.length > 0 || selectedStatuses.length > 0) && (
+          <div className="">
+            <button
+              onClick={removeFilters}
+              className="text-system font-medium ms-5 flex items-center gap-x-1"
+            >
+              <span>{t('Reset')}</span>
+              <X size={17} />
+            </button>
+          </div>
+        )}
       </div>
 
       <Popover
