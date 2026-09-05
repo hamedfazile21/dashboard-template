@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useTask } from './task-provider'
 import type { Task } from '..'
-import { statusIcon } from './task-columns'
+import { priorityIcon, statusIcon } from './task-columns'
 
 const statusOptions = [
   'Backlog',
@@ -250,6 +250,7 @@ const TableToolbar = ({ table }: TableToolbarProps) => {
                           checked={isSelected}
                           onChange={() => undefined}
                         />
+                        <span>{priorityIcon[priority]}</span>
                         <span>{priority}</span>
                       </span>
                       <span className="text-xs">

@@ -13,7 +13,6 @@ import {
   CircleOff,
   CirclePlay,
 } from 'lucide-react'
-import { useAppSelector } from '#/hooks/redux'
 import TaskSortPopover from './task-sort-popover'
 
 const columnHelper = createColumnHelper<Task>()
@@ -23,6 +22,13 @@ export const statusIcon = {
   'In Progress': <AlarmClock size={17} />,
   Done: <CircleCheckBig size={17} />,
   Canceled: <CircleOff size={17} />,
+}
+
+export const priorityIcon = {
+  Low: <ArrowDown size={17} />,
+  High: <ArrowUp size={17} />,
+  Medium: <ArrowRight className={`rtl:rotate-180`} size={17} />,
+  Critical: <CircleAlert size={17} />,
 }
 
 export const columns = [
@@ -76,7 +82,7 @@ export const columns = [
 
       return (
         <div className="flex items-center gap-x-2 px-2">
-          <span className="text-xs px-2 font-medium border border-borderColor rounded-xl">
+          <span className="text-xs px-2 font-medium border border-dashed border-borderColor rounded-xl">
             {task.label}
           </span>
           <span className="font-medium text-system text-foreground">
@@ -130,20 +136,9 @@ export const columns = [
       )
     },
     cell: (info) => {
-      const { direction } = useAppSelector((state) => state.themeConfig)
       return (
         <div className="flex items-center gap-x-2">
-          <span className="text-muted">
-            {info.getValue() === 'Low' && <ArrowDown size={17} />}
-            {info.getValue() === 'High' && <ArrowUp size={17} />}
-            {info.getValue() === 'Medium' && (
-              <ArrowRight
-                className={`${direction === 'rtl' && 'rotate-180'}`}
-                size={17}
-              />
-            )}
-            {info.getValue() === 'Critical' && <CircleAlert size={17} />}
-          </span>
+          <span className="text-muted">{priorityIcon[info.getValue()]}</span>
           <span className="text-system font-medium">{info.getValue()}</span>
         </div>
       )
